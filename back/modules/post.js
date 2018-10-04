@@ -1,16 +1,10 @@
 const mongoose = require('mongoose');
 const comment = require('./comment')
 const postSchema = mongoose.Schema({
-    createdAt:{
-        type:Date
-    },
-    updatedAt:{
-        type:Date
-    },
     userId:{
         type:String
     },
-    user:{
+    username:{
         type:String,
         require:true
     },
@@ -23,7 +17,14 @@ const postSchema = mongoose.Schema({
         require:true 
 
     },
-    comments:[comment.schema]
+    createdAt:{
+        type:Date
+    },
+    updatedAt:{
+        type:Date
+    },
+
+    comment:[comment.schema]
 })
 
 

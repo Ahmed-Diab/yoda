@@ -1,23 +1,5 @@
 const mongoose = require('mongoose');
 const replayComment = mongoose.Schema({
-    createdAt:{
-        type:Date
-    },
-    updatedAt:{
-        type:Date
-    },
-    user:{
-        type:String,
-        require:true
-    },
-    userId:{
-        type:String,
-        require:true
-    },
-    userImage:{
-        type:String,
-        require:true
-    },
     postId:{
         type:String,
         require:true
@@ -26,22 +8,11 @@ const replayComment = mongoose.Schema({
         type:String,
         require:true
     },
-    body:{
-        type:String
-    }
-})
-const commentSchema = mongoose.Schema({
-    createdAt:{
-        type:Date
-    },
-    updatedAt:{
-        type:Date
-    },
-    user:{
+    userId:{
         type:String,
         require:true
     },
-    userId:{
+    username:{
         type:String,
         require:true
     },
@@ -52,11 +23,40 @@ const commentSchema = mongoose.Schema({
     body:{
         type:String
     },
+    createdAt:{
+        type:Date
+    },
+    updatedAt:{
+        type:Date
+    }
+})
+const commentSchema = mongoose.Schema({
     postId:{
         type:String,
         require:true
     },
-    replayComment:[replayComment]
+    userId:{
+        type:String,
+        require:true
+    },
+    username:{
+        type:String,
+        require:true
+    },
+    userImage:{
+        type:String,
+        require:true
+    },
+    body:{
+        type:String
+    },
+    createdAt:{
+        type:Date
+    },
+    updatedAt:{
+        type:Date
+    },
+    replay:[replayComment]
 
 })
 commentSchema.pre('update', (next)=>{

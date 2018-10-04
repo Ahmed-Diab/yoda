@@ -7,7 +7,6 @@ const User = require('../modules/users');
 router.post('/:reqId/:resId/send', function(req, res, next) {
     var reqId = req.params.reqId,
         resId   = req.params.resId;
-
     User.find({}, (err, users)=>{
           if (err) {
             res.json({success:false, errMSG:err.message})

@@ -3,28 +3,6 @@ const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
 
-// var profile = mongoose.Schema({
-//   quote:{
-//     type:String
-//   },
-//   work:{
-//     type:Array
-//   },
-//   education:{
-//     type:Array
-//   }
-// })
-var message = mongoose.Schema({
-  userId:{
-    type:String
-  },
-  userImage:{ 
-    type:String
-   },
-  message:{
-    type:Array
-  }
-})
 var newUser = mongoose.Schema({
     username:{
         type:String,
@@ -51,39 +29,38 @@ var newUser = mongoose.Schema({
     friendRequest:{
       type:Array
     },
-    updated_date: { 
+    createdAt: { 
       type: Date, 
       default: Date.now
-     },
-    // profile:[profile],
-    messages:[message]
+     }
 });
 
 const User = module.exports = mongoose.model('User', newUser);
-
 module.exports.getUserById = function(id, callback) {
     User.findById(id, callback);
   }
-  
-  module.exports.getUserByUsername = function(username, callback) {
-    const query = {email: username}
-    User.findOne(query, callback);
-  }
-  
-  module.exports.addUser = function(newUser, callback) {
-    bcrypt.genSalt(10, (err, salt) => {
-      bcrypt.hash(newUser.password, salt, (err, hash) => {
-        if(err) throw err;
-        newUser.password = hash;
-        newUser.save(callback);
-      });
-    });
-  }
+module.exports.getUserByUsername = function(username, callback) {
+  const query = {username: username}
+  User.findOne(query, callback);
+}
 
+module.exports.getUserByEmail = function(email, callback) {
+  const query = {email: email}
+  User.findOne(query, callback);
+}
 
-  module.exports.comparePassword = function(candidatePassword, hash, callback) {
-    bcrypt.compare(candidatePassword, hash, (err, isMatch) => {
+module.exports.addUser = function(newUser, callback) {
+  bcrypt.genSalt(10, (err, salt) => {
+    bcrypt.hash(newUser.password, salt, (err, hash) => {
       if(err) throw err;
-      callback(null, isMatch);
+      newUser.password = hash;
+      newUser.save(callback);
     });
-  }
+  });
+}
+module.exports.comparePassword = function(candidatePassword, hash, callback) {
+  bcrypt.compare(candidatePassword, hash, (err, isMatch) => {
+    if(err) throw err;
+    callback(null, isMatch);
+  });
+}

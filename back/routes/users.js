@@ -10,9 +10,8 @@ const path = require('path');
 
 // start path to save images & rename images
 const storage = multer.diskStorage({
-
   destination: function (req, file, callback) {
-      callback(null, 'public/users_images/')
+      callback(null, 'public/users-mages/')
   },
   filename: function(req, file, cd){
       cd(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
@@ -22,17 +21,17 @@ const storage = multer.diskStorage({
 // start handel multer file size and use check file type fun
 const upload = multer({
    storage:storage,
-   limits: {fileSize: 100000000000},
+   limits: {fileSize: 100000,},
    fileFilter: function(req, file, cb){
      checkFileType(file, cb);
    }
-}).single('user_image') // end handel multer file size and use check file type fun
+}).single('userImage') // end handel multer file size and use check file type fun
 
 // start check file type 
 function checkFileType(file, cb) {
-  const filetypes = /jpeg|jpg|png|gif/;
-  const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
-  const mimetype = filetypes.test(file.mimetype)
+  const filetypes = /jpeg|jpg|png/;
+  const extname   = filetypes.test(path.extname(file.originalname).toLowerCase());
+  const mimetype  = filetypes.test(file.mimetype)
   if(mimetype && extname){
     return cb(null, true);
   } else{
@@ -52,15 +51,18 @@ function verifyToken(req, res, next) {
   if(!payload) {
     return res.status(401).send('Unauthorized request')    
   }
-  req.userId = payload.subject
+  req.userId = payload.subject;
   next()
 }
 // Authenticate
 
-router.post('/sign-in', (req, res, next) => {
-    const username = req.body.email;
+router.post('/login', (req, res, next) => {
+    const emailOrUsername = req.body.email;
     const password = req.body.password;
-      User.getUserByUsername(username, (err, user) => {
+
+    // get user by email
+    if (emailOrUsername.contains('@')) {
+      User.getUserByEmail(emailOrUsername, (err, user) => {
         if(err) throw err;
         if(!user) {
           return res.json({success: false, errMSG: 'User not found'});
@@ -81,11 +83,7 @@ router.post('/sign-in', (req, res, next) => {
                 name: user.name,
                 username: user.username,
                 email: user.email,
-                image:user.image,
-                // friends:user.friends,
-                // holdFriendRequest:user.holdFriendRequest,
-                // friendRequest:user.friendRequest
-
+                image:user.image
               }// end user
             }) // end res.json
           } else {
@@ -93,25 +91,58 @@ router.post('/sign-in', (req, res, next) => {
           }// end else
         }); // end User.comparePassword
       }); // end User.getUserByUsername
+    }else{
+      // get user by user name
+      User.getUserByUsername(emailOrUsername, (err, user) => {
+        if(err) throw err;
+        if(!user) {
+          return res.json({success: false, errMSG: 'User not found'});
+        }
+        User.comparePassword(password, user.password, (err, isMatch) => {
+          if(err) {
+          return  res.json({success: false, errMSG: 'somthig wrong  plz try agean later'})
+          }
+          if(isMatch) {
+            const token = jwt.sign({data: user}, config.secret, {
+              expiresIn: 604800 // 1 week
+            });
+            res.json({
+              success: true,
+              token: 'JWT '+ token,
+              user: {
+                _id: user._id,
+                name: user.name,
+                username: user.username,
+                email: user.email,
+                image:user.image
+              }// end user
+            }) // end res.json
+          } else {
+            return res.json({success: false, errMSG: 'Wrong password'});
+          }// end else
+        }); // end User.comparePassword
+      }); // end User.getUserByUsername
+    } // get user by user name
+
   }); 
 
 // registry  
-router.post('/sign-up', (req, res, next)=>{
+router.post('/rigster', (req, res, next)=>{
   upload(req, res, (err) => {
     if(err)  {
       return  res.json({success:false, errMSG: err.message});
     } else{
-      let username = req.body.username;
-      let password = req.body.password;
-      let email    = req.body.email;
-      let image    = req.file.filename;
-      let newUser  = new User({
-          username:username,
-          password:password,
-          email:email,
-          image:image,
-      });
-      User.findOne({"email":req.body.email}, (err, user)=>{
+       var  username = req.body.username,
+            password = req.body.password,
+            email    = req.body.email,
+            image    = req.file.filename,
+            newUser  = new User({
+            username:username,
+            password:password,
+            email:email,
+            image:image,
+        });
+      User.findOne({"email":email}, (err, user)=>{
         if (err) {
           res.json({success: false, errMSG:err.message})
         }
@@ -119,23 +150,34 @@ router.post('/sign-up', (req, res, next)=>{
           res.json({success: false, errMSG:'email is alredy taken'})
         }
         if(!user){
-          User.addUser(newUser, (err)=>{
+          User.findOne({"username":username}, (err, user)=>{
             if (err) {
-                res.json({errMSG:err.message})
+              res.json({success: false, errMSG:err.message})
             }
-            res.json({success: true, MSG:'now you can login'})
-        })
-        }
-      })
-      
-      }
-    });
+            if(user){
+              res.json({success: false, errMSG:'username is alredy taken'})
+            }
+            if(!user){
+              User.addUser(newUser, (err)=>{
+                if (err) {
+                    res.json({errMSG:err.message})
+                }else{
+                  res.json({success: true, MSG:'now you can login'})
+                }
+              }) // User addUser
+            }// if
+          }) //User findOne
+        } // if ! user
+      }) //user find one
+      } //else
+    }) // upload
   })// end user post
 
 // profile
 router.get('/profile', passport.authenticate('jwt', {session:false}), (req, res, next) => {
     res.json({user: req.user});
 });// profile
+
 // find users by id
 router.get('/:id', (req, res, next)=>{
   var id = req.params.id;
@@ -167,8 +209,7 @@ router.get('/:id', (req, res, next)=>{
             return item.username.toLocaleLowerCase().includes(username)
           })
           res.json({success:true, allUsers:allUsers})
-
-      }
+      }// else
     })
   })// find all users by user name
 
@@ -185,19 +226,19 @@ router.get('/:id', (req, res, next)=>{
             if (user._id == id) {
               users.splice(i, 1)
               break;
-            }
-          }
+            }// if
+          }// for
           var u = [] = users.filter(item=>{
             return item.username.toLocaleLowerCase().includes(username)
-          })
+          }) // filter
           let users_5 = [] = u.slice(0, 10);
           if (users_5.length >= 1) {
             res.json({success:true, users:users_5})
           }else{
             res.json({success:true, users:false})
           }
-      }
-    })
+      }// else
+    }) // users find
   })// find users by user name
 
 // handel find users by user name
@@ -214,54 +255,54 @@ router.get('/find', (req, res, next)=>{
 
 // send friend request to user
 router.post('/:id/addToFriends', (req, res, next)=>{
-  var userId = req.params.id,
-      friendReq = req.body.freindRequest;
+  var userId   = req.params.id,
+      friendId = req.body.freindRequest;
   User.find({}, (err, users)=>{
     if (err) {
       res.json({success:false, errMSG:err.message})
     }else{
-            var user_id     = users.find((user)=>{return user._id == userId})
-            var user_req_id = users.find((user)=>{return user._id == friendReq})
-            if (user_id) {
-              var friendRequest = [] = user_id.friendRequest;
-              var v = friendRequest.find((item)=>{return item === friendReq})
-              if (!v) {
-                user_id.friendRequest.push(friendReq)
-                user_id.save((err)=>{
-                  if (err) {
-                    res.json({success:false, errMSG:err.message})
-                  }else{
-                    if(user_req_id){
-                      var holdFriendRequest = [] = user_req_id.holdFriendRequest;
-                      var x = holdFriendRequest.find((item)=>{return item === userId})
-                      if(!x){
-                        user_req_id.holdFriendRequest.push(userId)
-                        user_req_id.save((err)=>{
-                          if (err) {
-                            res.json({success:false, errMSG:err.message})
-                          }else{
-                            res.json({success:true, MSG:"request sended"})
-                          }
-                        })
-                      }
-                      if (x) {
-                        res.json({success:true, MSG:"this request is sended befor"})
-                      }
+      var user     = users.find((user)=>{return user._id == userId})
+      var friend = users.find((user)=>{return user._id == friendId})
+      if (user) {
+        var friendRequest = [] = user.friendRequest;
+        var allReadyFriend = friendRequest.find((item)=>{return item === friendId})
+        if (!allReadyFriend) {
+          user.friendRequest.push(friendId)
+          user.save((err)=>{
+            if (err) {
+              res.json({success:false, errMSG:err.message})
+            }else{
+              if(friend){
+                var holdFriendRequest = [] = friend.holdFriendRequest;
+                var allReadyUser = holdFriendRequest.find((item)=>{return item === userId})
+                if(!allReadyUser){
+                  friend.holdFriendRequest.push(userId)
+                  friend.save((err)=>{
+                    if (err) {
+                      res.json({success:false, errMSG:err.message})
+                    }else{
+                      res.json({success:true, MSG:"request sended"})
                     }
-                  }
-                })
-              }
-              if (v) {
-                res.json({success:true, MSG:"this request is sended befor"})
-              }
-            } 
-    }
-  })
+                  }) //friend save
+                } // if ! all Ready User
+                if (allReadyUser) {
+                  res.json({success:true, MSG:"this request is sended befor"})
+                }
+              } // if
+            } // else
+          }) //user save
+        } // if
+        if (allReadyFriend) {
+          res.json({success:true, MSG:"this request is sended befor"})
+        }
+      } // if user
+    }// else
+  })// find
 })
 
 // find users by id and remove from friends
 router.get('/find/:userId/:friendId/unfriend', (req, res, next)=>{
-  var userId = req.params.userId;
+  var userId   = req.params.userId;
   var friendId = req.params.friendId;
   User.find({}, (err, users)=>{
     if (err) {
@@ -290,22 +331,21 @@ router.get('/find/:userId/:friendId/unfriend', (req, res, next)=>{
                                 res.json({success:false, errMSG:err.message})
                               }else{
                                 res.json({success:true, MSG:'saved'})
-                              }// end els
-                            })// end save friend
-                          }// end if
-                        })// end for each
-                      }// end if friend id
-                    }// en for 
-                  }// end else save user
-                })// end save user
-              }// end if
-            })// end foreach user friends
-          }// end if
-        }// end for
-    }// end else
-  })// end find
+                              }//  els
+                            })// save friend
+                          }//  if
+                        })//for each
+                      }// if friend id
+                    }// for 
+                  }// else save user
+                })//  user save
+              }//  if
+            })//   user Friends forEach
+          }//  if
+        }//  for
+    }//  else
+  })// find
 })// find users by id and remove from friends
-
 
 // get all friends request
 router.get('/:id/friendsRequst', (req, res, next)=>{
@@ -326,9 +366,9 @@ router.get('/:id/friendsRequst', (req, res, next)=>{
                   o.push(friend)
                   o.forEach((item)=>{
                       users.forEach((o)=>{
-                          if (o._id == item) {
-                              t.push(o)
-                          }
+                        if (o._id == item) {
+                            t.push(o)
+                        }
                       })
                   })
               })
