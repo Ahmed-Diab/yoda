@@ -2,19 +2,21 @@ const mongoose = require('mongoose');
 const comment = require('./comment')
 const postSchema = mongoose.Schema({
     userId:{
-        type:String
+        type:String,
+        required:[true ,'plz fill all fildes']
+
     },
     username:{
         type:String,
-        require:true
+        required:[true ,'plz fill all fildes']
     },
     userImage:{
         type:String,
-        require:true 
+        required:[true ,'plz fill all fildes']
     },
     body:{
         type:String,
-        require:true 
+        required:[true ,'plz fill all fildes']
 
     },
     createdAt:{

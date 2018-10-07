@@ -6,25 +6,30 @@ const jwt = require('jsonwebtoken');
 var newUser = mongoose.Schema({
     username:{
         type:String,
-        required:true
+        required:[true ,'plz fill all fildes']
     },
     image:{
       type:String,
-      require:true
+      required:[true ,'plz fill all fildes']
     },
     password:{
         type:String,
-        required:true
+        required:[true ,'plz fill all fildes']
     },
     email:{
         type:String,
-        required:true
+        required:[true ,'plz fill all fildes']
     },
     friends:{
       type:Array
     },
     holdFriendRequest:{
       type:Array
+    },
+    dateOfBirth:{
+      type:Date,
+      required:[true ,'plz fill all filde']
+
     },
     friendRequest:{
       type:Array

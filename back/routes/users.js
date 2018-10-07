@@ -11,17 +11,18 @@ const path = require('path');
 // start path to save images & rename images
 const storage = multer.diskStorage({
   destination: function (req, file, callback) {
-      callback(null, 'public/users-mages/')
+      callback(null, 'user-images/')
   },
   filename: function(req, file, cd){
-      cd(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+    let username = req.body.username
+      cd(null, username.replace(/\s+/g,"-") + "-" + Date.now() + path.extname(file.originalname));
   }
 })// end path to save images & rename images
 
 // start handel multer file size and use check file type fun
 const upload = multer({
    storage:storage,
-   limits: {fileSize: 100000,},
+   limits: {fileSize: 10000000,},
    fileFilter: function(req, file, cb){
      checkFileType(file, cb);
    }
@@ -36,6 +37,7 @@ function checkFileType(file, cb) {
     return cb(null, true);
   } else{
     cb('Error: must be image');
+
   }
 } // end check file type 
 // to varfay user
@@ -57,15 +59,14 @@ function verifyToken(req, res, next) {
 // Authenticate
 
 router.post('/login', (req, res, next) => {
-    const emailOrUsername = req.body.email;
+    const user = req.body.user;
     const password = req.body.password;
-
-    // get user by email
-    if (emailOrUsername.contains('@')) {
-      User.getUserByEmail(emailOrUsername, (err, user) => {
+    if (user.includes('@')) {
+      console.log(user)
+      User.getUserByEmail(user, (err, user) => {
         if(err) throw err;
         if(!user) {
-          return res.json({success: false, errMSG: 'User not found'});
+          return res.json({success: false, errMSG: 'Email not found'});
         }
         User.comparePassword(password, user.password, (err, isMatch) => {
           if(err) {
@@ -92,8 +93,8 @@ router.post('/login', (req, res, next) => {
         }); // end User.comparePassword
       }); // end User.getUserByUsername
     }else{
-      // get user by user name
-      User.getUserByUsername(emailOrUsername, (err, user) => {
+      console.log(user + 'username')
+      User.getUserByUsername(user, (err, user) => {
         if(err) throw err;
         if(!user) {
           return res.json({success: false, errMSG: 'User not found'});
@@ -127,45 +128,50 @@ router.post('/login', (req, res, next) => {
   }); 
 
 // registry  
-router.post('/rigster', (req, res, next)=>{
+router.post('/register', (req, res, next)=>{
   upload(req, res, (err) => {
-    if(err)  {
+    if(err instanceof multer.MulterError)  {
       return  res.json({success:false, errMSG: err.message});
     } else{
-       var  username = req.body.username,
-            password = req.body.password,
-            email    = req.body.email,
-            image    = req.file.filename,
-            newUser  = new User({
-            username:username,
-            password:password,
-            email:email,
-            image:image,
+       var  password    = req.body.password,
+            email       = req.body.email,
+            image       = req.file.filename,
+            dateOfBirth = req.body.dateOfBirth,
+            username    = req.body.username,
+            newUser     = new User({
+            username    :username,
+            password    :password,
+            email       :email,
+            image       :image,
+            dateOfBirth :dateOfBirth
         });
       User.findOne({"email":email}, (err, user)=>{
         if (err) {
           res.json({success: false, errMSG:err.message})
         }
         if(user){
-          res.json({success: false, errMSG:'email is alredy taken'})
+          res.json({success: false, errMSG:'this email is alredy taken'});
+          return false;
         }
         if(!user){
-          User.findOne({"username":username}, (err, user)=>{
+          User.findOne({"username":req.body.username}, (err, user)=>{
             if (err) {
               res.json({success: false, errMSG:err.message})
             }
             if(user){
-              res.json({success: false, errMSG:'username is alredy taken'})
+              res.json({success: false, errMSG:'this username is alredy taken'})
             }
             if(!user){
               User.addUser(newUser, (err)=>{
                 if (err) {
                     res.json({errMSG:err.message})
                 }else{
+                  console.log(req.body)
+                  console.log(req.file)
                   res.json({success: true, MSG:'now you can login'})
                 }
               }) // User addUser
-            }// if
+            }
           }) //User findOne
         } // if ! user
       }) //user find one

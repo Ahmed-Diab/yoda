@@ -17,38 +17,38 @@ app.set('port', port);
  */
 
 // socket io connect
-io.on("connection", (socket)=>{
-  // listin to emit
-  socket.on('join', function(data){
-    socket.join(data.room);
-    // send message to room if another user connect using emit
-    socket.broadcast.to(data.room).emit('new user joined', {username:data.username, message:'has joined to this room'})
-  })
-  // listen to emit
-  socket.on('leave', function(data){
-    // send message to room if another user connect using emit
-    socket.broadcast.to(data.room).emit('user left', { username:data.username, message:'has left to this room'})
-    socket.leave(data.room);
-  })
-  // listen to emit
-  socket.on('message', function(data){
-    const newMessage = new Message({
-      username:data.username,
-      message:data.message,
-      chatRoom:data.room
-  });
-  Message.create(newMessage, (err)=>{
-    if (err) {
-        console.log(err.message)
-    }else{
-      io.in(data.room).emit('new message', { username:data.username, message:data.message})
-    }
-})
-// socket.message(data)
+// io.on("connection", (socket)=>{
+//   // listin to emit
+//   socket.on('join', function(data){
+//     socket.join(data.room);
+//     // send message to room if another user connect using emit
+//     socket.broadcast.to(data.room).emit('new user joined', {username:data.username, message:'has joined to this room'})
+//   })
+//   // listen to emit
+//   socket.on('leave', function(data){
+//     // send message to room if another user connect using emit
+//     socket.broadcast.to(data.room).emit('user left', { username:data.username, message:'has left to this room'})
+//     socket.leave(data.room);
+//   })
+//   // listen to emit
+//   socket.on('message', function(data){
+//     const newMessage = new Message({
+//       username:data.username,
+//       message:data.message,
+//       chatRoom:data.room
+//   });
+//   Message.create(newMessage, (err)=>{
+//     if (err) {
+//         console.log(err.message)
+//     }else{
+//       io.in(data.room).emit('new message', { username:data.username, message:data.message})
+//     }
+// })
+// // socket.message(data)
 
-    // send message to room if another user connect using emit
-  })
-})
+//     // send message to room if another user connect using emit
+//   })
+// })
 
 
 
@@ -119,3 +119,9 @@ function onListening() {
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
 }
+
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+ next();
+});

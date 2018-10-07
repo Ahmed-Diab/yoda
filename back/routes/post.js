@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 const Post = require('../modules/post')
 const User = require('../modules/users')
+const jwt = require('jsonwebtoken');
+const passport = require('passport');
+
 router.get('/:userId', function(req, res, next) {
     var userId = req.params.userId;
     Post.find({"userId":userId}, (err, posts)=>{
@@ -12,7 +15,6 @@ router.get('/:userId', function(req, res, next) {
         }
     })// end find
 })// get user posts
-
 // get user dashbord posts
 router.get('/:userId/user', function(req, res, next) {
     var userId = req.params.userId;
@@ -27,27 +29,30 @@ router.get('/:userId/user', function(req, res, next) {
                         res.json({success:false, errMSG:err.message})
                     }else{
                         for (const x of posts) {
-                           if (x.userId === userId) {
-                            var allComments = [] = x.comments
-                            var z           = allComments.slice(-1)
-                            var l           = {
-                                body          :x.body,
-                                _id           :x._id,
-                                userId        :x.userId,
-                                username      :x.username,
-                                userId        :x.userId,
-                                userImage     :x.userImage,
-                                createdAt     :x.createdAt,
-                                comments      :z,
-                                commentsLength:allComments.length
+                            if (x.comment) {
+                                if (x.userId === userId) {
+                                    var allComments = [] = x.comment
+                                    var z           = allComments.slice(-1)
+                                    var l           = {
+                                        body          :x.body,
+                                        _id           :x._id,
+                                        userId        :x.userId,
+                                        username      :x.username,
+                                        userId        :x.userId,
+                                        userImage     :x.userImage,
+                                        createdAt     :x.createdAt,
+                                        comment      :z,
+                                        commentsLength:allComments.length
+                                    }
+                                    arrPosts.push(l);
+                                   }
                             }
-                            arrPosts.push(l);
-                           }
+
                         }
                         for (const post of posts) {
                             for (const i of friends) {
                                 if (post.userId === i) {
-                                    var allComments = [] = post.comments
+                                    var allComments = [] = post.comment
                                     var z = allComments.slice(-1)
                                     var l = {
                                         _id           :post._id,
@@ -57,7 +62,7 @@ router.get('/:userId/user', function(req, res, next) {
                                         userImage     :post.userImage,
                                         body          :post.body,
                                         createdAt     :post.createdAt,
-                                        comments      :z,
+                                        comment      :z,
                                         commentsLength:allComments.length
                                     }
                                     arrPosts.push(l);
@@ -74,7 +79,7 @@ router.get('/:userId/user', function(req, res, next) {
 router.post('/addText', (req, res, next)=>{
     const   userId    = req.body.userId,
             username  = req.body.username,
-            userImage = req.body.image,
+            userImage = req.body.userImage,
             body      = req.body.body,
             newPost   = Post({
                 body     :body,
@@ -127,7 +132,7 @@ router.post('/:id/comment', (req, res, next)=>{
         userId    = req.body.userId,
         userImage = req.body.image;
     Post.findByIdAndUpdate(quaryId, {
-        $push:{"comments":{
+        $push:{"comment":{
             userId   :userId, body:body, 
             postId   :quaryId, 
             username :username, 
@@ -137,7 +142,7 @@ router.post('/:id/comment', (req, res, next)=>{
         if (err) {
             res.json({success:false, errMSG:err.message})
         }else{
-            res.json({success:true, comments:post.comments})
+            res.json({success:true, comment:post.comment})
         }
     })
 })// post comment
@@ -151,7 +156,7 @@ router.post('/:postId/:commentId/comment/edit', (req, res, next)=>{
         if (err) {
             res.json({success:false, errMSG:err.message})
         }else{
-            post.comments.forEach(comment => {
+            post.comment.forEach(comment => {
                 if (comment._id == commentId) {
                     comment.body      = body,
                     comment.updatedAt = Date.now();
@@ -163,7 +168,7 @@ router.post('/:postId/:commentId/comment/edit', (req, res, next)=>{
                         }
                     }) // post save
                 } //if
-            }) // post comments
+            }) // post comment
         } //else
     }) //find
 })// edit comment
@@ -176,7 +181,7 @@ router.get('/:postId/:commentId/comment/remove', (req, res, next)=>{
         if (err) {
             res.json({success:false, errMSG:err.message})
         }else{
-            post.comments.forEach(comment => {
+            post.comment.forEach(comment => {
                 if (comment._id == commentId) {
                     comment.remove();
                     post.save((err)=>{
@@ -199,17 +204,17 @@ router.post('/:id/:comentID/replay', (req, res, next)=>{
         username  = req.body.username,
         userId    = req.body.userId,
         body      = req.body.body;
-        image     = req.body.image;
+        userImage     = req.body.userImage;
     Post.findById(quary, (err, post)=>{
         if (err) {
             res.json({success:false, errMSG:err.message})
         }else{
-            post.comments.forEach(comment => {
+            post.comment.forEach(comment => {
                 if (comment._id == commentID) {
-                    comment.replayComment.push({
+                    comment.replay.push({
                         body     :body,
                         username :username,
-                        userImage:image,
+                        userImage:userImage,
                         userId   :userId,
                         createdAt:Date.now()
                     })
@@ -221,7 +226,7 @@ router.post('/:id/:comentID/replay', (req, res, next)=>{
                         }
                     }) // post save
                 } // if
-            }) // post comments forEach
+            }) // post comment forEach
         }// else
     }) //find
 })// post replay
@@ -236,9 +241,9 @@ router.post('/:postId/:comentId/:replayId/replay/edit', (req, res, next)=>{
         if (err) {
             res.json({success:false, errMSG:err.message})
         }else{
-            post.comments.forEach(comment => {
+            post.comment.forEach(comment => {
                 if (comment._id == commentId) {
-                    comment.replayComment.forEach(replay => {
+                    comment.replay.forEach(replay => {
                         if (replay._id == replayId) {
                             replay.body = body,
                             replay.updatedAt = Date.now();
@@ -266,9 +271,9 @@ router.get('/:postId/:commentId/:replayId/replay/remove', (req, res, next)=>{
         if (err) {
             res.json({success:false, errMSG:err.message})
         }else{
-            post.comments.forEach(comment => {
+            post.comment.forEach(comment => {
                 if (comment._id == commentId) {
-                    comment.replayComment.forEach((replay)=>{
+                    comment.replay.forEach((replay)=>{
                         if (replay._id == replayId) {
                             replay.remove();
                             post.save((err)=>{
@@ -281,7 +286,7 @@ router.get('/:postId/:commentId/:replayId/replay/remove', (req, res, next)=>{
                         } // if
                     }) // comment replayComment forEach
                 }//  if
-            }) // post comments forEach
+            }) // post comment forEach
         } // else 
     }) //post fing by id
 })// remove replay
@@ -291,7 +296,7 @@ router.get('/:id/all/comment', (req, res, next)=>{
         if (err) {
             res.json({success:false, errMSG:err.message})
         }else{
-            var t = post.comments
+            var t = post.comment
             res.json({success:true, comment:t})
         }
     })
