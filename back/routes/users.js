@@ -41,28 +41,12 @@ function checkFileType(file, cb) {
   }
 } // end check file type 
 // to varfay user
-function verifyToken(req, res, next) {
-  if(!req.headers.authorization) {
-    return res.status(401).send('Unauthorized request')
-  }
-  let token = req.headers.authorization.split(' ')[1]
-  if(token === 'null') {
-    return res.status(401).send('Unauthorized request')    
-  }
-  let payload = jwt.verify(token, 'secretKey')
-  if(!payload) {
-    return res.status(401).send('Unauthorized request')    
-  }
-  req.userId = payload.subject;
-  next()
-}
-// Authenticate
+
 
 router.post('/login', (req, res, next) => {
     const user = req.body.user;
     const password = req.body.password;
     if (user.includes('@')) {
-      console.log(user)
       User.getUserByEmail(user, (err, user) => {
         if(err) throw err;
         if(!user) {
@@ -93,7 +77,6 @@ router.post('/login', (req, res, next) => {
         }); // end User.comparePassword
       }); // end User.getUserByUsername
     }else{
-      console.log(user + 'username')
       User.getUserByUsername(user, (err, user) => {
         if(err) throw err;
         if(!user) {
@@ -166,8 +149,6 @@ router.post('/register', (req, res, next)=>{
                 if (err) {
                     res.json({errMSG:err.message})
                 }else{
-                  console.log(req.body)
-                  console.log(req.file)
                   res.json({success: true, MSG:'now you can login'})
                 }
               }) // User addUser
@@ -191,7 +172,19 @@ router.get('/:id', (req, res, next)=>{
     if (err) {
       res.json({success:false, errMSG:err.message})
     }else{
-        res.json({success:true, user:user})
+        let data = {
+          createdAt                : user.createdAt,
+          dateOfBirth              : user.dateOfBirth,
+          email                    : user.email,
+          friends                  : user.friends,
+          image                    : user.image,
+          username                 : user.username,
+          _id                      : user._id,
+          holdAcceptFriendRequest  : user.holdAcceptFriendRequest,
+          friendRequest            : user.friendRequest
+
+        }
+        res.json({success:true, user:data})
       }
   })
 })// find by id 
@@ -279,10 +272,10 @@ router.post('/:id/addToFriends', (req, res, next)=>{
               res.json({success:false, errMSG:err.message})
             }else{
               if(friend){
-                var holdFriendRequest = [] = friend.holdFriendRequest;
-                var allReadyUser = holdFriendRequest.find((item)=>{return item === userId})
+                var holdAcceptFriendRequest = [] = friend.holdAcceptFriendRequest;
+                var allReadyUser = holdAcceptFriendRequest.find((item)=>{return item === userId})
                 if(!allReadyUser){
-                  friend.holdFriendRequest.push(userId)
+                  friend.holdAcceptFriendRequest.push(userId)
                   friend.save((err)=>{
                     if (err) {
                       res.json({success:false, errMSG:err.message})
@@ -387,7 +380,7 @@ router.get('/:id/friendsRequst', (req, res, next)=>{
 })// get all friends request
 
 // cansle friends request
-router.get('/:userId/:friendId/canselFriendRequst', (req, res, next)=>{
+router.get('/:userId/:friendId/ignnorFriendRequst', (req, res, next)=>{
   var userId = req.params.userId,
   friendId = req.params.friendId;
 User.find({}, (err, users)=>{
@@ -412,22 +405,24 @@ if (err) {
           }else{
             let friend = users.find((friend)=>{return friend._id == friendId});
             if (friend) {
-              let friendHoldFriendRequest = [] = friend.holdFriendRequest;
-              friendHoldFriendRequest.forEach((id)=>{
-                for (let i = 0; i < friendHoldFriendRequest.length; i++) {
-                  const e = friendHoldFriendRequest[i]
-                  if(e === userId){
-                    friendHoldFriendRequest.splice(i, 1);
-                    break;
-                  }// end if
-              } // end for
-              friend.save((err)=>{
-                if (err) {
-                  res.json({success:false, errMSG:err.message})
-                }else{
-                  res.json({success:true, MSG:'canceld'})
-                }// end else
-              })// end save friend
+              let friendHoldAcceptFriendRequest = [] = friend.holdAcceptFriendRequest;
+              friendHoldAcceptFriendRequest.forEach((id)=>{
+                  if (id == userId) {
+                  for (let i = 0; i < friendHoldAcceptFriendRequest.length; i++) {
+                    const e = friendHoldAcceptFriendRequest[i]
+                    if(e === userId){
+                      friendHoldAcceptFriendRequest.splice(i, 1);
+                      break;
+                    }// end if
+                } // end for
+                friend.save((err)=>{
+                  if (err) {
+                    res.json({success:false, errMSG:err.message})
+                  }else{
+                    res.json({success:true, MSG:'canceld'})
+                  }// end else
+                })// end save friend
+              }
               }) // end for each
             } // end if-frind
           } // end else
@@ -449,13 +444,13 @@ router.get('/:userId/:friendId/canselRequstFromSender', (req, res, next)=>{
     }else{
       let user = users.find((user)=>{return user._id == userId});
       if (user) {
-        let userHoldFriendRequest = [] = user.holdFriendRequest;
-        userHoldFriendRequest.forEach((id)=>{
+        let userHoldAcceptFriendRequest = [] = user.holdAcceptFriendRequest;
+        userHoldAcceptFriendRequest.forEach((id)=>{
           if (id == friendId) {
-            for (let i = 0; i < userHoldFriendRequest.length; i++) {
-              const e = userHoldFriendRequest[i]
+            for (let i = 0; i < userHoldAcceptFriendRequest.length; i++) {
+              const e = userHoldAcceptFriendRequest[i]
               if(e === friendId){
-                userHoldFriendRequest.splice(i, 1);
+                userHoldAcceptFriendRequest.splice(i, 1);
                   break;
                 }// end if
           } // end for 
@@ -503,14 +498,14 @@ router.get('/:id/:reqId/acceptFriendRequst', (req, res, next)=>{
         users.forEach((user)=>{
           if(user._id == reqId){
             var friendsId = [] = user.friends;
-            var holdFriendRequest = [] = user.holdFriendRequest;
+            var holdAcceptFriendRequest = [] = user.holdAcceptFriendRequest;
             friendsId.push(id);
-              holdFriendRequest.forEach((item)=>{
+              holdAcceptFriendRequest.forEach((item)=>{
                 if (item == id) {
-                  for (let i = 0; i < holdFriendRequest.length; i++) {
-                    const e = holdFriendRequest[i]
+                  for (let i = 0; i < holdAcceptFriendRequest.length; i++) {
+                    const e = holdAcceptFriendRequest[i]
                     if(e === id){
-                      holdFriendRequest.splice(i, 1);
+                      holdAcceptFriendRequest.splice(i, 1);
                         break;
                         }// end if
                     } // end for 

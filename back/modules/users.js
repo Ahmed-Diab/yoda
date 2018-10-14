@@ -1,10 +1,23 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
-const passport = require('passport');
-const jwt = require('jsonwebtoken');
+
+const notifications =  mongoose.Schema({
+  username:{ 
+    type:String,
+    required:[true ,'plz fill all fildes']
+  },
+  userImage:{
+    type:String,
+    required:[true ,'plz fill all fildes']
+  },
+  body:{
+    type:String,
+    required:[true ,'plz fill all fildes']
+  }
+})
 
 var newUser = mongoose.Schema({
-    username:{
+    username:{ 
         type:String,
         required:[true ,'plz fill all fildes']
     },
@@ -20,16 +33,15 @@ var newUser = mongoose.Schema({
         type:String,
         required:[true ,'plz fill all fildes']
     },
-    friends:{
-      type:Array
-    },
-    holdFriendRequest:{
-      type:Array
-    },
     dateOfBirth:{
       type:Date,
       required:[true ,'plz fill all filde']
-
+    },
+    friends:{
+      type:Array
+    },
+    holdAcceptFriendRequest:{
+      type:Array
     },
     friendRequest:{
       type:Array
@@ -37,7 +49,8 @@ var newUser = mongoose.Schema({
     createdAt: { 
       type: Date, 
       default: Date.now
-     }
+     },
+     notifications:[notifications]
 });
 
 const User = module.exports = mongoose.model('User', newUser);

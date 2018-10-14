@@ -10,47 +10,81 @@ const http = require('http');
 const server = http.createServer(app);
 const io = require('socket.io').listen(server);
 const port = normalizePort(process.env.PORT || '3000');
-app.set('port', port);
+const Posts = require('../modules/post');
+const User = require('../modules/users');
+const Post = require('../modules/post');
 
-/**
- * Create HTTP server.
- */
+app.set('port', port);
 
 // socket io connect
 // io.on("connection", (socket)=>{
+//   console.log('connct')
 //   // listin to emit
 //   socket.on('join', function(data){
-//     socket.join(data.room);
-//     // send message to room if another user connect using emit
-//     socket.broadcast.to(data.room).emit('new user joined', {username:data.username, message:'has joined to this room'})
+//     User.find({}, (err, users)=>{
+//       if (err) {
+//         console.log(err)
+//       }else{
+//         userFriends = [];
+//         for (const user of users) {
+//           if (user._id == data.userId) {
+//             user.friends.forEach((id)=>{
+//           //  socket.join(data.userId);   
+//           io.broadcast.emit('new message', { username:data.username, body:data.username + 'have been add new post'})
+ 
+//             })
+//       }
+//       }
+//     }
 //   })
+// })
 //   // listen to emit
-//   socket.on('leave', function(data){
-//     // send message to room if another user connect using emit
-//     socket.broadcast.to(data.room).emit('user left', { username:data.username, message:'has left to this room'})
-//     socket.leave(data.room);
-//   })
+//   // socket.on('leave', function(data){
+//   //   // send message to room if another user connect using emit
+//   //   socket.broadcast.to(data.room).emit('user left', { username:data.username, message:'has left to this room'})
+//   //   socket.leave(data.room);
+//   // })
 //   // listen to emit
 //   socket.on('message', function(data){
-//     const newMessage = new Message({
-//       username:data.username,
-//       message:data.message,
-//       chatRoom:data.room
-//   });
-//   Message.create(newMessage, (err)=>{
-//     if (err) {
-//         console.log(err.message)
-//     }else{
-//       io.in(data.room).emit('new message', { username:data.username, message:data.message})
-//     }
+//     User.find({}, (err, users)=>{
+//       if (err) {
+//         console.log(err)
+//       }else{
+//         userFriends = [];
+//         for (const user of users) {
+//           if (user._id == data.userId) {
+//             user.friends.forEach(id => {
+//               userFriends.push(id)
+//             });
+//           }
+//         }
+//         userFriends.forEach((id)=>{
+//           User.findById(id, (err, friend)=>{
+//             if (err) {
+//               console.log(err)
+//             }else{
+//               friend.notifications.push({
+//                 username :data.username,
+//                 userImage:data.userImage,
+//                 body     :data.username + ' have been add new post'
+//               })
+//               friend.save((err)=>{
+//                 if(err){
+//                   console.log(err)
+//                 }else{
+//                   io.broadcast.emit('new message', { username:data.username, body:data.username + 'have been add new post'})
+//                 }
+//               });
+//             }
+//           })
+//           // socket.broadcast.to(data.room).emit('new user joined', {username:data.username, message:'has joined to this room'})
+//         })
+//       }
+//     })
+//     // socket.broadcast.to(data.userId).emit('new user joined', {username:data.username, message:'has joined to this room'})
+
+// })// end connction
 // })
-// // socket.message(data)
-
-//     // send message to room if another user connect using emit
-//   })
-// })
-
-
 
 /**
  * Listen on provided port, on all network interfaces.
@@ -124,4 +158,4 @@ app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
  next();
-});
+})

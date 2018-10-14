@@ -2,9 +2,6 @@ const express = require('express');
 const router = express.Router();
 const Post = require('../modules/post')
 const User = require('../modules/users')
-const jwt = require('jsonwebtoken');
-const passport = require('passport');
-
 router.get('/:userId', function(req, res, next) {
     var userId = req.params.userId;
     Post.find({"userId":userId}, (err, posts)=>{
@@ -15,6 +12,8 @@ router.get('/:userId', function(req, res, next) {
         }
     })// end find
 })// get user posts
+
+
 // get user dashbord posts
 router.get('/:userId/user', function(req, res, next) {
     var userId = req.params.userId;
@@ -88,11 +87,37 @@ router.post('/addText', (req, res, next)=>{
                 userImage:userImage,
                 createdAt:Date.now()
             })
-    Post.create(newPost, (err)=>{
+    Post.create(newPost, (err, post)=>{
         if (err) {
             res.json({success:false, errMSG:err.message})
         }else{
             res.json({success:true, MSG:'posted'})
+
+            // User.find({}, (err, users)=>{
+            //     if (err) {
+            //         res.json({success:false, errMSG:err.message})
+            //     }else{
+            //         let user = users.find((user)=>{return user._id == userId})
+
+            //         for (const id of user.friends) {
+            //             let friend = users.find((friend)=>{ return friend._id == id; })
+            //             let notifications = {
+            //                 username:username,
+            //                 userImage:userImage,
+            //                 body:username + 'have been add new post'
+            //             }
+            //             friend.notifications.push(notifications)
+            //             friend.save(err=>{
+            //                 if(err){
+            //                     res.json({success:false, errMSG:err.message})
+            //                 }else{
+            //                     res.json({success:true, MSG:'posted'})
+            //                 }
+            //             })
+            //         }
+
+            //     }
+            // })
         }
     })
 })// add post
