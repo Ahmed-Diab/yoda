@@ -182,7 +182,6 @@ router.get('/:id', (req, res, next)=>{
           _id                      : user._id,
           holdAcceptFriendRequest  : user.holdAcceptFriendRequest,
           friendRequest            : user.friendRequest
-
         }
         res.json({success:true, user:data})
       }
@@ -253,51 +252,51 @@ router.get('/find', (req, res, next)=>{
 })// handel find users by user name
 
 // send friend request to user
-router.post('/:id/addToFriends', (req, res, next)=>{
-  var userId   = req.params.id,
-      friendId = req.body.freindRequest;
-  User.find({}, (err, users)=>{
-    if (err) {
-      res.json({success:false, errMSG:err.message})
-    }else{
-      var user     = users.find((user)=>{return user._id == userId})
-      var friend = users.find((user)=>{return user._id == friendId})
-      if (user) {
-        var friendRequest = [] = user.friendRequest;
-        var allReadyFriend = friendRequest.find((item)=>{return item === friendId})
-        if (!allReadyFriend) {
-          user.friendRequest.push(friendId)
-          user.save((err)=>{
-            if (err) {
-              res.json({success:false, errMSG:err.message})
-            }else{
-              if(friend){
-                var holdAcceptFriendRequest = [] = friend.holdAcceptFriendRequest;
-                var allReadyUser = holdAcceptFriendRequest.find((item)=>{return item === userId})
-                if(!allReadyUser){
-                  friend.holdAcceptFriendRequest.push(userId)
-                  friend.save((err)=>{
-                    if (err) {
-                      res.json({success:false, errMSG:err.message})
-                    }else{
-                      res.json({success:true, MSG:"request sended"})
-                    }
-                  }) //friend save
-                } // if ! all Ready User
-                if (allReadyUser) {
-                  res.json({success:true, MSG:"this request is sended befor"})
-                }
-              } // if
-            } // else
-          }) //user save
-        } // if
-        if (allReadyFriend) {
-          res.json({success:true, MSG:"this request is sended befor"})
-        }
-      } // if user
-    }// else
-  })// find
-})
+// router.post('/:id/addToFriends', (req, res, next)=>{
+  // var userId   = req.params.id,
+  //     friendId = req.body.freindRequest;
+  // User.find({}, (err, users)=>{
+  //   if (err) {
+  //     res.json({success:false, errMSG:err.message})
+  //   }else{
+  //     var user     = users.find((user)=>{return user._id == userId})
+  //     var friend = users.find((user)=>{return user._id == friendId})
+  //     if (user) {
+  //       var friendRequest = [] = user.friendRequest;
+  //       var allReadyFriend = friendRequest.find((item)=>{return item === friendId})
+  //       if (!allReadyFriend) {
+  //         user.friendRequest.push(friendId)
+  //         user.save((err)=>{
+  //           if (err) {
+  //             res.json({success:false, errMSG:err.message})
+  //           }else{
+  //             if(friend){
+  //               var holdAcceptFriendRequest = [] = friend.holdAcceptFriendRequest;
+  //               var allReadyUser = holdAcceptFriendRequest.find((item)=>{return item === userId})
+  //               if(!allReadyUser){
+  //                 friend.holdAcceptFriendRequest.push(userId)
+  //                 friend.save((err)=>{
+  //                   if (err) {
+  //                     res.json({success:false, errMSG:err.message})
+  //                   }else{
+  //                     res.json({success:true, MSG:"request sended"})
+  //                   }
+  //                 }) //friend save
+  //               } // if ! all Ready User
+  //               if (allReadyUser) {
+  //                 res.json({success:true, MSG:"this request is sended befor"})
+  //               }
+  //             } // if
+  //           } // else
+  //         }) //user save
+  //       } // if
+  //       if (allReadyFriend) {
+  //         res.json({success:true, MSG:"this request is sended befor"})
+  //       }
+  //     } // if user
+  //   }// else
+  // })// find
+// })
 
 // find users by id and remove from friends
 router.get('/find/:userId/:friendId/unfriend', (req, res, next)=>{
@@ -347,210 +346,210 @@ router.get('/find/:userId/:friendId/unfriend', (req, res, next)=>{
 })// find users by id and remove from friends
 
 // get all friends request
-router.get('/:id/friendsRequst', (req, res, next)=>{
-  var id = req.params.id;
-  User.findById(id, (err, user)=>{
-    if (err) {
-      res.json({success:false, errMSG:err.message})
-    }else{
-      var t = []
-      User.find({}, (err, users)=>{
-        if (err) {
-          res.json({success:false, errMSG:err.message})
-        }else{
-          var friends = user.friendRequest;
-          if (friends.length >= 1) {
-              friends.forEach((friend)=>{ 
-                  var o =[]      
-                  o.push(friend)
-                  o.forEach((item)=>{
-                      users.forEach((o)=>{
-                        if (o._id == item) {
-                            t.push(o)
-                        }
-                      })
-                  })
-              })
-            }
-        }
-        res.json({success:true, friendsRequset:t})
-      })
-    }
-  })
-})// get all friends request
+// router.get('/:id/friendsRequst', (req, res, next)=>{
+//   var id = req.params.id;
+//   User.findById(id, (err, user)=>{
+//     if (err) {
+//       res.json({success:false, errMSG:err.message})
+//     }else{
+//       var t = []
+//       User.find({}, (err, users)=>{
+//         if (err) {
+//           res.json({success:false, errMSG:err.message})
+//         }else{
+//           var friends = user.friendRequest;
+//           if (friends.length >= 1) {
+//               friends.forEach((friend)=>{ 
+//                   var o =[]      
+//                   o.push(friend)
+//                   o.forEach((item)=>{
+//                       users.forEach((o)=>{
+//                         if (o._id == item) {
+//                             t.push(o)
+//                         }
+//                       })
+//                   })
+//               })
+//             }
+//         }
+//         res.json({success:true, friendsRequset:t})
+//       })
+//     }
+//   })
+// })// get all friends request
 
 // cansle friends request
-router.get('/:userId/:friendId/ignnorFriendRequst', (req, res, next)=>{
-  var userId = req.params.userId,
-  friendId = req.params.friendId;
-User.find({}, (err, users)=>{
-if (err) {
-  res.json({success:false, errMSG:err.message})
-}else{
-  let user = users.find((user)=>{return user._id == userId});
-  if (user) {
-    let userFriendRequest = [] = user.friendRequest;
-    userFriendRequest.forEach((id)=>{
-      if (id == friendId) {
-        for (let i = 0; i < userFriendRequest.length; i++) {
-          const e = userFriendRequest[i]
-          if(e === friendId){
-            userFriendRequest.splice(i, 1);
-              break;
-            }// end if
-      } // end for 
-        user.save((err)=>{
-          if (err) {
-            res.json({success:false, errMSG:err.message})
-          }else{
-            let friend = users.find((friend)=>{return friend._id == friendId});
-            if (friend) {
-              let friendHoldAcceptFriendRequest = [] = friend.holdAcceptFriendRequest;
-              friendHoldAcceptFriendRequest.forEach((id)=>{
-                  if (id == userId) {
-                  for (let i = 0; i < friendHoldAcceptFriendRequest.length; i++) {
-                    const e = friendHoldAcceptFriendRequest[i]
-                    if(e === userId){
-                      friendHoldAcceptFriendRequest.splice(i, 1);
-                      break;
-                    }// end if
-                } // end for
-                friend.save((err)=>{
-                  if (err) {
-                    res.json({success:false, errMSG:err.message})
-                  }else{
-                    res.json({success:true, MSG:'canceld'})
-                  }// end else
-                })// end save friend
-              }
-              }) // end for each
-            } // end if-frind
-          } // end else
-        })// end save user
-      }// end if
-    }) // end for each
-  }// end if
-}// else
-})//end find
-})// cansle friends request
+// router.get('/:userId/:friendId/ignnorFriendRequst', (req, res, next)=>{
+//   var userId = req.params.userId,
+//   friendId = req.params.friendId;
+// User.find({}, (err, users)=>{
+// if (err) {
+//   res.json({success:false, errMSG:err.message})
+// }else{
+//   let user = users.find((user)=>{return user._id == userId});
+//   if (user) {
+//     let userFriendRequest = [] = user.friendRequest;
+//     userFriendRequest.forEach((id)=>{
+//       if (id == friendId) {
+//         for (let i = 0; i < userFriendRequest.length; i++) {
+//           const e = userFriendRequest[i]
+//           if(e === friendId){
+//             userFriendRequest.splice(i, 1);
+//               break;
+//             }// end if
+//       } // end for 
+//         user.save((err)=>{
+//           if (err) {
+//             res.json({success:false, errMSG:err.message})
+//           }else{
+//             let friend = users.find((friend)=>{return friend._id == friendId});
+//             if (friend) {
+//               let friendHoldAcceptFriendRequest = [] = friend.holdAcceptFriendRequest;
+//               friendHoldAcceptFriendRequest.forEach((id)=>{
+//                   if (id == userId) {
+//                   for (let i = 0; i < friendHoldAcceptFriendRequest.length; i++) {
+//                     const e = friendHoldAcceptFriendRequest[i]
+//                     if(e === userId){
+//                       friendHoldAcceptFriendRequest.splice(i, 1);
+//                       break;
+//                     }// end if
+//                 } // end for
+//                 friend.save((err)=>{
+//                   if (err) {
+//                     res.json({success:false, errMSG:err.message})
+//                   }else{
+//                     res.json({success:true, MSG:'canceld'})
+//                   }// end else
+//                 })// end save friend
+//               }
+//               }) // end for each
+//             } // end if-frind
+//           } // end else
+//         })// end save user
+//       }// end if
+//     }) // end for each
+//   }// end if
+// }// else
+// })//end find
+// })// cansle friends request
 
 // cansle friends request from sender
-router.get('/:userId/:friendId/canselRequstFromSender', (req, res, next)=>{
-  var userId = req.params.userId,
-      friendId = req.params.friendId;
-  User.find({}, (err, users)=>{
-    if (err) {
-      res.json({success:false, errMSG:err.message})
-    }else{
-      let user = users.find((user)=>{return user._id == userId});
-      if (user) {
-        let userHoldAcceptFriendRequest = [] = user.holdAcceptFriendRequest;
-        userHoldAcceptFriendRequest.forEach((id)=>{
-          if (id == friendId) {
-            for (let i = 0; i < userHoldAcceptFriendRequest.length; i++) {
-              const e = userHoldAcceptFriendRequest[i]
-              if(e === friendId){
-                userHoldAcceptFriendRequest.splice(i, 1);
-                  break;
-                }// end if
-          } // end for 
-            user.save((err)=>{
-              if (err) {
-                res.json({success:false, errMSG:err.message})
-              }else{
-                let friend = users.find((friend)=>{return friend._id == friendId});
-                if (friend) {
-                  let friendRequest = [] = friend.friendRequest;
-                  friendRequest.forEach((id)=>{
-                    for (let i = 0; i < friendRequest.length; i++) {
-                      const e = friendRequest[i]
-                      if(e === userId){
-                        friendRequest.splice(i, 1);
-                        break;
-                      }// end if
-                  } // end for
-                  friend.save((err)=>{
-                    if (err) {
-                      res.json({success:false, errMSG:err.message})
-                    }else{
-                      res.json({success:true, MSG:'canceld'})
-                    }// end else
-                  })// end save friend
-                  }) // end for each
-                } // end if-frind
-              } // end else
-            })// end save user
-          }// end if
-        }) // end for each
-      }// end if
-    }// else
-  })//end find
-})// cansle friends request from sender
+// router.get('/:userId/:friendId/canselRequstFromSender', (req, res, next)=>{
+//   var userId = req.params.userId,
+//       friendId = req.params.friendId;
+//   User.find({}, (err, users)=>{
+//     if (err) {
+//       res.json({success:false, errMSG:err.message})
+//     }else{
+//       let user = users.find((user)=>{return user._id == userId});
+//       if (user) {
+//         let userHoldAcceptFriendRequest = [] = user.holdAcceptFriendRequest;
+//         userHoldAcceptFriendRequest.forEach((id)=>{
+//           if (id == friendId) {
+//             for (let i = 0; i < userHoldAcceptFriendRequest.length; i++) {
+//               const e = userHoldAcceptFriendRequest[i]
+//               if(e === friendId){
+//                 userHoldAcceptFriendRequest.splice(i, 1);
+//                   break;
+//                 }// end if
+//           } // end for 
+//             user.save((err)=>{
+//               if (err) {
+//                 res.json({success:false, errMSG:err.message})
+//               }else{
+//                 let friend = users.find((friend)=>{return friend._id == friendId});
+//                 if (friend) {
+//                   let friendRequest = [] = friend.friendRequest;
+//                   friendRequest.forEach((id)=>{
+//                     for (let i = 0; i < friendRequest.length; i++) {
+//                       const e = friendRequest[i]
+//                       if(e === userId){
+//                         friendRequest.splice(i, 1);
+//                         break;
+//                       }// end if
+//                   } // end for
+//                   friend.save((err)=>{
+//                     if (err) {
+//                       res.json({success:false, errMSG:err.message})
+//                     }else{
+//                       res.json({success:true, MSG:'canceld'})
+//                     }// end else
+//                   })// end save friend
+//                   }) // end for each
+//                 } // end if-frind
+//               } // end else
+//             })// end save user
+//           }// end if
+//         }) // end for each
+//       }// end if
+//     }// else
+//   })//end find
+// })// cansle friends request from sender
 
-// accept friends request
-router.get('/:id/:reqId/acceptFriendRequst', (req, res, next)=>{
-  var id = req.params.id,
-      reqId = req.params.reqId;
-  User.find({}, (err, users)=>{
-    if (err) {
-      res.json({success:false, errMSG:err.message})
-    }else{
-        users.forEach((user)=>{
-          if(user._id == reqId){
-            var friendsId = [] = user.friends;
-            var holdAcceptFriendRequest = [] = user.holdAcceptFriendRequest;
-            friendsId.push(id);
-              holdAcceptFriendRequest.forEach((item)=>{
-                if (item == id) {
-                  for (let i = 0; i < holdAcceptFriendRequest.length; i++) {
-                    const e = holdAcceptFriendRequest[i]
-                    if(e === id){
-                      holdAcceptFriendRequest.splice(i, 1);
-                        break;
-                        }// end if
-                    } // end for 
-                    user.save((err)=>{
-                      if (err) {
-                        res.json({success:false, errMSG:err.message})
-                      }else{
-                        var userById = users.find((o)=>{return o._id == id})
-                        if(userById){
-                          var friendsReq = [] = userById.friendRequest;
-                          var friends = [] = userById.friends;
-                          var u = friendsReq.find((requestId)=>{return requestId === reqId});
-                          if (u) {
-                            friends.push(u);
-                            userById.friendRequest.forEach((item)=>{
-                              if (item == reqId) {
-                                for (let i = 0; i < friendsReq.length; i++) {
-                                  const e = friendsReq[i]
-                                  if(e === reqId){
-                                    friendsReq.splice(i, 1);
-                                      break;
-                                      }// end if
-                                  } // end for 
-                                  userById.save((err)=>{
-                                    if (err) {
-                                      res.json({success:false, errMSG:err.message})
-                                      }else{
-                                      res.json({success:true, MSG:'accepted'})
-                                    }
-                                  })
-                                }
-                            }) 
-                            }
-                          }
-                      }
+// // accept friends request
+// router.get('/:id/:reqId/acceptFriendRequst', (req, res, next)=>{
+//   var id = req.params.id,
+//       reqId = req.params.reqId;
+//   User.find({}, (err, users)=>{
+//     if (err) {
+//       res.json({success:false, errMSG:err.message})
+//     }else{
+//         users.forEach((user)=>{
+//           if(user._id == reqId){
+//             var friendsId = [] = user.friends;
+//             var holdAcceptFriendRequest = [] = user.holdAcceptFriendRequest;
+//             friendsId.push(id);
+//               holdAcceptFriendRequest.forEach((item)=>{
+//                 if (item == id) {
+//                   for (let i = 0; i < holdAcceptFriendRequest.length; i++) {
+//                     const e = holdAcceptFriendRequest[i]
+//                     if(e === id){
+//                       holdAcceptFriendRequest.splice(i, 1);
+//                         break;
+//                         }// end if
+//                     } // end for 
+//                     user.save((err)=>{
+//                       if (err) {
+//                         res.json({success:false, errMSG:err.message})
+//                       }else{
+//                         var userById = users.find((o)=>{return o._id == id})
+//                         if(userById){
+//                           var friendsReq = [] = userById.friendRequest;
+//                           var friends = [] = userById.friends;
+//                           var u = friendsReq.find((requestId)=>{return requestId === reqId});
+//                           if (u) {
+//                             friends.push(u);
+//                             userById.friendRequest.forEach((item)=>{
+//                               if (item == reqId) {
+//                                 for (let i = 0; i < friendsReq.length; i++) {
+//                                   const e = friendsReq[i]
+//                                   if(e === reqId){
+//                                     friendsReq.splice(i, 1);
+//                                       break;
+//                                       }// end if
+//                                   } // end for 
+//                                   userById.save((err)=>{
+//                                     if (err) {
+//                                       res.json({success:false, errMSG:err.message})
+//                                       }else{
+//                                       res.json({success:true, MSG:'accepted'})
+//                                     }
+//                                   })
+//                                 }
+//                             }) 
+//                             }
+//                           }
+//                       }
 
-                    })
-                  }
+//                     })
+//                   }
 
-              })
-          }
-        })
-    }
-  })
-})// accept friends request
+//               })
+//           }
+//         })
+//     }
+//   })
+// })// accept friends request
 // get user fiends
 router.get('/:userId/user/friends', (req, res, next)=>{
   var userId = req.params.userId;

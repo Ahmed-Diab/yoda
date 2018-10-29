@@ -5,13 +5,14 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const passport = require('passport');
+const usersRouter = require('./routes/users');
 const postRouter = require('./routes/post');
+const commentRouter = require('./routes/comment');
+const replayRouter = require('./routes/replay');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const keys = require('./config/keys')
 const app = express();
-
-const usersRouter = require('./routes/users');
 
 mongoose.connect(keys.database, { useNewUrlParser: true });
 // // On Connection
@@ -30,7 +31,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'dist')));
 app.use(express.static(path.join(__dirname, 'public/')));
 app.use(express.static(path.join(__dirname, 'user-images/')));
-
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(cors())
@@ -38,6 +38,8 @@ app.use(cors())
 require('./config/passport')(passport);
 app.use('/users', usersRouter);
 app.use('/post', postRouter);
+app.use('/comment', commentRouter);
+app.use('/replay', replayRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -56,11 +58,8 @@ app.use(function(err, req, res, next) {
     error: err
   });
 });
-
-
 app.get('/', (req, res) => {
   res.send('invaild endpoint');
-
 });
 
 app.get('*', (req, res) => {

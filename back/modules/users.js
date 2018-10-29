@@ -2,6 +2,10 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
 const notifications =  mongoose.Schema({
+  type:{
+    type:String,
+    required:[true ,'plz fill all fildes']
+  },
   username:{ 
     type:String,
     required:[true ,'plz fill all fildes']
@@ -13,7 +17,15 @@ const notifications =  mongoose.Schema({
   body:{
     type:String,
     required:[true ,'plz fill all fildes']
-  }
+  },
+  isRead:{
+    type:Boolean,
+    default:false
+  },
+  createdAt: { 
+    type: Date, 
+    default: Date.now
+   }
 })
 
 var newUser = mongoose.Schema({

@@ -1,0 +1,23 @@
+@import './color';
+%form{
+    .comment-form{
+        width: 100%;
+        padding:5px;
+        resize: unset;
+        textarea{
+            @extend %textarea;
+        }
+        p-button{
+            float: right;
+        }
+    }
+}
+%textarea{
+    margin: 0px;
+    width: 100%;
+    height: 42px;
+    border: 1px solid $mid_color;
+    // border-color: $light_color;
+    border-radius: 6px;
+    box-shadow: 0 0 3px $dark_color;
+}
