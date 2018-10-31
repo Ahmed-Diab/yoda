@@ -7544,9 +7544,9 @@ window.global = window;
 var SocketService = /** @class */ (function () {
     function SocketService(_http) {
         this._http = _http;
-        this.socket = socket_io_client__WEBPACK_IMPORTED_MODULE_1__('http://localhost:3000/');
-        this.socketPost = socket_io_client__WEBPACK_IMPORTED_MODULE_1__('http://localhost:3000/post');
+        this.socket = socket_io_client__WEBPACK_IMPORTED_MODULE_1__('http://192.168.20.103:3000');
     }
+    // on user join 
     SocketService.prototype.userJoin = function (data) {
         this.socket.emit('join', data);
     };
@@ -7561,19 +7561,6 @@ var SocketService = /** @class */ (function () {
         return observable;
     };
     // user leave chat room
-    SocketService.prototype.onNotifications = function (data) {
-        this.socket.emit('notifications', data);
-    };
-    SocketService.prototype.getNotifications = function () {
-        var _this = this;
-        var observable = new rxjs__WEBPACK_IMPORTED_MODULE_2__["Observable"](function (obs) {
-            _this.socket.on('get notifications', function (data) {
-                obs.next(data);
-            });
-            return function () { _this.socket.disconnect(); };
-        });
-        return observable;
-    };
     SocketService.prototype.onPost = function (data) {
         this.socket.emit('post', data);
     };
@@ -7590,29 +7577,101 @@ var SocketService = /** @class */ (function () {
     SocketService.prototype.getErrorMessage = function () {
         var _this = this;
         var err = new rxjs__WEBPACK_IMPORTED_MODULE_2__["Observable"](function (obs) {
-            _this.socket.on('new message', function (data) {
+            _this.socket.on('Error', function (data) {
                 obs.next(data);
             });
             return function () { _this.socket.disconnect(); };
         });
         return err;
     };
-    SocketService.prototype.getMessages = function () {
-        return this._http.get('/index');
-    };
+    // getMessages(){
+    //   return this._http.get('message')
+    // }
     SocketService.prototype.onComment = function (data) {
         this.socket.emit('comment', data);
     };
-    SocketService.prototype.ongetid = function () {
+    SocketService.prototype.onGetComment = function () {
         var _this = this;
-        var d = new rxjs__WEBPACK_IMPORTED_MODULE_2__["Observable"](function (obs) {
-            _this.socketPost.on('send test', function (data) {
+        var comment = new rxjs__WEBPACK_IMPORTED_MODULE_2__["Observable"](function (obs) {
+            _this.socket.on('new comment', function (data) {
                 obs.next(data);
             });
             return function () { _this.socket.disconnect(); };
         });
-        return d;
+        return comment;
     };
+    SocketService.prototype.onReplay = function (data) {
+        this.socket.emit('replay', data);
+    };
+    SocketService.prototype.onGetReplay = function () {
+        var _this = this;
+        var replay = new rxjs__WEBPACK_IMPORTED_MODULE_2__["Observable"](function (obs) {
+            _this.socket.on('new replay', function (data) {
+                obs.next(data);
+            });
+            return function () { _this.socket.disconnect(); };
+        });
+        return replay;
+    };
+    SocketService.prototype.onFrindNotifications = function (data) {
+        this.socket.emit('friend notifications', data);
+    };
+    SocketService.prototype.getGetFrindNotifications = function () {
+        var _this = this;
+        var observable = new rxjs__WEBPACK_IMPORTED_MODULE_2__["Observable"](function (obs) {
+            _this.socket.on('new text notifications', function (data) {
+                obs.next(data);
+            });
+            return function () { _this.socket.disconnect(); };
+        });
+        return observable;
+    };
+    SocketService.prototype.onFriendReuest = function (data) {
+        this.socket.emit('get friends requset', data);
+    };
+    SocketService.prototype.onCansleFriendReuest = function (data) {
+        this.socket.emit('cansel friend request', data);
+    };
+    SocketService.prototype.onCansleFriendReuestFromSender = function (data) {
+        this.socket.emit('cansel friend request from sender', data);
+    };
+    SocketService.prototype.onAcceptFriendRequest = function (data) {
+        this.socket.emit('accept friend request', data);
+    };
+    SocketService.prototype.getGetFrindRequst = function () {
+        var _this = this;
+        var observable = new rxjs__WEBPACK_IMPORTED_MODULE_2__["Observable"](function (obs) {
+            _this.socket.on('new friends requset', function (data) {
+                obs.next(data);
+            });
+            return function () { _this.socket.disconnect(); };
+        });
+        return observable;
+    };
+    // notifications
+    SocketService.prototype.onNotifications = function (data) {
+        this.socket.emit('notifications', data);
+    };
+    SocketService.prototype.onGetAllNotifications = function () {
+        var _this = this;
+        var observable = new rxjs__WEBPACK_IMPORTED_MODULE_2__["Observable"](function (obs) {
+            _this.socket.on('all notification', function (data) {
+                obs.next(data);
+            });
+            return function () { _this.socket.disconnect(); };
+        });
+        return observable;
+    }; //  notifications
+    SocketService.prototype.onGetNewNotifications = function () {
+        var _this = this;
+        var observable = new rxjs__WEBPACK_IMPORTED_MODULE_2__["Observable"](function (obs) {
+            _this.socket.on('new notification', function (data) {
+                obs.next(data);
+            });
+            return function () { _this.socket.disconnect(); };
+        });
+        return observable;
+    }; //  notifications
     SocketService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
             providedIn: 'root'
@@ -7644,7 +7703,7 @@ module.exports = "<h3>\n  confrmation \n</h3>\n<p>{{data.qustion}}</p>\n<button 
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".yes {\n  float: right; }\n"
+module.exports = ".yes {\n  float: right; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvdXNlci9jb25maXJtLXJlbW92ZS9FOlxcYXBwc1xcTmV3IE1FQU4gc3Rha2VcXFlPREFcXGZyb250L3NyY1xcYXBwXFx1c2VyXFxjb25maXJtLXJlbW92ZVxccmVtb3ZlLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksYUFBWSxFQUNmIiwiZmlsZSI6InNyYy9hcHAvdXNlci9jb25maXJtLXJlbW92ZS9yZW1vdmUuY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIueWVze1xyXG4gICAgZmxvYXQ6IHJpZ2h0O1xyXG59Il19 */"
 
 /***/ }),
 
@@ -7710,7 +7769,7 @@ var ConfirmRemoveComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"find-friend-contanir\">\n    <form>\n        <div class=\"example-container\">\n            <mat-form-field>\n              <input autocomplete=\"off\" matInput placeholder=\"frind name\" (keyup)=\"findFriend()\" name=\"firndName\" [(ngModel)]=\"friendName\">\n              <mat-icon matSuffix (click)=\"findFrindInMainPage()\" class=\"search\">search</mat-icon>\n            </mat-form-field>\n            </div>\n    </form>\n    <div *ngIf=\"users\" class='users'>\n        <div class=\"display-users\"  *ngFor=\"let friend of users\">\n            <p class=\"p-username\">\n              <a [routerLink]=\"[ '/profile']\" [queryParams]=\"{id: user._id}\">\n               <img src=\"{{url}}/{{friend.image}}\" alt=\"friend.username\">\n               {{friend.username}}\n             </a> \n           </p>\n            <p class=\"p-icons\">     \n                <button mat-button  (click)='openDialog()'>\n                    <mat-icon class=\"mat-18\" color='primary' >send</mat-icon>\n                </button>  \n              <button *ngIf=\"friend.isFriend\" mat-button (click)='unfriend(user._id, friend)'  >\n                  <mat-icon class=\"mat-18\" color=\"warn\"  >delete</mat-icon>\n              </button>\n              <button *ngIf=\"!friend.isFriend && !friend.isInHold && !friend.isFriendReq\"  mat-button (click)='sendFriendReuest(friend)'>\n                  <mat-icon class=\"mat-18\" color='primary'  >group_add</mat-icon>\n              </button>\n               <button   *ngIf=\"friend.isInHold\" mat-button (click)=\"cancelFriendReqFromSender(user._id, friend)\">cancel</button>\n               <button   *ngIf=\"friend.isFriendReq\" mat-button (click)=\"acceptFriendRequest(user._id, friend)\">accept</button>\n               <button   *ngIf=\"friend.isFriendReq\" mat-button (click)=\"ignnorFriendRequest(user._id, friend)\">ignnor</button>\n             </p>\n           </div>\n    </div>\n      <p *ngIf=\"users.length >= 5\">\n      <a [routerLink]=\"['/friends']\" [queryParams]=\"{username: friend, id: user._id}\">see more</a>\n      </p>\n</div>\n\n\n"
+module.exports = "<div class=\"find-friend-contanir\">\n    <form>\n        <div class=\"example-container\">\n            <mat-form-field>\n              <input autocomplete=\"off\" matInput placeholder=\"frind name\" (keyup)=\"findFriend()\" name=\"firndName\" [(ngModel)]=\"friendName\">\n              <mat-icon matSuffix (click)=\"findFrindInMainPage()\" class=\"search\">search</mat-icon>\n            </mat-form-field>\n            </div>\n    </form>\n    <div *ngIf=\"users\" class='users'>\n        <div class=\"display-users\"  *ngFor=\"let friend of users\">\n            <p class=\"p-username\">\n              <a [routerLink]=\"[ '/user/profile']\" [queryParams]=\"{id: friend._id}\">\n               <img src=\"{{url}}/{{friend.image}}\" alt=\"friend.username\">\n               {{friend.username}}\n             </a> \n           </p>\n            <p class=\"p-icons\">     \n                <button mat-button  (click)='openDialog()'>\n                    <mat-icon class=\"mat-18\" color='primary' >send</mat-icon>\n                </button>  \n              <button *ngIf=\"friend.isFriend\" mat-button (click)='unfriend(user._id, friend)'  >\n                  <mat-icon class=\"mat-18\" color=\"warn\"  >delete</mat-icon>\n              </button>\n              <button *ngIf=\"!friend.isFriend && !friend.isInHold && !friend.isFriendReq\"  mat-button (click)='sendFriendReuest(friend)'>\n                  <mat-icon class=\"mat-18\" color='primary'  >group_add</mat-icon>\n              </button>\n               <button   *ngIf=\"friend.isInHold\" mat-button (click)=\"cancelFriendReqFromSender(user._id, friend)\">cancel</button>\n               <button   *ngIf=\"friend.isFriendReq\" mat-button (click)=\"acceptFriendRequest(user._id, friend)\">accept</button>\n               <button   *ngIf=\"friend.isFriendReq\" mat-button (click)=\"ignnorFriendRequest(user._id, friend)\">ignnor</button>\n             </p>\n           </div>\n    </div>\n      <p *ngIf=\"users.length >= 5\">\n      <a [routerLink]=\"['/friends']\" [queryParams]=\"{username: friend, id: user._id}\">see more</a>\n      </p>\n</div>\n\n\n"
 
 /***/ }),
 
@@ -7721,7 +7780,7 @@ module.exports = "<div class=\"find-friend-contanir\">\n    <form>\n        <div
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".find-friend-contanir {\n  border-left: 1px solid #3f51b5;\n  margin: 10px auto;\n  padding: 10px;\n  box-shadow: 2px 2px 9px;\n  width: 95%;\n  overflow: auto;\n  max-height: 300px; }\n  .find-friend-contanir form {\n    width: 95%;\n    margin: auto; }\n  .find-friend-contanir form .search {\n      cursor: pointer; }\n  .find-friend-contanir form .mat-form-field {\n      width: 100%; }\n  .find-friend-contanir .users .display-users img {\n    width: 40px;\n    height: 40px; }\n  .find-friend-contanir .users .display-users mat-icon {\n    margin: 5px;\n    cursor: pointer; }\n  .find-friend-contanir .users .display-users .p-username {\n    margin-bottom: 0; }\n  .find-friend-contanir .users .display-users .p-icons {\n    margin: 0;\n    text-align: right; }\n"
+module.exports = ".find-friend-contanir {\n  border-left: 1px solid #3f51b5;\n  margin: 10px auto;\n  padding: 10px;\n  box-shadow: 2px 2px 9px;\n  width: 95%;\n  overflow: auto;\n  max-height: 300px; }\n  .find-friend-contanir form {\n    width: 95%;\n    margin: auto; }\n  .find-friend-contanir form .search {\n      cursor: pointer; }\n  .find-friend-contanir form .mat-form-field {\n      width: 100%; }\n  .find-friend-contanir .users {\n    padding: 20px 10px; }\n  .find-friend-contanir .users .display-users img {\n      width: 40px;\n      height: 40px; }\n  .find-friend-contanir .users .display-users mat-icon {\n      margin: 5px;\n      cursor: pointer; }\n  .find-friend-contanir .users .display-users .p-username {\n      margin-bottom: 0; }\n  .find-friend-contanir .users .display-users .p-icons {\n      margin: 0;\n      text-align: right; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvdXNlci9maW5kLWZyaWVuZC1jb250YW5pci9FOlxcYXBwc1xcTmV3IE1FQU4gc3Rha2VcXFlPREFcXGZyb250L3NyY1xcYXBwXFx1c2VyXFxmaW5kLWZyaWVuZC1jb250YW5pclxcZmluZC1mcmllbmQtY29udGFuaXIuY29tcG9uZW50LnNjc3MiLCJzcmMvYXBwL3VzZXIvZmluZC1mcmllbmQtY29udGFuaXIvRTpcXGFwcHNcXE5ldyBNRUFOIHN0YWtlXFxZT0RBXFxmcm9udC9zcmNcXGFzc2V0c1xcc2Fzc1xcX2NvbG9yLnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQ0E7RUFDSSwrQkNDZTtFREFmLGtCQUFpQjtFQUNqQixjQUFhO0VBQ2Isd0JBQXVCO0VBQ3ZCLFdBQVU7RUFDVixlQUFjO0VBQ2Qsa0JBQWlCLEVBZ0NwQjtFQXZDRDtJQVNRLFdBQVU7SUFDVixhQUFZLEVBT2Y7RUFqQkw7TUFZWSxnQkFBZSxFQUNsQjtFQWJUO01BZVksWUFBVyxFQUNkO0VBaEJUO0lBbUJRLG1CQUFrQixFQWtCckI7RUFyQ0w7TUFzQmdCLFlBQVc7TUFDWCxhQUFZLEVBQ2Y7RUF4QmI7TUEwQmdCLFlBQVc7TUFDWCxnQkFBZSxFQUNsQjtFQTVCYjtNQThCZ0IsaUJBQWdCLEVBQ25CO0VBL0JiO01BaUNnQixVQUFTO01BQ1Qsa0JBQWlCLEVBQ3BCIiwiZmlsZSI6InNyYy9hcHAvdXNlci9maW5kLWZyaWVuZC1jb250YW5pci9maW5kLWZyaWVuZC1jb250YW5pci5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIkBpbXBvcnQgJy4uLy4uLy4uL2Fzc2V0cy9zYXNzL2NvbG9yJztcclxuLmZpbmQtZnJpZW5kLWNvbnRhbmlye1xyXG4gICAgYm9yZGVyLWxlZnQ6IDFweCBzb2xpZCAkbWlkMl9jb2xvcjtcclxuICAgIG1hcmdpbjogMTBweCBhdXRvO1xyXG4gICAgcGFkZGluZzogMTBweDtcclxuICAgIGJveC1zaGFkb3c6IDJweCAycHggOXB4O1xyXG4gICAgd2lkdGg6IDk1JTtcclxuICAgIG92ZXJmbG93OiBhdXRvO1xyXG4gICAgbWF4LWhlaWdodDogMzAwcHg7XHJcbiAgICBmb3Jte1xyXG4gICAgICAgIHdpZHRoOiA5NSU7XHJcbiAgICAgICAgbWFyZ2luOiBhdXRvO1xyXG4gICAgICAgIC5zZWFyY2h7XHJcbiAgICAgICAgICAgIGN1cnNvcjogcG9pbnRlcjtcclxuICAgICAgICB9XHJcbiAgICAgICAgLm1hdC1mb3JtLWZpZWxke1xyXG4gICAgICAgICAgICB3aWR0aDogMTAwJTtcclxuICAgICAgICB9XHJcbiAgICB9XHJcbiAgICAudXNlcnN7XHJcbiAgICAgICAgcGFkZGluZzogMjBweCAxMHB4O1xyXG4gICAgICAgIC5kaXNwbGF5LXVzZXJze1xyXG4gICAgICAgICAgICBpbWd7XHJcbiAgICAgICAgICAgICAgICB3aWR0aDogNDBweDtcclxuICAgICAgICAgICAgICAgIGhlaWdodDogNDBweDtcclxuICAgICAgICAgICAgfVxyXG4gICAgICAgICAgICBtYXQtaWNvbntcclxuICAgICAgICAgICAgICAgIG1hcmdpbjogNXB4O1xyXG4gICAgICAgICAgICAgICAgY3Vyc29yOiBwb2ludGVyO1xyXG4gICAgICAgICAgICB9XHJcbiAgICAgICAgICAgIC5wLXVzZXJuYW1le1xyXG4gICAgICAgICAgICAgICAgbWFyZ2luLWJvdHRvbTogMDtcclxuICAgICAgICAgICAgfVxyXG4gICAgICAgICAgICAucC1pY29uc3tcclxuICAgICAgICAgICAgICAgIG1hcmdpbjogMDtcclxuICAgICAgICAgICAgICAgIHRleHQtYWxpZ246IHJpZ2h0O1xyXG4gICAgICAgICAgICB9XHJcbiAgICAgICAgfVxyXG4gICAgfVxyXG5cclxufVxyXG4iLCIkbGlnaHRfY29sb3I6I2ZmZjtcclxuJG1pZF9jb2xvcjojODljNGZmO1xyXG4kZGFya19jb2xvcjojMDAwO1xyXG4kbWlkMl9jb2xvcjojM2Y1MWI1O1xyXG4kc3VjY2Vzc19jb2xvcjojYThmN2E4O1xyXG4kZGFuZ2VyX2NvbG9yOnJnYigyNTUsIDk4LCA5Myk7Il19 */"
 
 /***/ }),
 
@@ -7739,6 +7798,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm5/material.es5.js");
 /* harmony import */ var _send_message_send_message_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../send-message/send-message.component */ "./src/app/user/send-message/send-message.component.ts");
 /* harmony import */ var _services_services_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../services/services.service */ "./src/app/services/services.service.ts");
+/* harmony import */ var src_app_services_socket_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/services/socket.service */ "./src/app/services/socket.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -7752,13 +7812,20 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var FindFriendContanirComponent = /** @class */ (function () {
-    function FindFriendContanirComponent(dialog, _services, _snackBar) {
+    function FindFriendContanirComponent(dialog, _services, _snackBar, _socketServices) {
+        var _this = this;
         this.dialog = dialog;
         this._services = _services;
         this._snackBar = _snackBar;
+        this._socketServices = _socketServices;
         this.users = [];
         this.url = this._services.url;
+        this._socketServices.getGetFrindNotifications().subscribe(function (res) {
+            _this._snackBar.open(res, 'Undo', { duration: 5000 });
+            _this._socketServices.onFriendReuest(_this.user._id);
+        });
     }
     FindFriendContanirComponent.prototype.ngOnInit = function () {
     };
@@ -7912,40 +7979,26 @@ var FindFriendContanirComponent = /** @class */ (function () {
     }; // cansel friends request
     // send frind request
     FindFriendContanirComponent.prototype.sendFriendReuest = function (friend) {
-        var _this = this;
-        var frindId = friend._id;
-        var data = {
-            freindRequest: this.user._id
-        };
-        this._services.sendfriendRequest(frindId, data).subscribe(function (res) {
-            if (res.success) {
-                friend.isFriend = false;
-                friend.isInHold = true;
-                _this._snackBar.open(res.MSG, 'Undo', { duration: 5000 });
-            }
-            else {
-                _this._snackBar.open(res.errMSG, 'Undo', { duration: 5000 });
-            }
-        }, function (error) {
-            _this._snackBar.open(error.message, 'Undo', { duration: 5000 });
-        });
+        this._socketServices.onFrindNotifications({ friendId: friend._id, userId: this.user._id, username: this.user.username });
+        friend.isFriend = false;
+        friend.isInHold = true;
     }; // send frind request
     // cansel friends request
     FindFriendContanirComponent.prototype.cancelFriendReqFromSender = function (userId, friend) {
-        var _this = this;
-        var friendId = friend._id;
-        this._services.cancelFriendReqFromSender(userId, friendId).subscribe(function (res) {
-            if (res.success) {
-                friend.isFriend = false;
-                friend.isInHold = false;
-                _this._snackBar.open(res.MSG, 'Undo', { duration: 5000 });
-            }
-            else {
-                _this._snackBar.open(res.errMSG, 'Undo', { duration: 5000 });
-            }
-        }, function (error) {
-            _this._snackBar.open(error.message, 'Undo', { duration: 5000 });
-        });
+        this._socketServices.onCansleFriendReuestFromSender({ userId: userId, friendId: friend._id });
+        // let friendId = friend._id
+        // this._services.cancelFriendReqFromSender(userId, friendId).subscribe((res:any)=>{
+        //   if (res.success) {
+        friend.isFriend = false;
+        friend.isInHold = false;
+        //     this._snackBar.open(res.MSG, 'Undo', {duration: 5000})
+        //   }else{
+        //     this._snackBar.open(res.errMSG, 'Undo', {duration: 5000})
+        //   }
+        //   },    
+        //     (error)=>{
+        //       this._snackBar.open(error.message, 'Undo', {duration: 5000})
+        //     })
     }; // cansel friends request
     // unfriend friend
     FindFriendContanirComponent.prototype.unfriend = function (userId, friend) {
@@ -7975,7 +8028,8 @@ var FindFriendContanirComponent = /** @class */ (function () {
         }),
         __metadata("design:paramtypes", [_angular_material__WEBPACK_IMPORTED_MODULE_1__["MatDialog"],
             _services_services_service__WEBPACK_IMPORTED_MODULE_3__["ServicesService"],
-            _angular_material__WEBPACK_IMPORTED_MODULE_1__["MatSnackBar"]])
+            _angular_material__WEBPACK_IMPORTED_MODULE_1__["MatSnackBar"],
+            src_app_services_socket_service__WEBPACK_IMPORTED_MODULE_4__["SocketService"]])
     ], FindFriendContanirComponent);
     return FindFriendContanirComponent;
 }());
@@ -8002,7 +8056,7 @@ module.exports = "<mat-grid-list cols=\"12\">\n    <mat-grid-tile  [colspan]=\"1
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "/deep/ mat-grid-list .home-tile {\n  width: 0 !important; }\n"
+module.exports = "/deep/ mat-grid-list .home-tile {\n  width: 0 !important; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvdXNlci9ob21lL0U6XFxhcHBzXFxOZXcgTUVBTiBzdGFrZVxcWU9EQVxcZnJvbnQvc3JjXFxhcHBcXHVzZXJcXGhvbWVcXGhvbWUuY29tcG9uZW50LnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFFTyxvQkFBbUIsRUFDckIiLCJmaWxlIjoic3JjL2FwcC91c2VyL2hvbWUvaG9tZS5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIi9kZWVwLyBtYXQtZ3JpZC1saXN0e1xyXG4gICAgLmhvbWUtdGlsZXtcclxuICAgICAgIHdpZHRoOiAwICFpbXBvcnRhbnQ7XHJcbiAgICB9XHJcbn0iXX0= */"
 
 /***/ }),
 
@@ -8067,7 +8121,7 @@ module.exports = "<p>\n  messages works!\n</p>\n"
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ""
+module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL3VzZXIvbWVzc2FnZXMvbWVzc2FnZXMuY29tcG9uZW50LnNjc3MifQ== */"
 
 /***/ }),
 
@@ -8119,7 +8173,7 @@ var MessagesComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<nav>\n  <div class=\"site-name\">\n        <a [routerLink]=\"[ '/user/home' ]\">\n        <img src=\"../../../../assets/images/yoda.png\" alt=\"yoda\">\n        </a>\n</div>\n<div class=\"user-image\">\n    <a [routerLink]=\"[ '/user/profile']\" [queryParams]=\"{id: user._id}\">\n        <p> \n            <img src=\"{{url}}/{{user.image}}\" alt=\"yoda\">\n            <span class=\"link-span\">{{user.username}}</span>\n        </p>\n    </a>\n</div>\n    <ul [@fadeSidbar]='animatSidbar'>\n      <!-- md screen -->\n      <li class=\"md-screen-link\">\n            <a (click)=\"logout()\">\n                <mat-icon class=\"mat-12\" >logout</mat-icon> \n                <span class=\"link-span\">LOGOUT</span> \n            </a>\n        </li>\n        <li class=\"md-screen-link\">\n            <a (click)=\"getMessages()\">\n                <mat-icon class=\"mat-12\">send</mat-icon> \n                <span class=\"link-span\">messages</span> \n            </a>\n        </li>\n        <li class=\"md-screen-link\">\n            <a (click)=\"getNotfacation()\">\n                <mat-icon class=\"mat-12\">notifications</mat-icon> \n                <span class=\"link-span\">notifications</span> \n            </a>\n        </li>\n        <li class=\"md-screen-link\">\n            <a (click)=\"getFriends()\">\n                <mat-icon class=\"mat-12\">group </mat-icon>\n                {{friendsReqLength}} \n                <span class=\"link-span\">\n                    friends\n                </span> \n            </a>\n        </li>\n        <li class=\"md-screen-link\">\n                <a [routerLink]=\"[ '/user/home']\" routerLinkActive=\"active\"> \n                    <mat-icon class=\"mat-12\">home</mat-icon> \n                    <span class=\"link-span\">home</span>\n                </a>\n            </li>\n        <!-- small screen -->\n        <li class=\"s-screen-link\">\n            <a (click)=\"logout()\">\n                <mat-icon class=\"mat-12\" >logout</mat-icon>\n            </a>\n        </li>\n        <li class=\"s-screen-link\">\n            <a [routerLink]=\"[ '/user/messages']\" routerLinkActive=\"active\">\n                <mat-icon class=\"mat-12\">send</mat-icon> \n                <span class=\"link-span\">messages</span> \n            </a>\n        </li>\n        <li class=\"s-screen-link\">\n            <a [routerLink]=\"[ '/user/notfacation']\" routerLinkActive=\"active\"> \n                <mat-icon class=\"mat-12\">notifications</mat-icon> \n                <span class=\"link-span\">notifications</span>\n            </a>\n        </li>\n        <li class=\"s-screen-link\">\n                <a (click)=\"getFriends()\">\n                    <mat-icon class=\"mat-12\">group </mat-icon>\n                    {{friendsReqLength}}\n                </a>\n            </li>\n        <li class=\"s-screen-link\">\n            <a [routerLink]=\"[ '/user/home']\" routerLinkActive=\"active\"> \n                <mat-icon class=\"mat-12\">home</mat-icon> \n                <span class=\"link-span\">home</span>\n            </a>\n        </li>\n    </ul>\n    <div class=\"clear-fix\">\n    </div>\n    <div class=\"friends_req d-none\" #friendsReq>\n            <mat-icon (click)='close(\"friends_req\")' class=\"mat-18\">close</mat-icon>\n            <a [routerLink]=\"[ '/user/profile']\" [queryParams]=\"{id: user._id}\">\n                <p> \n                    <img src=\"{{url}}/{{user.image}}\" alt=\"yoda\">\n                    <span class=\"link-span\">{{user.username}}</span> comment on your post\n                </p>\n            </a>\n            <a [routerLink]=\"[ '/user/profile']\" [queryParams]=\"{id: user._id}\">\n                <p> \n                    <img src=\"{{url}}/{{user.image}}\" alt=\"yoda\">\n                    <span class=\"link-span\">{{user.username}}</span> add new post\n                </p>\n            </a>\n            <a [routerLink]=\"[ '/user/profile']\" [queryParams]=\"{id: user._id}\">\n                <p> \n                    <img src=\"{{url}}/{{user.image}}\" alt=\"yoda\">\n                    <span class=\"link-span\">{{user.username}}</span> replay your comment\n                </p>\n            </a>\n        </div>\n     <div class=\"notifications d-none\" #notifications>\n            <mat-icon (click)='close(\"notifications\")' class=\"mat-18\">close</mat-icon>\n        </div>\n\n    <div class=\"messages d-none\" #messages>\n        <mat-icon (click)='close(\"messages\")' class=\"mat-18\">close</mat-icon>\n    </div> \n</nav>\n\n"
+module.exports = "<nav>\n  <div class=\"site-name\">\n        <a [routerLink]=\"[ '/user/home' ]\">\n        <img src=\"../../../../assets/images/yoda.png\" alt=\"yoda\">\n        </a>\n</div>\n<div class=\"user-image\">\n    \n        <p> \n                <a [routerLink]=\"[ '/user/profile']\" [queryParams]=\"{id: user._id}\">\n            <img src=\"{{url}}/{{user.image}}\" alt=\"yoda\">\n            <span class=\"link-span\">{{user.username}}</span>\n                </a>\n\n        </p>\n</div>\n    <ul [@fadeSidbar]='animatSidbar'>\n      <!-- md screen -->\n      <li class=\"md-screen-link\">\n            <a (click)=\"logout()\">\n                <mat-icon class=\"mat-12\" >logout</mat-icon> \n                <span class=\"link-span\">LOGOUT</span> \n            </a>\n        </li>\n        <li class=\"md-screen-link\">\n            <a (click)=\"getMessages()\">\n                <mat-icon class=\"mat-12\">send</mat-icon> \n                <span class=\"link-span\">messages</span> \n            </a>\n        </li>\n        <li class=\"md-screen-link\">\n            <a (click)=\"getNotfacation()\">\n                <span *ngIf=\"notificationsLength.length >= 1\">{{notificationsLength.length}}</span>\n                <mat-icon class=\"mat-12\">notifications</mat-icon> \n                <span class=\"link-span\">notifications</span> \n            </a>\n        </li>\n        <li class=\"md-screen-link\">\n            <a (click)=\"getFriends()\">\n                    <span *ngIf=\"frindRequest.length >= 1\">{{frindRequest.length}}</span>\n                <mat-icon class=\"mat-12\">group</mat-icon>\n                <span class=\"link-span\">friends</span> \n            </a>\n        </li>\n        <li class=\"md-screen-link\">\n                <a [routerLink]=\"[ '/user/home']\" routerLinkActive=\"active\"> \n                    <mat-icon class=\"mat-12\">home</mat-icon> \n                    <span class=\"link-span\">home</span>\n                </a>\n            </li>\n        <!-- small screen -->\n        <li class=\"s-screen-link\">\n            <a (click)=\"logout()\">\n                <mat-icon class=\"mat-12\" >logout</mat-icon>\n            </a>\n        </li>\n        <li class=\"s-screen-link\">\n            <a [routerLink]=\"[ '/user/messages']\" routerLinkActive=\"active\">\n                <mat-icon class=\"mat-12\">send</mat-icon> \n                <span class=\"link-span\">messages</span> \n            </a>\n        </li>\n        <li class=\"s-screen-link\">\n            <a [routerLink]=\"[ '/user/notfacation']\" routerLinkActive=\"active\"> \n                <mat-icon class=\"mat-12\">notifications</mat-icon> \n                <span class=\"link-span\">notifications</span>\n            </a>\n        </li>\n        <li class=\"s-screen-link\">\n                <a (click)=\"getFriends()\">\n                    <mat-icon class=\"mat-12\">group</mat-icon>\n                </a>\n            </li>\n        <li class=\"s-screen-link\">\n            <a [routerLink]=\"[ '/user/home']\" routerLinkActive=\"active\"> \n                <mat-icon class=\"mat-12\">home</mat-icon> \n                <span class=\"link-span\">home</span>\n            </a>\n        </li>\n    </ul>\n    <div class=\"clear-fix\">\n    </div>\n    <div class=\"friends_req d-none\" #friendsReq>\n            <mat-icon (click)='close(\"friends_req\")' class=\"mat-18\">close</mat-icon>\n            <ng-container *ngIf=\"frindRequest.length >= 1; else nousers\">\n                <p *ngFor=\"let item of frindRequest\">\n                    <a  [routerLink]=\"[ '/user/profile']\" [queryParams]=\"{id: item._id}\">\n                        <img src=\"{{url}}/{{item.image}}\" alt=\"yoda\">\n                        <span class=\"link-span\">{{item.username}}</span>\n                    </a>\n                    <br>\n                       <button    mat-button (click)=\"cansleFriendRequest(user, item)\">cancel</button>\n                       <button    mat-button (click)=\"acceptFriendRequest(user, item)\">accept</button>\n                </p>\n            </ng-container>\n            <ng-template #nousers>\n                no friend requst\n            </ng-template>\n\n        </div>\n     <div class=\"notifications d-none\"  #notifications>\n            <mat-icon (click)='close(\"notifications\")' class=\"mat-18\">close</mat-icon>\n            <ng-container *ngIf=\"user_notifications.length >= 1; else noUserNotifications\" >\n                <div *ngFor=\"let item of user_notifications\">        \n                <p>\n                    <a  [routerLink]=\"[ '/user/post']\" [queryParams]=\"{id: item._id}\">\n                        <img style=\"width:30px;height: 30px;\" src=\"{{url}}/{{item.userImage}}\" alt=\"yoda\">\n                        <span class=\"link-span\">{{item.username}}</span>\n                        <p class=\"notification-body\">{{item.body}}</p>\n                    </a>\n                </p>\n                </div>\n            </ng-container>\n            <ng-template #noUserNotifications>\n                No User Notifications\n            </ng-template>\n        </div>\n\n    <div class=\"messages d-none\" #messages>\n        <mat-icon (click)='close(\"messages\")' class=\"mat-18\">close</mat-icon>\n    </div> \n</nav>\n\n"
 
 /***/ }),
 
@@ -8130,7 +8184,7 @@ module.exports = "<nav>\n  <div class=\"site-name\">\n        <a [routerLink]=\"
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".active {\n  color: #fff !important;\n  font-weight: 900 !important;\n  border-bottom: 2px solid #3f51b5; }\n\nnav {\n  position: fixed;\n  top: 0;\n  left: 0;\n  right: 0;\n  z-index: +1000;\n  background-color: #89c4ff;\n  padding-left: 20px; }\n\nnav .site-name {\n    width: 15%;\n    float: left; }\n\nnav .site-name .home-icon {\n      display: none; }\n\nnav .site-name a {\n      text-transform: capitalize;\n      color: #000;\n      padding: 5px 10px; }\n\nnav .site-name a h3 {\n        padding: 0;\n        margin: 0; }\n\nnav .user-image {\n    width: 30%;\n    float: left; }\n\nnav .user-image img {\n      width: 40px;\n      height: 40px;\n      border-radius: 50%; }\n\nnav ul {\n    list-style: none;\n    width: 55%;\n    float: left;\n    direction: rtl; }\n\nnav ul li {\n      display: inline-block;\n      padding: 0 5px; }\n\nnav ul li a {\n        text-transform: capitalize;\n        color: #000;\n        padding: 5px 10px; }\n\nnav from {\n    width: 100%; }\n\nnav .friends_req, nav .notifications, nav .messages {\n    width: 300px;\n    max-height: 300px;\n    min-height: 100px;\n    position: absolute;\n    background-color: #fff;\n    right: 290px;\n    top: 50px;\n    z-index: +50;\n    box-shadow: 0 0 5px #000; }\n\nnav .friends_req::before, nav .notifications::before, nav .messages::before {\n      content: '';\n      z-index: +55;\n      top: -10PX;\n      position: absolute;\n      display: block;\n      transform: translateX(-50%);\n      -o-transform: translateX(-50%);\n      -moz-transform: translateX(-50%);\n      -webkit-transform: translateX(-50%);\n      left: 50%;\n      border-bottom: 10px #000 solid;\n      border-left: 10px transparent solid;\n      border-right: 10px transparent solid; }\n\nnav .friends_req .mat-icon, nav .notifications .mat-icon, nav .messages .mat-icon {\n      color: red;\n      float: right; }\n\nnav .friends_req img, nav .notifications img, nav .messages img {\n      width: 40px;\n      height: 40px;\n      border-radius: 50%; }\n\nnav .notifications {\n    right: 193px !important; }\n\nnav .messages {\n    right: 73px !important; }\n\n@media (max-width: 1200px) {\n    nav .friends_req, nav .notifications, nav .messages {\n      right: 60px !important; }\n      nav .friends_req::before, nav .notifications::before, nav .messages::before {\n        display: none; }\n    nav .site-name {\n      display: none; }\n      nav .site-name .home-icon {\n        display: block; }\n    nav .user-image {\n      width: 50%; }\n      nav .user-image .link-span {\n        display: none; }\n    nav ul {\n      width: 50%;\n      padding-right: 5px; }\n      nav ul li a {\n        padding: 0; }\n      nav ul .link-span {\n        display: none; } }\n\n.s-screen-link {\n  display: none !important; }\n\n.md-screen-link {\n  display: inline-block; }\n\n@media (max-width: 578px) {\n  .friends_req, .notifications, .messages {\n    display: none; }\n  .mat-icon {\n    font-size: 16px;\n    width: 16px;\n    height: 18px; }\n  .s-screen-link {\n    display: inline-block !important; }\n  .md-screen-link {\n    display: none !important; } }\n\n.d-none {\n  display: none; }\n"
+module.exports = ".active {\n  color: #fff !important;\n  font-weight: 900 !important;\n  border-bottom: 2px solid #3f51b5; }\n\nnav {\n  position: fixed;\n  top: 0;\n  left: 0;\n  right: 0;\n  z-index: +1000;\n  background-color: #89c4ff;\n  padding-left: 20px; }\n\nnav .site-name {\n    width: 15%;\n    float: left; }\n\nnav .site-name .home-icon {\n      display: none; }\n\nnav .site-name a {\n      text-transform: capitalize;\n      color: #000;\n      padding: 5px 10px; }\n\nnav .site-name a h3 {\n        padding: 0;\n        margin: 0; }\n\nnav .user-image {\n    width: 30%;\n    float: left; }\n\nnav .user-image img {\n      width: 40px;\n      height: 40px;\n      border-radius: 50%; }\n\nnav ul {\n    list-style: none;\n    width: 55%;\n    float: left;\n    direction: rtl; }\n\nnav ul li {\n      display: inline-block;\n      padding: 0 5px; }\n\nnav ul li a {\n        text-transform: capitalize;\n        color: #000;\n        padding: 5px 10px; }\n\nnav from {\n    width: 100%; }\n\nnav .friends_req, nav .notifications, nav .messages {\n    width: 300px;\n    max-height: 300px;\n    min-height: 100px;\n    color: #000;\n    position: absolute;\n    background-color: #fff;\n    right: 290px;\n    top: 50px;\n    z-index: +50;\n    box-shadow: 0 0 5px #000; }\n\nnav .friends_req::before, nav .notifications::before, nav .messages::before {\n      content: '';\n      z-index: +55;\n      top: -10PX;\n      position: absolute;\n      display: block;\n      transform: translateX(-50%);\n      -o-transform: translateX(-50%);\n      -moz-transform: translateX(-50%);\n      -webkit-transform: translateX(-50%);\n      left: 50%;\n      border-bottom: 10px #000 solid;\n      border-left: 10px transparent solid;\n      border-right: 10px transparent solid; }\n\nnav .friends_req .mat-icon, nav .notifications .mat-icon, nav .messages .mat-icon {\n      color: red;\n      float: right;\n      cursor: pointer; }\n\nnav .friends_req img, nav .notifications img, nav .messages img {\n      width: 40px;\n      height: 40px;\n      border-radius: 50%; }\n\nnav .notifications {\n    right: 193px !important;\n    overflow: auto; }\n\nnav .notifications .notification-body {\n      color: #000; }\n\nnav .messages {\n    right: 73px !important; }\n\n@media (max-width: 1200px) {\n    nav .friends_req, nav .notifications, nav .messages {\n      right: 60px !important; }\n      nav .friends_req::before, nav .notifications::before, nav .messages::before {\n        display: none; }\n    nav .site-name {\n      display: none; }\n      nav .site-name .home-icon {\n        display: block; }\n    nav .user-image {\n      width: 50%; }\n      nav .user-image .link-span {\n        display: none; }\n    nav ul {\n      width: 50%;\n      padding-right: 5px; }\n      nav ul li a {\n        padding: 0; }\n      nav ul .link-span {\n        display: none; } }\n\n.s-screen-link {\n  display: none !important; }\n\n.md-screen-link {\n  display: inline-block; }\n\n@media (max-width: 578px) {\n  .friends_req, .notifications, .messages {\n    display: none; }\n  .mat-icon {\n    font-size: 16px;\n    width: 16px;\n    height: 18px; }\n  .s-screen-link {\n    display: inline-block !important; }\n  .md-screen-link {\n    display: none !important; } }\n\n.d-none {\n  display: none; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvdXNlci9uYXZiYXIvRTpcXGFwcHNcXE5ldyBNRUFOIHN0YWtlXFxZT0RBXFxmcm9udC9zcmNcXGFwcFxcdXNlclxcbmF2YmFyXFxuYXZiYXIuY29tcG9uZW50LnNjc3MiLCJzcmMvYXBwL3VzZXIvbmF2YmFyL0U6XFxhcHBzXFxOZXcgTUVBTiBzdGFrZVxcWU9EQVxcZnJvbnQvc3JjXFxhc3NldHNcXHNhc3NcXF9jb2xvci5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUVBO0VBQ0UsdUJBQThCO0VBQzlCLDRCQUEyQjtFQUMzQixpQ0NGaUIsRURHbEI7O0FBR0Q7RUFDRSxnQkFBZTtFQUNmLE9BQU07RUFDTixRQUFPO0VBQ1AsU0FBUTtFQUNSLGVBQWM7RUFDZCwwQkNkZ0I7RURlaEIsbUJBQWtCLEVBc0luQjs7QUE3SUQ7SUFTSSxXQUFVO0lBQ1YsWUFBVyxFQWFaOztBQXZCSDtNQVlNLGNBQWEsRUFDZDs7QUFiTDtNQWVNLDJCQUEwQjtNQUMxQixZQ3ZCVTtNRHdCVixrQkFBaUIsRUFLbEI7O0FBdEJMO1FBbUJRLFdBQVU7UUFDVixVQUFTLEVBQ1Y7O0FBckJQO0lBeUJJLFdBQVU7SUFDVixZQUFXLEVBT1o7O0FBakNIO01BNEJNLFlBQVc7TUFDWCxhQUFZO01BQ1osbUJBQWtCLEVBRW5COztBQWhDTDtJQW1DSSxpQkFBZ0I7SUFDaEIsV0FBVTtJQUNWLFlBQVc7SUFDWCxlQUFjLEVBVWY7O0FBaERIO01Bd0NNLHNCQUFxQjtNQUNyQixlQUFlLEVBTWhCOztBQS9DTDtRQTJDUSwyQkFBMEI7UUFDMUIsWUNuRFE7UURvRFIsa0JBQWlCLEVBQ2xCOztBQTlDUDtJQWtESSxZQUFXLEVBQ1o7O0FBbkRIO0lBcURJLGFBQVk7SUFDWixrQkFBaUI7SUFDakIsa0JBQWlCO0lBQ2pCLFlDL0RZO0lEZ0VaLG1CQUFrQjtJQUNsQix1QkNuRWE7SURvRWIsYUFBWTtJQUNaLFVBQVM7SUFDVCxhQUFZO0lBQ1oseUJDckVZLEVEbUdiOztBQTVGSDtNQWlFTSxZQUFXO01BQ1gsYUFBWTtNQUNaLFdBQVU7TUFDVixtQkFBa0I7TUFDbEIsZUFBYztNQUNkLDRCQUEyQjtNQUMzQiwrQkFBOEI7TUFDOUIsaUNBQWdDO01BQ2hDLG9DQUFtQztNQUNuQyxVQUFTO01BQ1QsK0JBQThCO01BQzlCLG9DQUFtQztNQUNuQyxxQ0FBb0MsRUFDckM7O0FBOUVMO01BaUZNLFdBQVM7TUFDVCxhQUFZO01BQ1osZ0JBQWUsRUFFaEI7O0FBckZMO01BdUZNLFlBQVc7TUFDWCxhQUFZO01BQ1osbUJBQWtCLEVBRW5COztBQTNGTDtJQThGSSx3QkFBdUI7SUFDdkIsZUFBYyxFQU1mOztBQXJHSDtNQWtHTSxZQUFXLEVBQ1o7O0FBbkdMO0lBdUdJLHVCQUFzQixFQUN2Qjs7QUFDRDtJQXpHRjtNQTJHTSx1QkFBc0IsRUFJdkI7TUEvR0w7UUE2R1EsY0FBYSxFQUNkO0lBOUdQO01BaUhNLGNBQWEsRUFJZDtNQXJITDtRQW1IUSxlQUFjLEVBQ2Y7SUFwSFA7TUF1SE0sV0FBUyxFQUlWO01BM0hMO1FBeUhRLGNBQWEsRUFDZDtJQTFIUDtNQTZITSxXQUFTO01BQ1QsbUJBQWtCLEVBVW5CO01BeElMO1FBaUlVLFdBQVUsRUFFWDtNQW5JVDtRQXNJUSxjQUFhLEVBQ2QsRUFBQTs7QUFRUDtFQUNFLHlCQUF3QixFQUN6Qjs7QUFDRDtFQUNFLHNCQUFxQixFQUN0Qjs7QUFDRDtFQUNFO0lBQ0ksY0FBYSxFQUNoQjtFQUNEO0lBQ0UsZ0JBQWU7SUFDZixZQUFXO0lBQ1gsYUFBWSxFQUNiO0VBQ0Q7SUFDRSxpQ0FBZ0MsRUFDakM7RUFDRDtJQUNFLHlCQUF3QixFQUN6QixFQUFBOztBQUdIO0VBQ0UsY0FBYSxFQUNkIiwiZmlsZSI6InNyYy9hcHAvdXNlci9uYXZiYXIvbmF2YmFyLmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiQGltcG9ydCAnLi4vLi4vLi4vYXNzZXRzL3Nhc3MvY29sb3InO1xyXG5cclxuLmFjdGl2ZXtcclxuICBjb2xvcjogJGxpZ2h0X2NvbG9yICFpbXBvcnRhbnQ7XHJcbiAgZm9udC13ZWlnaHQ6IDkwMCAhaW1wb3J0YW50O1xyXG4gIGJvcmRlci1ib3R0b206IDJweCBzb2xpZCAkbWlkMl9jb2xvcjtcclxufVxyXG5cclxuXHJcbm5hdntcclxuICBwb3NpdGlvbjogZml4ZWQ7XHJcbiAgdG9wOiAwO1xyXG4gIGxlZnQ6IDA7XHJcbiAgcmlnaHQ6IDA7XHJcbiAgei1pbmRleDogKzEwMDA7XHJcbiAgYmFja2dyb3VuZC1jb2xvcjogJG1pZF9jb2xvcjtcclxuICBwYWRkaW5nLWxlZnQ6IDIwcHg7XHJcbiAgLnNpdGUtbmFtZXtcclxuICAgIHdpZHRoOiAxNSU7XHJcbiAgICBmbG9hdDogbGVmdDtcclxuICAgIC5ob21lLWljb257XHJcbiAgICAgIGRpc3BsYXk6IG5vbmU7XHJcbiAgICB9XHJcbiAgICBhe1xyXG4gICAgICB0ZXh0LXRyYW5zZm9ybTogY2FwaXRhbGl6ZTtcclxuICAgICAgY29sb3I6ICRkYXJrX2NvbG9yO1xyXG4gICAgICBwYWRkaW5nOiA1cHggMTBweDtcclxuICAgICAgaDN7XHJcbiAgICAgICAgcGFkZGluZzogMDtcclxuICAgICAgICBtYXJnaW46IDA7XHJcbiAgICAgIH1cclxuICAgIH1cclxuICB9XHJcbiAgLnVzZXItaW1hZ2V7XHJcbiAgICB3aWR0aDogMzAlO1xyXG4gICAgZmxvYXQ6IGxlZnQ7XHJcbiAgICBpbWd7XHJcbiAgICAgIHdpZHRoOiA0MHB4O1xyXG4gICAgICBoZWlnaHQ6IDQwcHg7XHJcbiAgICAgIGJvcmRlci1yYWRpdXM6IDUwJTtcclxuXHJcbiAgICB9XHJcbiAgfVxyXG4gIHVse1xyXG4gICAgbGlzdC1zdHlsZTogbm9uZTtcclxuICAgIHdpZHRoOiA1NSU7XHJcbiAgICBmbG9hdDogbGVmdDtcclxuICAgIGRpcmVjdGlvbjogcnRsO1xyXG4gICAgbGl7XHJcbiAgICAgIGRpc3BsYXk6IGlubGluZS1ibG9jaztcclxuICAgICAgcGFkZGluZzogIDAgNXB4O1xyXG4gICAgICBhe1xyXG4gICAgICAgIHRleHQtdHJhbnNmb3JtOiBjYXBpdGFsaXplO1xyXG4gICAgICAgIGNvbG9yOiAkZGFya19jb2xvcjtcclxuICAgICAgICBwYWRkaW5nOiA1cHggMTBweDtcclxuICAgICAgfVxyXG4gICAgfVxyXG4gIH1cclxuICBmcm9te1xyXG4gICAgd2lkdGg6IDEwMCU7XHJcbiAgfVxyXG4gIC5mcmllbmRzX3JlcSwgLm5vdGlmaWNhdGlvbnMsIC5tZXNzYWdlc3tcclxuICAgIHdpZHRoOiAzMDBweDtcclxuICAgIG1heC1oZWlnaHQ6IDMwMHB4O1xyXG4gICAgbWluLWhlaWdodDogMTAwcHg7XHJcbiAgICBjb2xvcjogJGRhcmtfY29sb3I7XHJcbiAgICBwb3NpdGlvbjogYWJzb2x1dGU7XHJcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiAkbGlnaHRfY29sb3I7XHJcbiAgICByaWdodDogMjkwcHg7XHJcbiAgICB0b3A6IDUwcHg7XHJcbiAgICB6LWluZGV4OiArNTA7XHJcbiAgICBib3gtc2hhZG93OiAwIDAgNXB4ICRkYXJrX2NvbG9yO1xyXG4gICAgLy8gb3ZlcmZsb3c6IGF1dG87XHJcbiAgICAmOjpiZWZvcmV7XHJcbiAgICAgIGNvbnRlbnQ6ICcnO1xyXG4gICAgICB6LWluZGV4OiArNTU7XHJcbiAgICAgIHRvcDogLTEwUFg7XHJcbiAgICAgIHBvc2l0aW9uOiBhYnNvbHV0ZTtcclxuICAgICAgZGlzcGxheTogYmxvY2s7XHJcbiAgICAgIHRyYW5zZm9ybTogdHJhbnNsYXRlWCgtNTAlKTtcclxuICAgICAgLW8tdHJhbnNmb3JtOiB0cmFuc2xhdGVYKC01MCUpO1xyXG4gICAgICAtbW96LXRyYW5zZm9ybTogdHJhbnNsYXRlWCgtNTAlKTtcclxuICAgICAgLXdlYmtpdC10cmFuc2Zvcm06IHRyYW5zbGF0ZVgoLTUwJSk7XHJcbiAgICAgIGxlZnQ6IDUwJTtcclxuICAgICAgYm9yZGVyLWJvdHRvbTogMTBweCAjMDAwIHNvbGlkO1xyXG4gICAgICBib3JkZXItbGVmdDogMTBweCB0cmFuc3BhcmVudCBzb2xpZDtcclxuICAgICAgYm9yZGVyLXJpZ2h0OiAxMHB4IHRyYW5zcGFyZW50IHNvbGlkO1xyXG4gICAgfVxyXG5cclxuICAgIC5tYXQtaWNvbntcclxuICAgICAgY29sb3I6cmVkO1xyXG4gICAgICBmbG9hdDogcmlnaHQ7XHJcbiAgICAgIGN1cnNvcjogcG9pbnRlcjtcclxuXHJcbiAgICB9XHJcbiAgICAgICAgaW1ne1xyXG4gICAgICB3aWR0aDogNDBweDtcclxuICAgICAgaGVpZ2h0OiA0MHB4O1xyXG4gICAgICBib3JkZXItcmFkaXVzOiA1MCU7XHJcblxyXG4gICAgfVxyXG4gIH1cclxuICAubm90aWZpY2F0aW9uc3tcclxuICAgIHJpZ2h0OiAxOTNweCAhaW1wb3J0YW50O1xyXG4gICAgb3ZlcmZsb3c6IGF1dG87XHJcblxyXG4gICAgLm5vdGlmaWNhdGlvbi1ib2R5e1xyXG4gICAgICBjb2xvcjogIzAwMDtcclxuICAgIH1cclxuXHJcbiAgfVxyXG4gIC5tZXNzYWdlc3tcclxuICAgIHJpZ2h0OiA3M3B4ICFpbXBvcnRhbnQ7XHJcbiAgfVxyXG4gIEBtZWRpYShtYXgtd2lkdGg6MTIwMHB4KSB7XHJcbiAgICAuZnJpZW5kc19yZXEsIC5ub3RpZmljYXRpb25zLCAubWVzc2FnZXN7XHJcbiAgICAgIHJpZ2h0OiA2MHB4ICFpbXBvcnRhbnQ7XHJcbiAgICAgICY6OmJlZm9yZXtcclxuICAgICAgICBkaXNwbGF5OiBub25lO1xyXG4gICAgICB9XHJcbiAgICB9XHJcbiAgICAuc2l0ZS1uYW1le1xyXG4gICAgICBkaXNwbGF5OiBub25lO1xyXG4gICAgICAuaG9tZS1pY29ue1xyXG4gICAgICAgIGRpc3BsYXk6IGJsb2NrO1xyXG4gICAgICB9XHJcbiAgICB9XHJcbiAgICAudXNlci1pbWFnZXtcclxuICAgICAgd2lkdGg6NTAlO1xyXG4gICAgICAubGluay1zcGFue1xyXG4gICAgICAgIGRpc3BsYXk6IG5vbmU7XHJcbiAgICAgIH1cclxuICAgIH1cclxuICAgIHVse1xyXG4gICAgICB3aWR0aDo1MCU7XHJcbiAgICAgIHBhZGRpbmctcmlnaHQ6IDVweDtcclxuICAgICAgbGl7XHJcbiAgICAgICAgYXtcclxuICAgICAgICAgIHBhZGRpbmc6IDA7XHJcblxyXG4gICAgICAgIH1cclxuICAgICAgfVxyXG4gICAgICAubGluay1zcGFue1xyXG4gICAgICAgIGRpc3BsYXk6IG5vbmU7XHJcbiAgICAgIH1cclxuICAgIH1cclxuXHJcbiAgfVxyXG5cclxuICBcclxufVxyXG5cclxuLnMtc2NyZWVuLWxpbmt7XHJcbiAgZGlzcGxheTogbm9uZSAhaW1wb3J0YW50O1xyXG59XHJcbi5tZC1zY3JlZW4tbGlua3tcclxuICBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7XHJcbn1cclxuQG1lZGlhIChtYXgtd2lkdGg6NTc4cHgpIHtcclxuICAuZnJpZW5kc19yZXEsIC5ub3RpZmljYXRpb25zLCAubWVzc2FnZXN7XHJcbiAgICAgIGRpc3BsYXk6IG5vbmU7XHJcbiAgfVxyXG4gIC5tYXQtaWNvbntcclxuICAgIGZvbnQtc2l6ZTogMTZweDtcclxuICAgIHdpZHRoOiAxNnB4O1xyXG4gICAgaGVpZ2h0OiAxOHB4O1xyXG4gIH1cclxuICAucy1zY3JlZW4tbGlua3tcclxuICAgIGRpc3BsYXk6IGlubGluZS1ibG9jayAhaW1wb3J0YW50O1xyXG4gIH1cclxuICAubWQtc2NyZWVuLWxpbmt7XHJcbiAgICBkaXNwbGF5OiBub25lICFpbXBvcnRhbnQ7XHJcbiAgfVxyXG59XHJcblxyXG4uZC1ub25le1xyXG4gIGRpc3BsYXk6IG5vbmU7XHJcbn1cclxuXHJcblxyXG4iLCIkbGlnaHRfY29sb3I6I2ZmZjtcclxuJG1pZF9jb2xvcjojODljNGZmO1xyXG4kZGFya19jb2xvcjojMDAwO1xyXG4kbWlkMl9jb2xvcjojM2Y1MWI1O1xyXG4kc3VjY2Vzc19jb2xvcjojYThmN2E4O1xyXG4kZGFuZ2VyX2NvbG9yOnJnYigyNTUsIDk4LCA5Myk7Il19 */"
 
 /***/ }),
 
@@ -8149,6 +8203,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _services_services_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services/services.service */ "./src/app/services/services.service.ts");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 /* harmony import */ var _services_auth_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../services/auth.service */ "./src/app/services/auth.service.ts");
+/* harmony import */ var src_app_services_socket_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/app/services/socket.service */ "./src/app/services/socket.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8163,18 +8218,55 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var NavbarComponent = /** @class */ (function () {
-    function NavbarComponent(_renderer, _services, _router, _auth) {
+    function NavbarComponent(_renderer, _services, _router, _auth, _socketServices) {
+        var _this = this;
         this._renderer = _renderer;
         this._services = _services;
         this._router = _router;
         this._auth = _auth;
+        this._socketServices = _socketServices;
         this.url = this._services.url;
+        this.user_notifications = [];
+        this.frindRequest = [];
+        this.notificationsLength = [];
+        this._socketServices.onGetAllNotifications().subscribe(function (res) {
+            res.data.sort(function (a, b) {
+                if (a.createdAt < b.createdAt) {
+                    return 1;
+                }
+                if (a.createdAt > b.createdAt) {
+                    return -1;
+                }
+                else {
+                    return 0;
+                }
+            });
+            _this.user_notifications = res.data;
+            var notArray = [];
+            for (var _i = 0, _a = _this.user_notifications; _i < _a.length; _i++) {
+                var item = _a[_i];
+                if (!item.isRead) {
+                    notArray.push(item);
+                }
+            }
+            // this.notificationsLength = notArray;
+        });
+        this._socketServices.onGetNewNotifications().subscribe(function (res) {
+            _this.notificationsLength.push(res.data);
+        });
+        this._socketServices.getGetFrindRequst().subscribe(function (res) {
+            if (res.success) {
+                _this.frindRequest = res.data;
+            }
+        });
+        this._socketServices.getGetFrindNotifications().subscribe(function (res) {
+            _this._socketServices.onFriendReuest(_this.user._id);
+        });
     }
     NavbarComponent.prototype.ngOnInit = function () {
-        var _this = this;
-        this._services.friendsReqLength.subscribe(function (res) { _this.friendsReqLength = res; });
-        console.log(this.friendsReqLength);
+        this._socketServices.onNotifications({ id: this.user._id, isRead: false });
     };
     NavbarComponent.prototype.logout = function () {
         this._auth.logout();
@@ -8184,6 +8276,8 @@ var NavbarComponent = /** @class */ (function () {
         this._renderer.removeClass(this.notifications.nativeElement, 'd-none');
         this._renderer.addClass(this.messages.nativeElement, 'd-none');
         this._renderer.addClass(this.friendsReq.nativeElement, 'd-none');
+        this._socketServices.onNotifications({ id: this.user._id, isRead: true });
+        this.notificationsLength = [];
     };
     NavbarComponent.prototype.getMessages = function () {
         this._renderer.removeClass(this.messages.nativeElement, 'd-none');
@@ -8193,6 +8287,7 @@ var NavbarComponent = /** @class */ (function () {
         this._renderer.removeClass(this.friendsReq.nativeElement, 'd-none');
         this._renderer.addClass(this.notifications.nativeElement, 'd-none');
         this._renderer.addClass(this.messages.nativeElement, 'd-none');
+        this._socketServices.onFriendReuest(this.user._id);
     };
     NavbarComponent.prototype.close = function (d) {
         switch (d) {
@@ -8206,6 +8301,22 @@ var NavbarComponent = /** @class */ (function () {
                 this._renderer.addClass(this.friendsReq.nativeElement, 'd-none');
                 break;
         }
+    };
+    NavbarComponent.prototype.cansleFriendRequest = function (u, friend) {
+        this._socketServices.onCansleFriendReuest({ userId: u._id, friendId: friend._id });
+    };
+    NavbarComponent.prototype.acceptFriendRequest = function (u, friend) {
+        var x = {
+            _id: u._id,
+            username: u.username,
+            image: u.image
+        };
+        var z = {
+            _id: friend._id,
+            username: friend.username,
+            image: friend.image
+        };
+        this._socketServices.onAcceptFriendRequest({ user: x, friend: z });
     };
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])('userNav'),
@@ -8251,7 +8362,8 @@ var NavbarComponent = /** @class */ (function () {
         __metadata("design:paramtypes", [_angular_core__WEBPACK_IMPORTED_MODULE_0__["Renderer2"],
             _services_services_service__WEBPACK_IMPORTED_MODULE_2__["ServicesService"],
             _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"],
-            _services_auth_service__WEBPACK_IMPORTED_MODULE_4__["AuthService"]])
+            _services_auth_service__WEBPACK_IMPORTED_MODULE_4__["AuthService"],
+            src_app_services_socket_service__WEBPACK_IMPORTED_MODULE_5__["SocketService"]])
     ], NavbarComponent);
     return NavbarComponent;
 }());
@@ -8278,7 +8390,7 @@ module.exports = "<p>\n  notfacation works!\n</p>\n"
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ""
+module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL3VzZXIvbm90ZmFjYXRpb24vbm90ZmFjYXRpb24uY29tcG9uZW50LnNjc3MifQ== */"
 
 /***/ }),
 
@@ -8323,6 +8435,301 @@ var NotfacationComponent = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/user/post/post.component.html":
+/*!***********************************************!*\
+  !*** ./src/app/user/post/post.component.html ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"post-contanir\" *ngIf=\"post\">\n  <div class=\"post-ui\" >\n      <div class=\"post-contant\" >\n          <div class=\"edit\" *ngIf=\"user._id === post.userId\">\n                  <mat-icon (click)='displayEditPostForm($event)' title=\"Edit post\" class=\"mat-18 edit-icon\">edit</mat-icon>\n                  <mat-icon (click)='removePost($event, post._id)' class=\"mat-18 delete-icon\">delete</mat-icon>\n          </div>\n          <p>\n              <a [routerLink]=\"[ '/user/profile']\" [queryParams]=\"{id: post.userId}\">\n                  <img class=\"image\" src=\"{{url}}/{{post.userImage}}\" alt=\"user image\">\n                  {{post.username| titlecase}}\n              </a>\n          </p>\n          <p class=\"p-post\">puplished {{post.createdAt | date:'yyyy-MM-dd HH:mm'}}</p>  \n          <p class=\"p-post\"> {{post.body}} </p>\n          <form class=\"comment-form d-none\"  (submit)=\"editPost($event, i, post._id, post.body)\">\n              <mat-form-field >\n                  <textarea matInput name=\"editPost\" placeholder=\"Edit post\" [(ngModel)]=\"post.body\"></textarea>\n              </mat-form-field>\n              <div class=\"btn-contaniar\">\n                  <button mat-raised-button color=\"primary\" type=\"submit\">save</button>\n              </div> \n          </form>\n      </div> \n  <!-- start display comment -->\n  <div class=\"img\" *ngFor=\"let comment of post.comment; let u = index\">\n      <div class=\"edit\" >\n              <mat-icon *ngIf=\"user._id === comment.userId\" style=\"color:#3f51b5;\" (click)='displayEditCommentForm($event)' title=\"Edit post\" class=\"mat-18 edit-icon\">edit</mat-icon>\n              <mat-icon *ngIf=\"user._id === comment.userId || user._id === post.userId\"   (click)=\"removeComment(post._id, comment._id, $event)\" title=\"Remove comment\" class=\"mat-18 delete-icon\">delete</mat-icon>\n      </div>\n      <p>\n          <a [routerLink]=\"[ '/user/profile']\" [queryParams]=\"{id: comment.userId}\" (click)='goToProfile(comment.userId)'>\n              <img class=\"image\" src=\"{{url}}/{{comment.userImage}}\" alt=\"user image\">\n              {{comment.username}}\n          </a>\n      </p>\n      <p class=\"p-post\">  {{comment.body}}</p>\n      <form class=\"d-none\" (submit)=\"editComment($event, post._id, comment._id, comment.body)\">\n              <mat-form-field >\n                  <textarea matInput  name=\"body\" pInputTextarea [(ngModel)]=\"comment.body\" placeholder=\"comment\"></textarea>\n              </mat-form-field>    \n              <div class=\"btn-contaniar\">\n                  <button mat-raised-button color=\"primary\" type=\"submit\">save</button>\n              </div>                                 \n          </form>\n  <!-- start display replay comment -->\n                  <div class=\"replay\"   *ngFor=\"let item of comment.replay; let r = index\" >\n                      <div class=\"edit\" >\n                          <mat-icon style=\"color:#3f51b5;\" *ngIf=\"user._id === item.userId\"  (click)='displayEditReplayForm($event)' title=\"Edit Replay\" class=\"mat-18 edit-icon\">edit</mat-icon>\n                          <mat-icon *ngIf=\"user._id === item.userId || comment.userId === user._id\" (click)=\"removeReplay(post._id, comment._id, item._id, $event)\" title=\"Remove Replay\" class=\"delete-icon\">delete</mat-icon>\n                      </div>\n                      <p>\n                          <a [routerLink]=\"[ '/user/profile']\" [queryParams]=\"{id: item.userId}\">\n                          <img class=\"image\" src=\"{{url}}/{{item.userImage}}\" alt=\"user image\">\n                          {{item.username| titlecase}}\n                          </a>\n                      </p>\n                      <p class=\"p-replay\"> {{item.body}} </p>\n\n                      <form class=\"comment-form d-none\" (submit)=\"editReplay($event, post._id, comment._id, item._id, item.body)\">\n                          <mat-form-field >\n                              <textarea matInput  name=\"body\" pInputTextarea [(ngModel)]=\"item.body\" pInputTextarea placeholder=\"Edit Replay\"></textarea>\n                          </mat-form-field>    \n                          <div class=\"btn-contaniar\">\n                              <button mat-raised-button color=\"primary\" type=\"submit\">save</button>\n                          </div>   \n                      </form>\n                  </div>\n  <!-- end display replay comment -->\n                      <i (click)=\"displayReplayForm($event)\">replay</i>\n                      <form class=\"replay-form d-none clearfix\" (submit)='postReplay($event, post._id, comment._id, comment.replay[r], comment.replay)'>\n                          <mat-form-field >\n                              <textarea class=\"replat-textarea\" matInput  name=\"replay\" placeholder=\"replay\" [(ngModel)]=\"comment.replay[r]\"></textarea>\n                          </mat-form-field>    \n                          <div class=\"btn-contaniar\">\n                              <button mat-raised-button color=\"primary\" type=\"submit\">replay</button>\n                          </div>                                 \n                      </form>\n          </div>\n  \n  <!-- end display comment -->\n      </div>\n      <div class=\"comment\">\n              <form class=\"comment-form\" (submit)='postComment($event, post._id, post.comment[index], post.comment)' >\n                  <mat-form-field >\n                          <textarea matInput \n                          name=\"comment\"\n                          [(ngModel)]=\"post.comment[index]\"\n                          placeholder=\"comment\"></textarea>\n                      </mat-form-field>\n                      <div class=\"btn-contaniar\">\n                          <button mat-raised-button color=\"primary\"  type=\"submit\">comment</button>\n                      </div> \n              </form>\n          </div>\n          <a class='btn' *ngIf=\"post.commentsLength > 1\" (click)='getMoreComment(post, $event)'>comment {{post.commentsLength}}</a>\n      </div>"
+
+/***/ }),
+
+/***/ "./src/app/user/post/post.component.scss":
+/*!***********************************************!*\
+  !*** ./src/app/user/post/post.component.scss ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ".d-none {\n  display: none; }\n\nmat-form-field {\n  width: 100%; }\n\n.post-form {\n  width: 95%;\n  border-radius: 2%;\n  margin: 10px auto;\n  box-shadow: 2px 2px 9px;\n  padding: 20px; }\n\n.post-form .example-container mat-form-field {\n    width: 100%; }\n\n.post-form .btn-contaniar {\n    width: 100%;\n    direction: rtl; }\n\n.post-form textarea {\n    height: 75px; }\n\n.post-contanir {\n  box-shadow: 2px 2px 9px;\n  width: 95%;\n  border-radius: 2%;\n  margin: 10px auto;\n  border: 1px solid #89c4ff;\n  padding: 15px;\n  margin-top: 15px;\n  background-color: #fff;\n  color: #000;\n  position: relative; }\n\n.post-contanir a {\n    color: #000;\n    font-size: 18px;\n    font-weight: bold; }\n\n.post-contanir .post-contant form textarea {\n    background-color: #89c4ff;\n    padding: 5px;\n    color: #fff; }\n\n.post-contanir .edit {\n    text-align: right; }\n\n.post-contanir .edit .edit-icon {\n      color: #89c4ff;\n      cursor: pointer; }\n\n.post-contanir .edit .delete-icon {\n      color: red !important;\n      cursor: pointer; }\n\n.post-contanir .post-ui {\n    padding: 10px; }\n\n.post-contanir .img {\n    background-color: #89c4ff;\n    margin-top: 15px;\n    border-radius: 15px;\n    position: relative;\n    padding: 10px; }\n\n.post-contanir .img a {\n      color: #fff !important; }\n\n.post-contanir .img .p-post {\n      padding-left: 55px;\n      margin: 0;\n      overflow: auto; }\n\n.post-contanir .img .p-replay {\n      padding: 5px 0px 0 50px; }\n\n.post-contanir .img .replay-form {\n      padding: 15px; }\n\n.post-contanir .img .replay-form mat-form-field textarea {\n        background-color: #fff;\n        color: #3f51b5; }\n\n.post-contanir .img .clearfix {\n      clear: both; }\n\n.post-contanir .img p {\n      margin: 0; }\n\n.post-contanir .img i {\n      color: #fff; }\n\n.post-contanir .image {\n    position: relative;\n    width: 40px;\n    height: 40px;\n    border-radius: 50%;\n    box-shadow: 0 0 5px 0px #000; }\n\n.post-contanir .replay {\n    border-radius: 20px;\n    background-color: #89c4ff;\n    padding-left: 0;\n    margin-left: 44px;\n    padding: 1px 20px;\n    margin-top: 11px;\n    color: #fff; }\n\n.post-contanir .replay a {\n      color: #000 !important;\n      font-size: 18px;\n      font-weight: bold; }\n\n.post-contanir .comment mat-form-field {\n    width: 100%; }\n\n.btn-contaniar {\n  text-align: right; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvdXNlci9wb3N0L0U6XFxhcHBzXFxOZXcgTUVBTiBzdGFrZVxcWU9EQVxcZnJvbnQvc3JjXFxhcHBcXHVzZXJcXHBvc3RcXHBvc3QuY29tcG9uZW50LnNjc3MiLCJzcmMvYXBwL3VzZXIvcG9zdC9FOlxcYXBwc1xcTmV3IE1FQU4gc3Rha2VcXFlPREFcXGZyb250L3NyY1xcYXNzZXRzXFxzYXNzXFxfY29sb3Iuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFHQTtFQUNJLGNBQWEsRUFDaEI7O0FBRUQ7RUFDSSxZQUFXLEVBQ2Q7O0FBQ0Q7RUFDSSxXQUFVO0VBQ1Ysa0JBQWlCO0VBQ2pCLGtCQUFpQjtFQUNqQix3QkFBdUI7RUFDdkIsY0FBYSxFQWFoQjs7QUFsQkQ7SUFRWSxZQUFXLEVBQ2Q7O0FBVFQ7SUFZUSxZQUFXO0lBQ1gsZUFBYyxFQUNqQjs7QUFkTDtJQWdCUSxhQUFZLEVBQ2Y7O0FBRUw7RUFDSSx3QkFBdUI7RUFDdkIsV0FBVTtFQUNWLGtCQUFpQjtFQUNqQixrQkFBaUI7RUFDakIsMEJDakNjO0VEa0NkLGNBQWE7RUFDYixpQkFBZ0I7RUFDaEIsdUJDckNhO0VEc0NiLFlDcENZO0VEcUNaLG1CQUFrQixFQXFHckI7O0FBL0dEO0lBWVEsWUN2Q1E7SUR3Q1IsZ0JBQWU7SUFDZixrQkFBaUIsRUFFcEI7O0FBaEJMO0lBb0JnQiwwQkFBeUI7SUFDekIsYUFBWTtJQUNaLFlBQVcsRUFDZDs7QUF2QmI7SUE0Qlksa0JBQWlCLEVBV3BCOztBQXZDVDtNQThCZ0IsZUMxREU7TUQyREYsZ0JBQWUsRUFFbEI7O0FBakNiO01BbUNnQixzQkFBcUI7TUFDckIsZ0JBQWUsRUFFbEI7O0FBdENiO0lBeUNZLGNBQWEsRUFDaEI7O0FBMUNUO0lBNENRLDBCQ3hFVTtJRHlFVixpQkFBZ0I7SUFDaEIsb0JBQW1CO0lBQ25CLG1CQUFrQjtJQUNsQixjQUFhLEVBZ0NoQjs7QUFoRkw7TUFrRFksdUJBQThCLEVBQ2pDOztBQW5EVDtNQXFEWSxtQkFBa0I7TUFDbEIsVUFBUztNQUNULGVBQWMsRUFDakI7O0FBeERUO01BMERZLHdCQUF1QixFQUMxQjs7QUEzRFQ7TUE2RFksY0FBYSxFQU9oQjs7QUFwRVQ7UUFnRW9CLHVCQzdGSDtRRDhGRyxlQzNGRCxFRDRGRjs7QUFsRWpCO01Bc0VZLFlBQVcsRUFDZDs7QUF2RVQ7TUF5RVksVUFBUyxFQUNaOztBQTFFVDtNQTRFWSxZQ3pHSyxFRDBHUjs7QUE3RVQ7SUFtRlEsbUJBQWtCO0lBQ2xCLFlBQVU7SUFDVixhQUFZO0lBQ1osbUJBQWtCO0lBQ2xCLDZCQ2xIUSxFRG1IWDs7QUF4Rkw7SUEwRlEsb0JBQW1CO0lBQ25CLDBCQ3ZIVTtJRHdIVixnQkFBZTtJQUNmLGtCQUFpQjtJQUNqQixrQkFBaUI7SUFDakIsaUJBQWdCO0lBQ2hCLFlDN0hTLEVEb0laOztBQXZHTDtNQWtHWSx1QkFBNkI7TUFDN0IsZ0JBQWU7TUFDZixrQkFBaUIsRUFFcEI7O0FBdEdUO0lBMEdZLFlBQVcsRUFDZDs7QUFNVDtFQUNJLGtCQUFpQixFQUNwQiIsImZpbGUiOiJzcmMvYXBwL3VzZXIvcG9zdC9wb3N0LmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiQGltcG9ydCAnLi4vLi4vLi4vYXNzZXRzL3Nhc3MvY29sb3InO1xyXG5AaW1wb3J0ICcuLi8uLi8uLi9hc3NldHMvc2Fzcy9zaGFyZWQnO1xyXG5cclxuLmQtbm9uZXtcclxuICAgIGRpc3BsYXk6IG5vbmU7XHJcbn1cclxuXHJcbm1hdC1mb3JtLWZpZWxke1xyXG4gICAgd2lkdGg6IDEwMCU7XHJcbn1cclxuLnBvc3QtZm9ybXtcclxuICAgIHdpZHRoOiA5NSU7XHJcbiAgICBib3JkZXItcmFkaXVzOiAyJTtcclxuICAgIG1hcmdpbjogMTBweCBhdXRvO1xyXG4gICAgYm94LXNoYWRvdzogMnB4IDJweCA5cHg7XHJcbiAgICBwYWRkaW5nOiAyMHB4O1xyXG4gICAgLmV4YW1wbGUtY29udGFpbmVye1xyXG4gICAgICAgIG1hdC1mb3JtLWZpZWxke1xyXG4gICAgICAgICAgICB3aWR0aDogMTAwJTtcclxuICAgICAgICB9XHJcbiAgICB9XHJcbiAgICAuYnRuLWNvbnRhbmlhcntcclxuICAgICAgICB3aWR0aDogMTAwJTtcclxuICAgICAgICBkaXJlY3Rpb246IHJ0bDtcclxuICAgIH1cclxuICAgIHRleHRhcmVhe1xyXG4gICAgICAgIGhlaWdodDogNzVweDtcclxuICAgIH1cclxufSAgICAgXHJcbi5wb3N0LWNvbnRhbmlye1xyXG4gICAgYm94LXNoYWRvdzogMnB4IDJweCA5cHg7XHJcbiAgICB3aWR0aDogOTUlO1xyXG4gICAgYm9yZGVyLXJhZGl1czogMiU7XHJcbiAgICBtYXJnaW46IDEwcHggYXV0bztcclxuICAgIGJvcmRlcjogMXB4IHNvbGlkICRtaWRfY29sb3I7XHJcbiAgICBwYWRkaW5nOiAxNXB4O1xyXG4gICAgbWFyZ2luLXRvcDogMTVweDtcclxuICAgIGJhY2tncm91bmQtY29sb3I6ICRsaWdodF9jb2xvcjtcclxuICAgIGNvbG9yOiAkZGFya19jb2xvcjtcclxuICAgIHBvc2l0aW9uOiByZWxhdGl2ZTtcclxuICAgIGF7XHJcbiAgICAgICAgY29sb3I6ICRkYXJrX2NvbG9yO1xyXG4gICAgICAgIGZvbnQtc2l6ZTogMThweDtcclxuICAgICAgICBmb250LXdlaWdodDogYm9sZDtcclxuXHJcbiAgICB9XHJcbiAgICAucG9zdC1jb250YW50e1xyXG4gICAgICAgIGZvcm17XHJcbiAgICAgICAgICAgIHRleHRhcmVhe1xyXG4gICAgICAgICAgICAgICAgYmFja2dyb3VuZC1jb2xvcjogIzg5YzRmZjtcclxuICAgICAgICAgICAgICAgIHBhZGRpbmc6IDVweDtcclxuICAgICAgICAgICAgICAgIGNvbG9yOiAjZmZmO1xyXG4gICAgICAgICAgICB9XHJcblxyXG4gICAgICAgIH1cclxuICAgIH1cclxuICAgICAgICAuZWRpdHtcclxuICAgICAgICAgICAgdGV4dC1hbGlnbjogcmlnaHQ7XHJcbiAgICAgICAgICAgIC5lZGl0LWljb257XHJcbiAgICAgICAgICAgICAgICBjb2xvcjokbWlkX2NvbG9yO1xyXG4gICAgICAgICAgICAgICAgY3Vyc29yOiBwb2ludGVyO1xyXG5cclxuICAgICAgICAgICAgfVxyXG4gICAgICAgICAgICAuZGVsZXRlLWljb257XHJcbiAgICAgICAgICAgICAgICBjb2xvcjogcmVkICFpbXBvcnRhbnQ7XHJcbiAgICAgICAgICAgICAgICBjdXJzb3I6IHBvaW50ZXI7XHJcblxyXG4gICAgICAgICAgICB9XHJcbiAgICAgICAgfVxyXG4gICAgICAgIC5wb3N0LXVpe1xyXG4gICAgICAgICAgICBwYWRkaW5nOiAxMHB4O1xyXG4gICAgICAgIH1cclxuICAgIC5pbWd7XHJcbiAgICAgICAgYmFja2dyb3VuZC1jb2xvcjogJG1pZF9jb2xvcjtcclxuICAgICAgICBtYXJnaW4tdG9wOiAxNXB4O1xyXG4gICAgICAgIGJvcmRlci1yYWRpdXM6IDE1cHg7XHJcbiAgICAgICAgcG9zaXRpb246IHJlbGF0aXZlO1xyXG4gICAgICAgIHBhZGRpbmc6IDEwcHg7XHJcbiAgICAgICAgYXtcclxuICAgICAgICAgICAgY29sb3I6ICRsaWdodF9jb2xvciAhaW1wb3J0YW50O1xyXG4gICAgICAgIH1cclxuICAgICAgICAucC1wb3N0e1xyXG4gICAgICAgICAgICBwYWRkaW5nLWxlZnQ6IDU1cHg7XHJcbiAgICAgICAgICAgIG1hcmdpbjogMDtcclxuICAgICAgICAgICAgb3ZlcmZsb3c6IGF1dG87XHJcbiAgICAgICAgfVxyXG4gICAgICAgIC5wLXJlcGxheXtcclxuICAgICAgICAgICAgcGFkZGluZzogNXB4IDBweCAwIDUwcHg7IFxyXG4gICAgICAgIH1cclxuICAgICAgICAucmVwbGF5LWZvcm17XHJcbiAgICAgICAgICAgIHBhZGRpbmc6IDE1cHg7XHJcbiAgICAgICAgICAgIG1hdC1mb3JtLWZpZWxke1xyXG4gICAgICAgICAgICAgICAgdGV4dGFyZWF7XHJcbiAgICAgICAgICAgICAgICAgICAgYmFja2dyb3VuZC1jb2xvcjogJGxpZ2h0X2NvbG9yO1xyXG4gICAgICAgICAgICAgICAgICAgIGNvbG9yOiAkbWlkMl9jb2xvcjtcclxuICAgICAgICAgICAgICAgIH1cclxuICAgICAgICAgICAgfVxyXG4gICAgICAgIH1cclxuICAgICAgICAuY2xlYXJmaXh7XHJcbiAgICAgICAgICAgIGNsZWFyOiBib3RoO1xyXG4gICAgICAgIH1cclxuICAgICAgICBwe1xyXG4gICAgICAgICAgICBtYXJnaW46IDA7XHJcbiAgICAgICAgfVxyXG4gICAgICAgIGl7XHJcbiAgICAgICAgICAgIGNvbG9yOiAkbGlnaHRfY29sb3I7XHJcbiAgICAgICAgfVxyXG4gICAgICAgIC8vIEBleHRlbmQgJWZvcm07XHJcblxyXG4gICAgfVxyXG5cclxuICAgIC5pbWFnZXtcclxuICAgICAgICBwb3NpdGlvbjogcmVsYXRpdmU7XHJcbiAgICAgICAgd2lkdGg6NDBweDtcclxuICAgICAgICBoZWlnaHQ6IDQwcHg7XHJcbiAgICAgICAgYm9yZGVyLXJhZGl1czogNTAlO1xyXG4gICAgICAgIGJveC1zaGFkb3c6IDAgMCA1cHggMHB4ICRkYXJrX2NvbG9yO1xyXG4gICAgfVxyXG4gICAgLnJlcGxheXtcclxuICAgICAgICBib3JkZXItcmFkaXVzOiAyMHB4O1xyXG4gICAgICAgIGJhY2tncm91bmQtY29sb3I6ICRtaWRfY29sb3I7XHJcbiAgICAgICAgcGFkZGluZy1sZWZ0OiAwO1xyXG4gICAgICAgIG1hcmdpbi1sZWZ0OiA0NHB4O1xyXG4gICAgICAgIHBhZGRpbmc6IDFweCAyMHB4O1xyXG4gICAgICAgIG1hcmdpbi10b3A6IDExcHg7XHJcbiAgICAgICAgY29sb3I6ICRsaWdodF9jb2xvcjtcclxuICAgICAgICBhe1xyXG4gICAgICAgICAgICBjb2xvcjogJGRhcmtfY29sb3IgIWltcG9ydGFudDtcclxuICAgICAgICAgICAgZm9udC1zaXplOiAxOHB4O1xyXG4gICAgICAgICAgICBmb250LXdlaWdodDogYm9sZDtcclxuXHJcbiAgICAgICAgfVxyXG4gICAgfVxyXG4gICAgLmNvbW1lbnR7XHJcbiAgICAgICAgbWF0LWZvcm0tZmllbGR7XHJcbiAgICAgICAgICAgIHdpZHRoOiAxMDAlO1xyXG4gICAgICAgIH1cclxuXHJcbiAgICAgICAgXHJcbiAgICB9XHJcbn1cclxuXHJcbi5idG4tY29udGFuaWFye1xyXG4gICAgdGV4dC1hbGlnbjogcmlnaHQ7XHJcbn0iLCIkbGlnaHRfY29sb3I6I2ZmZjtcclxuJG1pZF9jb2xvcjojODljNGZmO1xyXG4kZGFya19jb2xvcjojMDAwO1xyXG4kbWlkMl9jb2xvcjojM2Y1MWI1O1xyXG4kc3VjY2Vzc19jb2xvcjojYThmN2E4O1xyXG4kZGFuZ2VyX2NvbG9yOnJnYigyNTUsIDk4LCA5Myk7Il19 */"
+
+/***/ }),
+
+/***/ "./src/app/user/post/post.component.ts":
+/*!*********************************************!*\
+  !*** ./src/app/user/post/post.component.ts ***!
+  \*********************************************/
+/*! exports provided: PostComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PostComponent", function() { return PostComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var src_app_services_services_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/services/services.service */ "./src/app/services/services.service.ts");
+/* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm5/material.es5.js");
+/* harmony import */ var src_app_services_socket_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/services/socket.service */ "./src/app/services/socket.service.ts");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+var PostComponent = /** @class */ (function () {
+    function PostComponent(_services, _snackBar, _dialog, _socketIoServices, _http, _activatedRoute) {
+        this._services = _services;
+        this._snackBar = _snackBar;
+        this._dialog = _dialog;
+        this._socketIoServices = _socketIoServices;
+        this._http = _http;
+        this._activatedRoute = _activatedRoute;
+        this.url = this._services.url;
+        this.user = JSON.parse(localStorage.getItem('user'));
+    }
+    PostComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        var id = this._activatedRoute.snapshot.queryParamMap.get('id');
+        this._services.getPost(id).subscribe(function (res) {
+            if (res.success) {
+                _this.post = res.post;
+                console.log('poooooooooooooooooooost', _this.post);
+            }
+            else {
+                _this._snackBar.open(res.errMSG, 'Undo', { duration: 5000 });
+            }
+        }, function (error) {
+            _this._snackBar.open(error.message, 'Undo', { duration: 10000 });
+        });
+        setTimeout(function () {
+        }, 1000);
+    };
+    PostComponent.prototype.ngOnDestroy = function () {
+        // this.subscription.unsubscribe();
+    };
+    PostComponent.prototype.displayEditPostForm = function (event) {
+        event.target.parentElement.parentElement.lastChild.classList.remove('d-none');
+        event.target.parentElement.parentElement.lastChild.previousSibling.classList.add('d-none');
+        event.target.classList.add('d-none');
+    }; // display eidt post
+    // remove post 
+    PostComponent.prototype.removePost = function (event, id) {
+        var _this = this;
+        this._services.removePost(id).subscribe(function (res) {
+            if (res.success) {
+                event.target.parentElement.parentElement.parentElement.parentElement.classList.add('d-none');
+                _this._snackBar.open(res.MSG, 'Undo', { duration: 5000 });
+            }
+            else {
+                _this._snackBar.open(res.errMSG, 'Undo', { duration: 5000 });
+            }
+        }, function (error) {
+            _this._snackBar.open(error.message.errMSG, 'Undo', { duration: 10000 });
+        });
+    };
+    // edit post
+    PostComponent.prototype.editPost = function (event, i, id, updatePost) {
+        var _this = this;
+        var post = {
+            body: updatePost
+        };
+        if (post.body === undefined || post.body === '') {
+            this._snackBar.open('you must write anything', 'Undo', { duration: 5000 });
+        }
+        else {
+            this._services.editPost(id, post).subscribe(function (res) {
+                if (res.success) {
+                    event.target.classList.add('d-none');
+                    event.target.previousSibling.classList.remove('d-none');
+                    event.target.parentElement.firstElementChild.firstElementChild.classList.remove('d-none');
+                    _this._snackBar.open(res.MSG, 'Undo', { duration: 5000 });
+                }
+                else {
+                    _this._snackBar.open(res.errMSG, 'Undo', { duration: 5000 });
+                }
+            }, function (error) {
+                _this._snackBar.open(error.message.errMSG, 'Undo', { duration: 10000 });
+            });
+        }
+    }; // edit post
+    // post comment form
+    PostComponent.prototype.postComment = function (event, id, comm, po) {
+        var comment = {
+            body: comm,
+            username: this.user.username,
+            image: this.user.image,
+            userId: this.user._id,
+            postId: id
+        };
+        if (comment.body === undefined || comment.body === '') {
+            this._snackBar.open('sorry u must writ anything', 'Undo', { duration: 5000 });
+        }
+        else {
+            this._socketIoServices.onComment(comment);
+            event.target.firstElementChild.firstElementChild.firstElementChild.firstElementChild.firstElementChild.value = '';
+        }
+    }; // post comment form
+    // to get more comments
+    PostComponent.prototype.getMoreComment = function (post, event) {
+        var _this = this;
+        if (post === void 0) { post = []; }
+        var id = post._id;
+        this._services.getPostComment(id).subscribe(function (res) {
+            if (res.success) {
+                event.target.classList.add('d-none');
+                post.comment = res.comment;
+            }
+            else {
+                _this._snackBar.open(res.errMSG, 'Undo', { duration: 5000 });
+            }
+        }, function (error) {
+            _this._snackBar.open(error.message, 'Undo', { duration: 10000 });
+        });
+    }; // to get more comments
+    // desplay edit comment form 
+    PostComponent.prototype.displayEditCommentForm = function (event) {
+        event.target.classList.add('d-none');
+        event.target.parentElement.nextSibling.nextSibling.nextSibling.classList.remove('d-none');
+        event.target.parentElement.nextSibling.nextSibling.classList.add('d-none');
+    }; // desplay edit comment form
+    // desplay edit replay form
+    PostComponent.prototype.displayReplayForm = function (event) {
+        event.target.parentElement.lastChild.classList.toggle('d-none');
+    }; // desplay edit replay form
+    // edit comment
+    PostComponent.prototype.editComment = function (event, postId, commentId, body) {
+        var _this = this;
+        var data = {
+            body: body
+        };
+        if (body === undefined || body === '') {
+            this._snackBar.open('sorry you must wright somthing', 'Undo', { duration: 10000 });
+        }
+        else {
+            this._services.editComment(postId, commentId, data).subscribe(function (res) {
+                if (res.success) {
+                    event.target.classList.add('d-none');
+                    event.target.previousSibling.classList.remove('d-none');
+                    event.target.previousSibling.previousSibling.previousSibling.firstElementChild.classList.remove('d-none');
+                    _this._snackBar.open(res.MSG, 'Undo', { duration: 5000 });
+                }
+                else {
+                    _this._snackBar.open(res.errMSG, 'Undo', { duration: 5000 });
+                }
+            }, function (error) {
+                _this._snackBar.open(error.message, 'Undo', { duration: 10000 });
+            });
+        }
+    }; // egit comment
+    PostComponent.prototype.removeComment = function (postId, commentId, event) {
+        var _this = this;
+        this._services.removeComment(postId, commentId).subscribe(function (res) {
+            if (res.success) {
+                event.target.parentElement.parentElement.classList.add('d-none');
+                _this._snackBar.open(res.MSG, 'Undo', { duration: 10000 });
+            }
+            else {
+                _this._snackBar.open(res.errMSG.message, 'Undo', { duration: 10000 });
+            }
+        }, function (error) {
+            _this._snackBar.open(error.message, 'Undo', { duration: 10000 });
+        });
+    }; // remove comment
+    PostComponent.prototype.displayEditReplayForm = function (event) {
+        event.target.parentElement.parentElement.lastChild.classList.remove('d-none');
+        event.target.parentElement.parentElement.lastChild.previousSibling.classList.add('d-none');
+        event.target.classList.add('d-none');
+    };
+    // post replay form
+    PostComponent.prototype.postReplay = function (event, postId, commentId, rep, replays) {
+        var user = JSON.parse(localStorage.getItem('user'));
+        event.target.firstChild.value = '';
+        var replay = {
+            commentId: commentId,
+            postId: postId,
+            body: rep,
+            username: user.username,
+            userImage: user.image,
+            userId: this.user._id
+        };
+        if (replay.body === undefined || replay.body === '') {
+            this._snackBar.open('sorry you must write anything', 'Undo', { duration: 10000 });
+            return false;
+        }
+        this._socketIoServices.onReplay(replay);
+        var o = event.target.firstElementChild.firstElementChild.firstElementChild.firstElementChild.firstElementChild.value = '';
+        event.target.firstChild.classList.remove('d-none');
+        event.target.classList.add('d-none');
+    }; // post replay form
+    PostComponent.prototype.editReplay = function (event, postId, commentId, replayId, body) {
+        var _this = this;
+        var data = {
+            body: body
+        };
+        if (body === undefined || body === '') {
+            this._snackBar.open('sorry you must wright somthing', 'Undo', { duration: 5000 });
+        }
+        else {
+            this._services.editReplay(postId, commentId, replayId, data).subscribe(function (res) {
+                if (res.success) {
+                    event.target.parentElement.firstChild.firstElementChild.classList.remove('d-none');
+                    event.target.previousSibling.classList.remove('d-none');
+                    event.target.classList.add('d-none');
+                }
+                else {
+                    _this._snackBar.open(res.errMSG, 'Undo', { duration: 10000 });
+                }
+            }, function (error) {
+                _this._snackBar.open(error.message, 'Undo', { duration: 10000 });
+            });
+        }
+    }; // egit comment
+    PostComponent.prototype.removeReplay = function (postId, commentId, replayId, event) {
+        var _this = this;
+        this._services.removeReplay(postId, commentId, replayId).subscribe(function (res) {
+            if (res.success) {
+                _this._snackBar.open(res.MSG, 'Undo', { duration: 5000 });
+                event.target.parentElement.parentElement.classList.add('d-none');
+            }
+            else {
+                _this._snackBar.open(res.errMSG, 'Undo', { duration: 5000 });
+            }
+        }, function (error) {
+            _this._snackBar.open(error.message, 'Undo', { duration: 5000 });
+        });
+    }; // remove replay comment
+    PostComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'app-post',
+            template: __webpack_require__(/*! ./post.component.html */ "./src/app/user/post/post.component.html"),
+            styles: [__webpack_require__(/*! ./post.component.scss */ "./src/app/user/post/post.component.scss")]
+        }),
+        __metadata("design:paramtypes", [src_app_services_services_service__WEBPACK_IMPORTED_MODULE_2__["ServicesService"],
+            _angular_material__WEBPACK_IMPORTED_MODULE_3__["MatSnackBar"],
+            _angular_material__WEBPACK_IMPORTED_MODULE_3__["MatDialog"],
+            src_app_services_socket_service__WEBPACK_IMPORTED_MODULE_4__["SocketService"],
+            _angular_common_http__WEBPACK_IMPORTED_MODULE_5__["HttpClient"],
+            _angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"]])
+    ], PostComponent);
+    return PostComponent;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/user/profile/profile.component.html":
 /*!*****************************************************!*\
   !*** ./src/app/user/profile/profile.component.html ***!
@@ -8330,7 +8737,7 @@ var NotfacationComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  profile works!\n</p>\n<p>\n  profile works!\n</p>\n<p>\n  profile works!\n</p>\n<p>\n  profile works!\n</p>\n<p>\n  profile works!\n</p>\n<p>\n  profile works!\n</p>\n<p>\n  profile works!\n</p>\n<p>\n  profile works!\n</p>\n<p>\n  profile works!\n</p>\n<p>\n  profile works!\n</p>\n<p>\n  profile works!\n</p>\n<p>\n  profile works!\n</p>\n<p>\n  profile works!\n</p>\n<p>\n  profile works!\n</p>\n"
+module.exports = "<div class=\"profile\" *ngIf=\"userProfile\">\n  <div class=\"left-side\">\n    <img src=\"{{url}}/{{userProfile.image}}\" alt=\"{{userProfile.username}}\">\n    <h3>Name: {{userProfile.username}}</h3>\n    <h3>Date Of Birth: {{userProfile.dateOfBirth | date:shortDate }}</h3>\n    <h3>Email: {{userProfile.email}}</h3>\n  </div>\n  <div class=\"right-side\">\n    <!-- start display post -->\n    <div class=\"post-contanir\"  *ngFor=\"let post of userPosts;let i = index\">\n      <div class=\"post-ui\" >\n          <div class=\"post-contant\" >\n              <div class=\"edit\" *ngIf=\"user._id === post.userId\">\n                      <mat-icon (click)='displayEditPostForm($event)' title=\"Edit post\" class=\"mat-18 edit-icon\">edit</mat-icon>\n                      <mat-icon (click)='removePost($event, post._id)' class=\"mat-18 delete-icon\">delete</mat-icon>\n              </div>\n              <p>\n                  <a [routerLink]=\"[ '/user/profile']\" [queryParams]=\"{id: post.userId}\">\n                      <img class=\"image\" src=\"{{url}}/{{post.userImage}}\" alt=\"user image\">\n                      {{post.username| titlecase}}\n                  </a>\n              </p>\n              <p class=\"p-post\">puplished {{post.createdAt | date:'yyyy-MM-dd HH:mm'}}</p>  \n              <p class=\"p-post\"><a [routerLink]=\"[ '/user/post']\" [queryParams]=\"{id: post._id}\">{{post.body}}</a>  </p>\n              <form class=\"comment-form d-none\"  (submit)=\"editPost($event, i, post._id, post.body)\">\n                  <mat-form-field >\n                      <textarea matInput name=\"editPost\" placeholder=\"Edit post\" [(ngModel)]=\"post.body\"></textarea>\n                  </mat-form-field>\n                  <div class=\"btn-contaniar\">\n                      <button mat-raised-button color=\"primary\" type=\"submit\">save</button>\n                  </div> \n              </form>\n          </div> \n      <!-- start display comment -->\n      <div class=\"img\" *ngFor=\"let comment of post.comment; let u = index\">\n          <div class=\"edit\" >\n                  <mat-icon *ngIf=\"user._id === comment.userId\" style=\"color:#3f51b5;\" (click)='displayEditCommentForm($event)' title=\"Edit post\" class=\"mat-18 edit-icon\">edit</mat-icon>\n                  <mat-icon *ngIf=\"user._id === comment.userId || user._id === post.userId\"   (click)=\"removeComment(post._id, comment._id, $event)\" title=\"Remove comment\" class=\"mat-18 delete-icon\">delete</mat-icon>\n          </div>\n          <p>\n              <a [routerLink]=\"[ '/user/profile']\" [queryParams]=\"{id: comment.userId}\" (click)='goToProfile(comment.userId)'>\n                  <img class=\"image\" src=\"{{url}}/{{comment.userImage}}\" alt=\"user image\">\n                  {{comment.username}}\n              </a>\n          </p>\n          <p class=\"p-post\">  {{comment.body}}</p>\n          <form class=\"d-none\" (submit)=\"editComment($event, post._id, comment._id, comment.body)\">\n                  <mat-form-field >\n                      <textarea matInput  name=\"body\" pInputTextarea [(ngModel)]=\"comment.body\" placeholder=\"comment\"></textarea>\n                  </mat-form-field>    \n                  <div class=\"btn-contaniar\">\n                      <button mat-raised-button color=\"primary\" type=\"submit\">save</button>\n                  </div>                                 \n              </form>\n      <!-- start display replay comment -->\n                      <div class=\"replay\"   *ngFor=\"let item of comment.replay; let r = index\" >\n                          <div class=\"edit\" >\n                              <mat-icon style=\"color:#3f51b5;\" *ngIf=\"user._id === item.userId\"  (click)='displayEditReplayForm($event)' title=\"Edit Replay\" class=\"mat-18 edit-icon\">edit</mat-icon>\n                              <mat-icon *ngIf=\"user._id === item.userId || comment.userId === user._id\" (click)=\"removeReplay(post._id, comment._id, item._id, $event)\" title=\"Remove Replay\" class=\"delete-icon\">delete</mat-icon>\n                          </div>\n                          <p>\n                              <a [routerLink]=\"[ '/user/profile']\" [queryParams]=\"{id: item.userId}\">\n                              <img class=\"image\" src=\"{{url}}/{{item.userImage}}\" alt=\"user image\">\n                              {{item.username| titlecase}}\n                              </a>\n                          </p>\n                          <p class=\"p-replay\"> {{item.body}} </p>\n  \n                          <form class=\"comment-form d-none\" (submit)=\"editReplay($event, post._id, comment._id, item._id, item.body)\">\n                              <mat-form-field >\n                                  <textarea matInput  name=\"body\" pInputTextarea [(ngModel)]=\"item.body\" pInputTextarea placeholder=\"Edit Replay\"></textarea>\n                              </mat-form-field>    \n                              <div class=\"btn-contaniar\">\n                                  <button mat-raised-button color=\"primary\" type=\"submit\">save</button>\n                              </div>   \n                          </form>\n                      </div>\n      <!-- end display replay comment -->\n                          <i (click)=\"displayReplayForm($event)\">replay</i>\n                          <form class=\"replay-form d-none clearfix\" (submit)='postReplay($event, post._id, comment._id, comment.replay[r], comment.replay)'>\n                              <mat-form-field >\n                                  <textarea class=\"replat-textarea\" matInput  name=\"replay\" placeholder=\"replay\" [(ngModel)]=\"comment.replay[r]\"></textarea>\n                              </mat-form-field>    \n                              <div class=\"btn-contaniar\">\n                                  <button mat-raised-button color=\"primary\" type=\"submit\">replay</button>\n                              </div>                                 \n                          </form>\n              </div>\n      \n      <!-- end display comment -->\n          </div>\n          <div class=\"comment\">\n                  <form class=\"comment-form\" (submit)='postComment($event, post._id, post.comment[index], post.comment)' >\n                      <mat-form-field >\n                              <textarea matInput \n                              name=\"comment\"\n                              [(ngModel)]=\"post.comment[index]\"\n                              placeholder=\"comment\"></textarea>\n                          </mat-form-field>\n                          <div class=\"btn-contaniar\">\n                              <button mat-raised-button color=\"primary\"  type=\"submit\">comment</button>\n                          </div> \n                  </form>\n              </div>\n              <a class='btn' *ngIf=\"post.commentsLength > 1\" (click)='getMoreComment(post, $event)'>comment {{post.commentsLength}}</a>\n          </div>\n      <!-- end display post -->\n  </div>\n  <div class=\"clear-fix\"></div>\n</div>"
 
 /***/ }),
 
@@ -8341,7 +8748,7 @@ module.exports = "<p>\n  profile works!\n</p>\n<p>\n  profile works!\n</p>\n<p>\
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ""
+module.exports = ".profile {\n  padding: 1%; }\n  .profile .left-side {\n    width: 35%;\n    float: left; }\n  .profile .left-side img {\n      max-width: 250px;\n      max-height: 250px; }\n  .profile .right-side {\n    width: 65%;\n    float: left; }\n  .profile .right-side .post-contanir {\n      box-shadow: 2px 2px 9px;\n      width: 95%;\n      border-radius: 2%;\n      margin: 10px auto;\n      border: 1px solid #89c4ff;\n      padding: 15px;\n      margin-top: 15px;\n      background-color: #fff;\n      color: #000;\n      position: relative; }\n  .profile .right-side .post-contanir a {\n        color: #000;\n        font-size: 18px;\n        font-weight: bold; }\n  .profile .right-side .post-contanir .post-contant .comment-form mat-form-field {\n        width: 100% !important; }\n  .profile .right-side .post-contanir .post-contant form {\n        width: 100%; }\n  .profile .right-side .post-contanir .post-contant form .mat-form-field-flex {\n          width: 100%; }\n  .profile .right-side .post-contanir .post-contant form textarea {\n          background-color: #89c4ff;\n          padding: 5px;\n          color: #fff; }\n  .profile .right-side .post-contanir .edit {\n        text-align: right; }\n  .profile .right-side .post-contanir .edit .edit-icon {\n          color: #89c4ff;\n          cursor: pointer; }\n  .profile .right-side .post-contanir .edit .delete-icon {\n          color: red !important;\n          cursor: pointer; }\n  .profile .right-side .post-contanir .post-ui {\n        padding: 10px; }\n  .profile .right-side .post-contanir .img {\n        background-color: #89c4ff;\n        margin-top: 15px;\n        border-radius: 15px;\n        position: relative;\n        padding: 10px; }\n  .profile .right-side .post-contanir .img a {\n          color: #fff !important; }\n  .profile .right-side .post-contanir .img .p-post {\n          padding-left: 55px;\n          margin: 0;\n          overflow: auto; }\n  .profile .right-side .post-contanir .img .p-replay {\n          padding: 5px 0px 0 50px; }\n  .profile .right-side .post-contanir .img .replay-form {\n          padding: 15px; }\n  .profile .right-side .post-contanir .img .replay-form mat-form-field textarea {\n            background-color: #fff;\n            color: #3f51b5; }\n  .profile .right-side .post-contanir .img .clearfix {\n          clear: both; }\n  .profile .right-side .post-contanir .img p {\n          margin: 0; }\n  .profile .right-side .post-contanir .img i {\n          color: #fff; }\n  .profile .right-side .post-contanir .image {\n        position: relative;\n        width: 40px;\n        height: 40px;\n        border-radius: 50%;\n        box-shadow: 0 0 5px 0px #000; }\n  .profile .right-side .post-contanir .replay {\n        border-radius: 20px;\n        background-color: #89c4ff;\n        padding-left: 0;\n        margin-left: 44px;\n        padding: 1px 20px;\n        margin-top: 11px;\n        color: #fff; }\n  .profile .right-side .post-contanir .replay a {\n          color: #000 !important;\n          font-size: 18px;\n          font-weight: bold; }\n  .profile .right-side .post-contanir .comment mat-form-field {\n        width: 100%; }\n  @media (max-width: 558px) {\n  .profile .left-side {\n    text-align: center;\n    width: 100%; }\n    .profile .left-side img {\n      max-width: 250px;\n      max-height: 250px; }\n  .profile .right-side {\n    width: 100%; } }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvdXNlci9wcm9maWxlL0U6XFxhcHBzXFxOZXcgTUVBTiBzdGFrZVxcWU9EQVxcZnJvbnQvc3JjXFxhcHBcXHVzZXJcXHByb2ZpbGVcXHByb2ZpbGUuY29tcG9uZW50LnNjc3MiLCJzcmMvYXBwL3VzZXIvcHJvZmlsZS9FOlxcYXBwc1xcTmV3IE1FQU4gc3Rha2VcXFlPREFcXGZyb250L3NyY1xcYXNzZXRzXFxzYXNzXFxfY29sb3Iuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFFQTtFQUNJLFlBQVcsRUEwSWQ7RUEzSUQ7SUFHUSxXQUFVO0lBQ1YsWUFBVyxFQU1kO0VBVkw7TUFPWSxpQkFBZ0I7TUFDaEIsa0JBQWlCLEVBQ3BCO0VBVFQ7SUFZUSxXQUFVO0lBQ1YsWUFBVyxFQTZIZDtFQTFJTDtNQWdCWSx3QkFBdUI7TUFDdkIsV0FBVTtNQUNWLGtCQUFpQjtNQUNqQixrQkFBaUI7TUFDakIsMEJDckJNO01Ec0JOLGNBQWE7TUFDYixpQkFBZ0I7TUFDaEIsdUJDekJLO01EMEJMLFlDeEJJO01EeUJKLG1CQUFrQixFQWdIckI7RUF6SVQ7UUEyQmdCLFlDM0JBO1FENEJBLGdCQUFlO1FBQ2Ysa0JBQWlCLEVBRXBCO0VBL0JiO1FBb0N3Qix1QkFBc0IsRUFFekI7RUF0Q3JCO1FBeUNvQixZQUFXLEVBVWQ7RUFuRGpCO1VBMkN3QixZQUFXLEVBQ2Q7RUE1Q3JCO1VBOEN3QiwwQkFBeUI7VUFDekIsYUFBWTtVQUNaLFlBQVcsRUFDZDtFQWpEckI7UUFzRG9CLGtCQUFpQixFQVdwQjtFQWpFakI7VUF3RHdCLGVDekROO1VEMERNLGdCQUFlLEVBRWxCO0VBM0RyQjtVQTZEd0Isc0JBQXFCO1VBQ3JCLGdCQUFlLEVBRWxCO0VBaEVyQjtRQW1Fb0IsY0FBYSxFQUNoQjtFQXBFakI7UUFzRWdCLDBCQ3ZFRTtRRHdFRixpQkFBZ0I7UUFDaEIsb0JBQW1CO1FBQ25CLG1CQUFrQjtRQUNsQixjQUFhLEVBZ0NoQjtFQTFHYjtVQTRFb0IsdUJBQThCLEVBQ2pDO0VBN0VqQjtVQStFb0IsbUJBQWtCO1VBQ2xCLFVBQVM7VUFDVCxlQUFjLEVBQ2pCO0VBbEZqQjtVQW9Gb0Isd0JBQXVCLEVBQzFCO0VBckZqQjtVQXVGb0IsY0FBYSxFQU9oQjtFQTlGakI7WUEwRjRCLHVCQzVGWDtZRDZGVyxlQzFGVCxFRDJGTTtFQTVGekI7VUFnR29CLFlBQVcsRUFDZDtFQWpHakI7VUFtR29CLFVBQVMsRUFDWjtFQXBHakI7VUFzR29CLFlDeEdILEVEeUdBO0VBdkdqQjtRQTZHZ0IsbUJBQWtCO1FBQ2xCLFlBQVU7UUFDVixhQUFZO1FBQ1osbUJBQWtCO1FBQ2xCLDZCQ2pIQSxFRGtISDtFQWxIYjtRQW9IZ0Isb0JBQW1CO1FBQ25CLDBCQ3RIRTtRRHVIRixnQkFBZTtRQUNmLGtCQUFpQjtRQUNqQixrQkFBaUI7UUFDakIsaUJBQWdCO1FBQ2hCLFlDNUhDLEVEbUlKO0VBakliO1VBNEhvQix1QkFBNkI7VUFDN0IsZ0JBQWU7VUFDZixrQkFBaUIsRUFFcEI7RUFoSWpCO1FBb0lvQixZQUFXLEVBQ2Q7RUFPakI7RUE1SUE7SUErSVksbUJBQWtCO0lBQ2xCLFlBQVcsRUFLZDtJQXJKVDtNQWtKZ0IsaUJBQWdCO01BQ2hCLGtCQUFpQixFQUNwQjtFQXBKYjtJQXVKWSxZQUFXLEVBQ2QsRUFBQSIsImZpbGUiOiJzcmMvYXBwL3VzZXIvcHJvZmlsZS9wcm9maWxlLmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiQGltcG9ydCAnLi4vLi4vLi4vYXNzZXRzL3Nhc3MvY29sb3InO1xyXG5AaW1wb3J0ICcuLi8uLi8uLi9hc3NldHMvc2Fzcy9zaGFyZWQnO1xyXG4ucHJvZmlsZXtcclxuICAgIHBhZGRpbmc6IDElO1xyXG4gICAgLmxlZnQtc2lkZXtcclxuICAgICAgICB3aWR0aDogMzUlO1xyXG4gICAgICAgIGZsb2F0OiBsZWZ0O1xyXG5cclxuICAgICAgICBpbWd7XHJcbiAgICAgICAgICAgIG1heC13aWR0aDogMjUwcHg7XHJcbiAgICAgICAgICAgIG1heC1oZWlnaHQ6IDI1MHB4O1xyXG4gICAgICAgIH1cclxuICAgIH1cclxuICAgIC5yaWdodC1zaWRle1xyXG4gICAgICAgIHdpZHRoOiA2NSU7XHJcbiAgICAgICAgZmxvYXQ6IGxlZnQ7XHJcblxyXG4gICAgICAgIC5wb3N0LWNvbnRhbmlye1xyXG4gICAgICAgICAgICBib3gtc2hhZG93OiAycHggMnB4IDlweDtcclxuICAgICAgICAgICAgd2lkdGg6IDk1JTtcclxuICAgICAgICAgICAgYm9yZGVyLXJhZGl1czogMiU7XHJcbiAgICAgICAgICAgIG1hcmdpbjogMTBweCBhdXRvO1xyXG4gICAgICAgICAgICBib3JkZXI6IDFweCBzb2xpZCAkbWlkX2NvbG9yO1xyXG4gICAgICAgICAgICBwYWRkaW5nOiAxNXB4O1xyXG4gICAgICAgICAgICBtYXJnaW4tdG9wOiAxNXB4O1xyXG4gICAgICAgICAgICBiYWNrZ3JvdW5kLWNvbG9yOiAkbGlnaHRfY29sb3I7XHJcbiAgICAgICAgICAgIGNvbG9yOiAkZGFya19jb2xvcjtcclxuICAgICAgICAgICAgcG9zaXRpb246IHJlbGF0aXZlO1xyXG4gICAgICAgICAgICBhe1xyXG4gICAgICAgICAgICAgICAgY29sb3I6ICRkYXJrX2NvbG9yO1xyXG4gICAgICAgICAgICAgICAgZm9udC1zaXplOiAxOHB4O1xyXG4gICAgICAgICAgICAgICAgZm9udC13ZWlnaHQ6IGJvbGQ7XHJcbiAgICAgICAgXHJcbiAgICAgICAgICAgIH1cclxuXHJcbiAgICAgICAgICAgIC5wb3N0LWNvbnRhbnR7XHJcbiAgICAgICAgICAgICAgICAuY29tbWVudC1mb3Jte1xyXG4gICAgICAgICAgICAgICAgICAgIG1hdC1mb3JtLWZpZWxke1xyXG4gICAgICAgICAgICAgICAgICAgICAgICB3aWR0aDogMTAwJSAhaW1wb3J0YW50O1xyXG5cclxuICAgICAgICAgICAgICAgICAgICB9XHJcbiAgICAgICAgICAgICAgICB9XHJcbiAgICAgICAgICAgICAgICBmb3Jte1xyXG4gICAgICAgICAgICAgICAgICAgIHdpZHRoOiAxMDAlO1xyXG4gICAgICAgICAgICAgICAgICAgIC5tYXQtZm9ybS1maWVsZC1mbGV4e1xyXG4gICAgICAgICAgICAgICAgICAgICAgICB3aWR0aDogMTAwJTtcclxuICAgICAgICAgICAgICAgICAgICB9XHJcbiAgICAgICAgICAgICAgICAgICAgdGV4dGFyZWF7XHJcbiAgICAgICAgICAgICAgICAgICAgICAgIGJhY2tncm91bmQtY29sb3I6ICM4OWM0ZmY7XHJcbiAgICAgICAgICAgICAgICAgICAgICAgIHBhZGRpbmc6IDVweDtcclxuICAgICAgICAgICAgICAgICAgICAgICAgY29sb3I6ICNmZmY7XHJcbiAgICAgICAgICAgICAgICAgICAgfVxyXG4gICAgICAgIFxyXG4gICAgICAgICAgICAgICAgfVxyXG4gICAgICAgICAgICB9XHJcbiAgICAgICAgICAgICAgICAuZWRpdHtcclxuICAgICAgICAgICAgICAgICAgICB0ZXh0LWFsaWduOiByaWdodDtcclxuICAgICAgICAgICAgICAgICAgICAuZWRpdC1pY29ue1xyXG4gICAgICAgICAgICAgICAgICAgICAgICBjb2xvcjokbWlkX2NvbG9yO1xyXG4gICAgICAgICAgICAgICAgICAgICAgICBjdXJzb3I6IHBvaW50ZXI7XHJcbiAgICAgICAgXHJcbiAgICAgICAgICAgICAgICAgICAgfVxyXG4gICAgICAgICAgICAgICAgICAgIC5kZWxldGUtaWNvbntcclxuICAgICAgICAgICAgICAgICAgICAgICAgY29sb3I6IHJlZCAhaW1wb3J0YW50O1xyXG4gICAgICAgICAgICAgICAgICAgICAgICBjdXJzb3I6IHBvaW50ZXI7XHJcbiAgICAgICAgXHJcbiAgICAgICAgICAgICAgICAgICAgfVxyXG4gICAgICAgICAgICAgICAgfVxyXG4gICAgICAgICAgICAgICAgLnBvc3QtdWl7XHJcbiAgICAgICAgICAgICAgICAgICAgcGFkZGluZzogMTBweDtcclxuICAgICAgICAgICAgICAgIH1cclxuICAgICAgICAgICAgLmltZ3tcclxuICAgICAgICAgICAgICAgIGJhY2tncm91bmQtY29sb3I6ICRtaWRfY29sb3I7XHJcbiAgICAgICAgICAgICAgICBtYXJnaW4tdG9wOiAxNXB4O1xyXG4gICAgICAgICAgICAgICAgYm9yZGVyLXJhZGl1czogMTVweDtcclxuICAgICAgICAgICAgICAgIHBvc2l0aW9uOiByZWxhdGl2ZTtcclxuICAgICAgICAgICAgICAgIHBhZGRpbmc6IDEwcHg7XHJcbiAgICAgICAgICAgICAgICBhe1xyXG4gICAgICAgICAgICAgICAgICAgIGNvbG9yOiAkbGlnaHRfY29sb3IgIWltcG9ydGFudDtcclxuICAgICAgICAgICAgICAgIH1cclxuICAgICAgICAgICAgICAgIC5wLXBvc3R7XHJcbiAgICAgICAgICAgICAgICAgICAgcGFkZGluZy1sZWZ0OiA1NXB4O1xyXG4gICAgICAgICAgICAgICAgICAgIG1hcmdpbjogMDtcclxuICAgICAgICAgICAgICAgICAgICBvdmVyZmxvdzogYXV0bztcclxuICAgICAgICAgICAgICAgIH1cclxuICAgICAgICAgICAgICAgIC5wLXJlcGxheXtcclxuICAgICAgICAgICAgICAgICAgICBwYWRkaW5nOiA1cHggMHB4IDAgNTBweDsgXHJcbiAgICAgICAgICAgICAgICB9XHJcbiAgICAgICAgICAgICAgICAucmVwbGF5LWZvcm17XHJcbiAgICAgICAgICAgICAgICAgICAgcGFkZGluZzogMTVweDtcclxuICAgICAgICAgICAgICAgICAgICBtYXQtZm9ybS1maWVsZHtcclxuICAgICAgICAgICAgICAgICAgICAgICAgdGV4dGFyZWF7XHJcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICBiYWNrZ3JvdW5kLWNvbG9yOiAkbGlnaHRfY29sb3I7XHJcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICBjb2xvcjogJG1pZDJfY29sb3I7XHJcbiAgICAgICAgICAgICAgICAgICAgICAgIH1cclxuICAgICAgICAgICAgICAgICAgICB9XHJcbiAgICAgICAgICAgICAgICB9XHJcbiAgICAgICAgICAgICAgICAuY2xlYXJmaXh7XHJcbiAgICAgICAgICAgICAgICAgICAgY2xlYXI6IGJvdGg7XHJcbiAgICAgICAgICAgICAgICB9XHJcbiAgICAgICAgICAgICAgICBwe1xyXG4gICAgICAgICAgICAgICAgICAgIG1hcmdpbjogMDtcclxuICAgICAgICAgICAgICAgIH1cclxuICAgICAgICAgICAgICAgIGl7XHJcbiAgICAgICAgICAgICAgICAgICAgY29sb3I6ICRsaWdodF9jb2xvcjtcclxuICAgICAgICAgICAgICAgIH1cclxuICAgICAgICAgICAgICAgIC8vIEBleHRlbmQgJWZvcm07XHJcbiAgICAgICAgXHJcbiAgICAgICAgICAgIH1cclxuICAgICAgICBcclxuICAgICAgICAgICAgLmltYWdle1xyXG4gICAgICAgICAgICAgICAgcG9zaXRpb246IHJlbGF0aXZlO1xyXG4gICAgICAgICAgICAgICAgd2lkdGg6NDBweDtcclxuICAgICAgICAgICAgICAgIGhlaWdodDogNDBweDtcclxuICAgICAgICAgICAgICAgIGJvcmRlci1yYWRpdXM6IDUwJTtcclxuICAgICAgICAgICAgICAgIGJveC1zaGFkb3c6IDAgMCA1cHggMHB4ICRkYXJrX2NvbG9yO1xyXG4gICAgICAgICAgICB9XHJcbiAgICAgICAgICAgIC5yZXBsYXl7XHJcbiAgICAgICAgICAgICAgICBib3JkZXItcmFkaXVzOiAyMHB4O1xyXG4gICAgICAgICAgICAgICAgYmFja2dyb3VuZC1jb2xvcjogJG1pZF9jb2xvcjtcclxuICAgICAgICAgICAgICAgIHBhZGRpbmctbGVmdDogMDtcclxuICAgICAgICAgICAgICAgIG1hcmdpbi1sZWZ0OiA0NHB4O1xyXG4gICAgICAgICAgICAgICAgcGFkZGluZzogMXB4IDIwcHg7XHJcbiAgICAgICAgICAgICAgICBtYXJnaW4tdG9wOiAxMXB4O1xyXG4gICAgICAgICAgICAgICAgY29sb3I6ICRsaWdodF9jb2xvcjtcclxuICAgICAgICAgICAgICAgIGF7XHJcbiAgICAgICAgICAgICAgICAgICAgY29sb3I6ICRkYXJrX2NvbG9yICFpbXBvcnRhbnQ7XHJcbiAgICAgICAgICAgICAgICAgICAgZm9udC1zaXplOiAxOHB4O1xyXG4gICAgICAgICAgICAgICAgICAgIGZvbnQtd2VpZ2h0OiBib2xkO1xyXG4gICAgICAgIFxyXG4gICAgICAgICAgICAgICAgfVxyXG4gICAgICAgICAgICB9XHJcbiAgICAgICAgICAgIC5jb21tZW50e1xyXG4gICAgICAgICAgICAgICAgbWF0LWZvcm0tZmllbGR7XHJcbiAgICAgICAgICAgICAgICAgICAgd2lkdGg6IDEwMCU7XHJcbiAgICAgICAgICAgICAgICB9XHJcbiAgICAgICAgXHJcbiAgICAgICAgICAgICAgICBcclxuICAgICAgICAgICAgfVxyXG4gICAgICAgIH1cclxuICAgIH1cclxufVxyXG5AbWVkaWEobWF4LXdpZHRoOjU1OHB4KXtcclxuICAgIC5wcm9maWxle1xyXG4gICAgICAgIC5sZWZ0LXNpZGV7XHJcbiAgICAgICAgICAgIHRleHQtYWxpZ246IGNlbnRlcjtcclxuICAgICAgICAgICAgd2lkdGg6IDEwMCU7XHJcbiAgICAgICAgICAgIGltZ3tcclxuICAgICAgICAgICAgICAgIG1heC13aWR0aDogMjUwcHg7XHJcbiAgICAgICAgICAgICAgICBtYXgtaGVpZ2h0OiAyNTBweDtcclxuICAgICAgICAgICAgfVxyXG4gICAgICAgIH0gXHJcbiAgICAgICAgLnJpZ2h0LXNpZGV7XHJcbiAgICAgICAgICAgIHdpZHRoOiAxMDAlO1xyXG4gICAgICAgIH1cclxuICAgIH1cclxuXHJcbn0iLCIkbGlnaHRfY29sb3I6I2ZmZjtcclxuJG1pZF9jb2xvcjojODljNGZmO1xyXG4kZGFya19jb2xvcjojMDAwO1xyXG4kbWlkMl9jb2xvcjojM2Y1MWI1O1xyXG4kc3VjY2Vzc19jb2xvcjojYThmN2E4O1xyXG4kZGFuZ2VyX2NvbG9yOnJnYigyNTUsIDk4LCA5Myk7Il19 */"
 
 /***/ }),
 
@@ -8359,6 +8766,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 /* harmony import */ var _services_services_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services/services.service */ "./src/app/services/services.service.ts");
 /* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm5/material.es5.js");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8372,19 +8780,24 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var ProfileComponent = /** @class */ (function () {
-    function ProfileComponent(_activatedRoute, _services, _snackBar) {
+    function ProfileComponent(_activatedRoute, _services, _snackBar, _lo) {
         this._activatedRoute = _activatedRoute;
         this._services = _services;
         this._snackBar = _snackBar;
+        this._lo = _lo;
+        this.url = this._services.url;
+        this.userPosts = [];
     }
     ProfileComponent.prototype.ngOnInit = function () {
         var _this = this;
         window.scrollTo(0, 0);
-        var id = this._activatedRoute.snapshot.queryParamMap.get('id');
-        this.subscription = this._services.getUserById(id).subscribe(function (res) {
+        this.id = this._activatedRoute.snapshot.queryParamMap.get('id');
+        this.subscription = this._services.getUserById(this.id).subscribe(function (res) {
             if (res.success) {
-                _this.user = res.user;
+                _this.userProfile = res.user;
+                _this.user = JSON.parse(localStorage.getItem('user'));
             }
             else {
                 _this._snackBar.open(res.errMSG, 'Undo', { duration: 5000 });
@@ -8392,7 +8805,16 @@ var ProfileComponent = /** @class */ (function () {
         }, function (error) {
             _this._snackBar.open(error.message, 'Undo', { duration: 10000 });
         });
-        console.log(id);
+        this._services.getUserPosts(this.id).subscribe(function (res) {
+            if (res.success) {
+                _this.userPosts = res.posts;
+            }
+            else {
+                _this._snackBar.open(res.errMSG, 'Undo', { duration: 5000 });
+            }
+        }, function (error) {
+            _this._snackBar.open(error.message, 'Undo', { duration: 10000 });
+        });
     };
     ProfileComponent.prototype.ngOnDestroy = function () {
         this.subscription.unsubscribe();
@@ -8405,7 +8827,8 @@ var ProfileComponent = /** @class */ (function () {
         }),
         __metadata("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"],
             _services_services_service__WEBPACK_IMPORTED_MODULE_2__["ServicesService"],
-            _angular_material__WEBPACK_IMPORTED_MODULE_3__["MatSnackBar"]])
+            _angular_material__WEBPACK_IMPORTED_MODULE_3__["MatSnackBar"],
+            _angular_common__WEBPACK_IMPORTED_MODULE_4__["Location"]])
     ], ProfileComponent);
     return ProfileComponent;
 }());
@@ -8432,7 +8855,7 @@ module.exports = "<p>\n  search works!\n</p>\n"
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ""
+module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL3VzZXIvc2VhcmNoL3NlYXJjaC5jb21wb25lbnQuc2NzcyJ9 */"
 
 /***/ }),
 
@@ -8495,7 +8918,7 @@ module.exports = "<form (submit)='sendMessage()'>\n  <div class=\"example-contai
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "form .example-container mat-form-field {\n  width: 100%; }\n  form .example-container mat-form-field textarea {\n    height: 100px; }\n  form .btn-contaniar {\n  text-align: right; }\n"
+module.exports = "form .example-container mat-form-field {\n  width: 100%; }\n  form .example-container mat-form-field textarea {\n    height: 100px; }\n  form .btn-contaniar {\n  text-align: right; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvdXNlci9zZW5kLW1lc3NhZ2UvRTpcXGFwcHNcXE5ldyBNRUFOIHN0YWtlXFxZT0RBXFxmcm9udC9zcmNcXGFwcFxcdXNlclxcc2VuZC1tZXNzYWdlXFxzZW5kLW1lc3NhZ2UuY29tcG9uZW50LnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFHWSxZQUFXLEVBS2Q7RUFSVDtJQUtnQixjQUFhLEVBQ2hCO0VBTmI7RUFXUSxrQkFBaUIsRUFDcEIiLCJmaWxlIjoic3JjL2FwcC91c2VyL3NlbmQtbWVzc2FnZS9zZW5kLW1lc3NhZ2UuY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyJmb3Jte1xyXG4gICAgLmV4YW1wbGUtY29udGFpbmVye1xyXG4gICAgICAgIG1hdC1mb3JtLWZpZWxke1xyXG4gICAgICAgICAgICB3aWR0aDogMTAwJTtcclxuICAgICAgICAgICAgdGV4dGFyZWF7XHJcbiAgICAgICAgICAgICAgICBoZWlnaHQ6IDEwMHB4O1xyXG4gICAgICAgICAgICB9XHJcblxyXG4gICAgICAgIH1cclxuICAgIH1cclxuICAgIC5idG4tY29udGFuaWFye1xyXG4gICAgICAgIHRleHQtYWxpZ246IHJpZ2h0O1xyXG4gICAgfVxyXG5cclxufVxyXG4iXX0= */"
 
 /***/ }),
 
@@ -8565,7 +8988,7 @@ module.exports = "<div class=\"user-home\" >\n<mat-grid-list cols=\"12\" >\n    
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".user-home {\n  max-height: 100vh !important; }\n  .user-home /deep/ mat-grid-list /deep/ mat-grid-tile {\n    overflow: auto;\n    margin: 0 !important; }\n  .user-home /deep/ mat-grid-list /deep/ mat-grid-tile /deep/ .mat-figure {\n      display: block;\n      align-items: start; }\n"
+module.exports = ".user-home {\n  max-height: 100vh !important; }\n  .user-home /deep/ mat-grid-list /deep/ mat-grid-tile {\n    overflow: auto;\n    margin: 0 !important; }\n  .user-home /deep/ mat-grid-list /deep/ mat-grid-tile /deep/ .mat-figure {\n      display: block;\n      align-items: start; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvdXNlci91c2VyLWhvbWUvRTpcXGFwcHNcXE5ldyBNRUFOIHN0YWtlXFxZT0RBXFxmcm9udC9zcmNcXGFwcFxcdXNlclxcdXNlci1ob21lXFx1c2VyLWhvbWUuY29tcG9uZW50LnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBRUE7RUFDSSw2QkFBNEIsRUFXL0I7RUFaRDtJQUlZLGVBQWM7SUFDZCxxQkFBb0IsRUFLbkI7RUFWYjtNQU9vQixlQUFjO01BQ2QsbUJBQWtCLEVBQ3JCIiwiZmlsZSI6InNyYy9hcHAvdXNlci91c2VyLWhvbWUvdXNlci1ob21lLmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiQGltcG9ydCAnLi4vLi4vLi4vYXNzZXRzL3Nhc3MvY29sb3InO1xyXG5AaW1wb3J0ICcuLi8uLi8uLi9hc3NldHMvc2Fzcy9zaGFyZWQuc2Nzcyc7XHJcbi51c2VyLWhvbWV7XHJcbiAgICBtYXgtaGVpZ2h0OiAxMDB2aCAhaW1wb3J0YW50O1xyXG4gICAgL2RlZXAvIG1hdC1ncmlkLWxpc3R7XHJcbiAgICAgICAgL2RlZXAvIG1hdC1ncmlkLXRpbGV7XHJcbiAgICAgICAgICAgIG92ZXJmbG93OiBhdXRvO1xyXG4gICAgICAgICAgICBtYXJnaW46IDAgIWltcG9ydGFudDtcclxuICAgICAgICAgICAgICAgIC9kZWVwLyAubWF0LWZpZ3VyZXtcclxuICAgICAgICAgICAgICAgICAgICBkaXNwbGF5OiBibG9jaztcclxuICAgICAgICAgICAgICAgICAgICBhbGlnbi1pdGVtczogc3RhcnQ7XHJcbiAgICAgICAgICAgICAgICB9ICAgICAgXHJcbiAgICAgICAgICAgIH1cclxuICAgICAgICB9IFxyXG59XHJcbiJdfQ== */"
 
 /***/ }),
 
@@ -8678,7 +9101,7 @@ var UserHomeComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div>\n    <form (submit)='addNewPost()' class=\"post-form\">\n        <div class=\"example-container\">\n            <mat-form-field>\n                <textarea matInput autofocus placeholder=\"post\" name=\"addPost\" [(ngModel)]=\"addPost\"></textarea>\n            </mat-form-field>\n        </div>\n        <div class=\"btn-contaniar\">\n            <button mat-raised-button color=\"primary\" type=\"submit\">post</button>\n        </div> \n        </form> \n    <!-- start display post -->\n<div class=\"post-contanir\"  *ngFor=\"let post of posts;let i = index\">\n    <div class=\"post-ui\" >\n        <div class=\"post-contant\" >\n            <div class=\"edit\" *ngIf=\"user._id === post.userId\">\n                    <mat-icon (click)='displayEditPostForm($event)' title=\"Edit post\" class=\"mat-18 edit-icon\">edit</mat-icon>\n                    <mat-icon (click)='removePost($event, post._id)' class=\"mat-18 delete-icon\">delete</mat-icon>\n            </div>\n            <p>\n                <a [routerLink]=\"[ '/user/profile']\" [queryParams]=\"{id: post.userId}\">\n                    <img class=\"image\" src=\"{{url}}/{{post.userImage}}\" alt=\"user image\">\n                    {{post.username| titlecase}}\n                </a>\n            </p>\n            <p class=\"p-post\">puplished {{post.createdAt | date:'yyyy-MM-dd HH:mm'}}</p>  \n            <p class=\"p-post\"> {{post.body}} </p>\n            <form class=\"comment-form d-none\"  (submit)=\"editPost($event, i, post._id, post.body)\">\n                <mat-form-field >\n                    <textarea matInput name=\"editPost\" placeholder=\"Edit post\" [(ngModel)]=\"post.body\"></textarea>\n                </mat-form-field>\n                <div class=\"btn-contaniar\">\n                    <button mat-raised-button color=\"primary\" type=\"submit\">save</button>\n                </div> \n            </form>\n        </div> \n    <!-- start display comment -->\n    <div class=\"img\" *ngFor=\"let comment of post.comment; let u = index\">\n        <div class=\"edit\" >\n                <mat-icon *ngIf=\"user._id === comment.userId\" style=\"color:#3f51b5;\" (click)='displayEditCommentForm($event)' title=\"Edit post\" class=\"mat-18 edit-icon\">edit</mat-icon>\n                <mat-icon *ngIf=\"user._id === comment.userId || user._id === post.userId\"   (click)=\"removeComment(post._id, comment._id, $event)\" title=\"Remove comment\" class=\"mat-18 delete-icon\">delete</mat-icon>\n        </div>\n        <p>\n            <a [routerLink]=\"[ '/user/profile']\" [queryParams]=\"{id: comment.userId}\" (click)='goToProfile(comment.userId)'>\n                <img class=\"image\" src=\"{{url}}/{{comment.userImage}}\" alt=\"user image\">\n                {{comment.username}}\n            </a>\n        </p>\n        <p class=\"p-post\">  {{comment.body}}</p>\n        <form class=\"d-none\" (submit)=\"editComment($event, post._id, comment._id, comment.body)\">\n                <mat-form-field >\n                    <textarea matInput  name=\"body\" pInputTextarea [(ngModel)]=\"comment.body\" placeholder=\"comment\"></textarea>\n                </mat-form-field>    \n                <div class=\"btn-contaniar\">\n                    <button mat-raised-button color=\"primary\" type=\"submit\">save</button>\n                </div>                                 \n            </form>\n    <!-- start display replay comment -->\n                    <div class=\"replay\"   *ngFor=\"let item of comment.replay; let r = index\" >\n                        <div class=\"edit\" >\n                            <mat-icon style=\"color:#3f51b5;\" *ngIf=\"user._id === item.userId\"  (click)='displayEditReplayForm($event)' title=\"Edit Replay\" class=\"mat-18 edit-icon\">edit</mat-icon>\n                            <mat-icon *ngIf=\"user._id === item.userId || comment.userId === user._id\" (click)=\"removeReplay(post._id, comment._id, item._id, $event)\" title=\"Remove Replay\" class=\"delete-icon\">delete</mat-icon>\n                        </div>\n                        <p>\n                            <a [routerLink]=\"[ '/user/profile']\" [queryParams]=\"{id: item.userId}\">\n                            <img class=\"image\" src=\"{{url}}/{{item.userImage}}\" alt=\"user image\">\n                            {{item.username| titlecase}}\n                            </a>\n                        </p>\n                        <p class=\"p-replay\"> {{item.body}} </p>\n\n                        <form class=\"comment-form d-none\" (submit)=\"editReplay($event, post._id, comment._id, item._id, item.body)\">\n                            <mat-form-field >\n                                <textarea matInput  name=\"body\" pInputTextarea [(ngModel)]=\"item.body\" pInputTextarea placeholder=\"Edit Replay\"></textarea>\n                            </mat-form-field>    \n                            <div class=\"btn-contaniar\">\n                                <button mat-raised-button color=\"primary\" type=\"submit\">save</button>\n                            </div>   \n                        </form>\n                    </div>\n    <!-- end display replay comment -->\n                        <i (click)=\"displayReplayForm($event)\">replay</i>\n                        <form class=\"replay-form d-none clearfix\" (submit)='postReplay($event, post._id, comment._id, comment[index], comment.replay)'>\n                            \n                            <mat-form-field >\n                                <textarea matInput  name=\"replay\" placeholder=\"replay\"[(ngModel)]=\"comment[index]\"></textarea>\n                            </mat-form-field>    \n                            <div class=\"btn-contaniar\">\n                                <button mat-raised-button color=\"primary\" type=\"submit\">replay</button>\n                            </div>                                 \n                        </form>\n            </div>\n    \n    <!-- end display comment -->\n        </div>\n        <div class=\"comment\">\n                <form class=\"comment-form\" (submit)='postComment($event, post._id, post.comment[index], post.comment)' >\n                    <mat-form-field >\n                            <textarea matInput \n                            name=\"comment\"\n                            [(ngModel)]=\"post.comment[index]\"\n                            placeholder=\"comment\"></textarea>\n                        </mat-form-field>\n                        <div class=\"btn-contaniar\">\n                            <button mat-raised-button color=\"primary\"  type=\"submit\">comment</button>\n                        </div> \n                </form>\n            </div>\n            <a class='btn' *ngIf=\"post.commentsLength > 1\" (click)='getMoreComment(post, $event)'>comment {{post.commentsLength}}</a>\n        </div>\n    <!-- end display post -->\n</div>\n"
+module.exports = "<div>\n    <form (submit)='addNewPost()' class=\"post-form\">\n        <div class=\"example-container\">\n            <mat-form-field>\n                <textarea matInput autofocus placeholder=\"post\" name=\"addPost\" [(ngModel)]=\"addPost\"></textarea>\n            </mat-form-field>\n        </div>\n        <div class=\"btn-contaniar\">\n            <button mat-raised-button color=\"primary\" type=\"submit\">post</button>\n        </div> \n        </form> \n    <!-- start display post -->\n<div class=\"post-contanir\"  *ngFor=\"let post of posts;let i = index\">\n    <div class=\"post-ui\" >\n        <div class=\"post-contant\" >\n            <div class=\"edit\" *ngIf=\"user._id === post.userId\">\n                    <mat-icon (click)='displayEditPostForm($event)' title=\"Edit post\" class=\"mat-18 edit-icon\">edit</mat-icon>\n                    <mat-icon (click)='removePost($event, post._id)' class=\"mat-18 delete-icon\">delete</mat-icon>\n            </div>\n            <p>\n                <a [routerLink]=\"[ '/user/profile']\" [queryParams]=\"{id: post.userId}\">\n                    <img class=\"image\" src=\"{{url}}/{{post.userImage}}\" alt=\"user image\">\n                    {{post.username| titlecase}}\n                </a>\n            </p>\n            <p class=\"p-post\">puplished {{post.createdAt | date:'yyyy-MM-dd HH:mm'}}</p>  \n            <p class=\"p-post\"><a [routerLink]=\"[ '/user/post']\" [queryParams]=\"{id: post._id}\">{{post.body}}</a>  </p>\n            <form class=\"comment-form d-none\"  (submit)=\"editPost($event, i, post._id, post.body)\">\n                <mat-form-field >\n                    <textarea matInput name=\"editPost\" placeholder=\"Edit post\" [(ngModel)]=\"post.body\"></textarea>\n                </mat-form-field>\n                <div class=\"btn-contaniar\">\n                    <button mat-raised-button color=\"primary\" type=\"submit\">save</button>\n                </div> \n            </form>\n        </div> \n    <!-- start display comment -->\n    <div class=\"img\" *ngFor=\"let comment of post.comment; let u = index\">\n        <div class=\"edit\" >\n                <mat-icon *ngIf=\"user._id === comment.userId\" style=\"color:#3f51b5;\" (click)='displayEditCommentForm($event)' title=\"Edit post\" class=\"mat-18 edit-icon\">edit</mat-icon>\n                <mat-icon *ngIf=\"user._id === comment.userId || user._id === post.userId\"   (click)=\"removeComment(post._id, comment._id, $event)\" title=\"Remove comment\" class=\"mat-18 delete-icon\">delete</mat-icon>\n        </div>\n        <p>\n            <a [routerLink]=\"[ '/user/profile']\" [queryParams]=\"{id: comment.userId}\" (click)='goToProfile(comment.userId)'>\n                <img class=\"image\" src=\"{{url}}/{{comment.userImage}}\" alt=\"user image\">\n                {{comment.username}}\n            </a>\n        </p>\n        <p class=\"p-post\">  {{comment.body}}</p>\n        <form class=\"d-none\" (submit)=\"editComment($event, post._id, comment._id, comment.body)\">\n                <mat-form-field >\n                    <textarea matInput  name=\"body\" pInputTextarea [(ngModel)]=\"comment.body\" placeholder=\"comment\"></textarea>\n                </mat-form-field>    \n                <div class=\"btn-contaniar\">\n                    <button mat-raised-button color=\"primary\" type=\"submit\">save</button>\n                </div>                                 \n            </form>\n    <!-- start display replay comment -->\n                    <div class=\"replay\"   *ngFor=\"let item of comment.replay; let r = index\" >\n                        <div class=\"edit\" >\n                            <mat-icon style=\"color:#3f51b5;\" *ngIf=\"user._id === item.userId\"  (click)='displayEditReplayForm($event)' title=\"Edit Replay\" class=\"mat-18 edit-icon\">edit</mat-icon>\n                            <mat-icon *ngIf=\"user._id === item.userId || comment.userId === user._id\" (click)=\"removeReplay(post._id, comment._id, item._id, $event)\" title=\"Remove Replay\" class=\"delete-icon\">delete</mat-icon>\n                        </div>\n                        <p>\n                            <a [routerLink]=\"[ '/user/profile']\" [queryParams]=\"{id: item.userId}\">\n                            <img class=\"image\" src=\"{{url}}/{{item.userImage}}\" alt=\"user image\">\n                            {{item.username| titlecase}}\n                            </a>\n                        </p>\n                        <p class=\"p-replay\"> {{item.body}} </p>\n\n                        <form class=\"comment-form d-none\" (submit)=\"editReplay($event, post._id, comment._id, item._id, item.body)\">\n                            <mat-form-field >\n                                <textarea matInput  name=\"body\" pInputTextarea [(ngModel)]=\"item.body\" pInputTextarea placeholder=\"Edit Replay\"></textarea>\n                            </mat-form-field>    \n                            <div class=\"btn-contaniar\">\n                                <button mat-raised-button color=\"primary\" type=\"submit\">save</button>\n                            </div>   \n                        </form>\n                    </div>\n    <!-- end display replay comment -->\n                        <i (click)=\"displayReplayForm($event)\">replay</i>\n                        <form class=\"replay-form d-none clearfix\" (submit)='postReplay($event, post._id, comment._id, comment.replay[r], comment.replay)'>\n                            <mat-form-field >\n                                <textarea class=\"replat-textarea\" matInput  name=\"replay\" placeholder=\"replay\" [(ngModel)]=\"comment.replay[r]\"></textarea>\n                            </mat-form-field>    \n                            <div class=\"btn-contaniar\">\n                                <button mat-raised-button color=\"primary\" type=\"submit\">replay</button>\n                            </div>                                 \n                        </form>\n            </div>\n    \n    <!-- end display comment -->\n        </div>\n        <div class=\"comment\">\n                <form class=\"comment-form\" (submit)='postComment($event, post._id, post.comment[index], post.comment)' >\n                    <mat-form-field >\n                            <textarea matInput \n                            name=\"comment\"\n                            [(ngModel)]=\"post.comment[index]\"\n                            placeholder=\"comment\"></textarea>\n                        </mat-form-field>\n                        <div class=\"btn-contaniar\">\n                            <button mat-raised-button color=\"primary\"  type=\"submit\">comment</button>\n                        </div> \n                </form>\n            </div>\n            <a class='btn' *ngIf=\"post.commentsLength > 1\" (click)='getMoreComment(post, $event)'>comment {{post.commentsLength}}</a>\n        </div>\n    <!-- end display post -->\n</div>\n"
 
 /***/ }),
 
@@ -8689,7 +9112,7 @@ module.exports = "<div>\n    <form (submit)='addNewPost()' class=\"post-form\">\
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".d-none {\n  display: none; }\n\nmat-form-field {\n  width: 100%; }\n\n.post-form {\n  width: 95%;\n  border-radius: 2%;\n  margin: 10px auto;\n  box-shadow: 2px 2px 9px;\n  padding: 20px; }\n\n.post-form .example-container mat-form-field {\n    width: 100%; }\n\n.post-form .btn-contaniar {\n    width: 100%;\n    direction: rtl; }\n\n.post-form textarea {\n    height: 75px; }\n\n.post-contanir {\n  box-shadow: 2px 2px 9px;\n  width: 95%;\n  border-radius: 2%;\n  margin: 10px auto;\n  border: 1px solid #89c4ff;\n  padding: 15px;\n  margin-top: 15px;\n  background-color: #fff;\n  color: #000;\n  position: relative; }\n\n.post-contanir a {\n    color: #000;\n    font-size: 18px;\n    font-weight: bold; }\n\n.post-contanir .post-contant form textarea {\n    background-color: #89c4ff;\n    padding: 5px;\n    color: #fff; }\n\n.post-contanir .edit {\n    text-align: right; }\n\n.post-contanir .edit .edit-icon {\n      color: #89c4ff;\n      cursor: pointer; }\n\n.post-contanir .edit .delete-icon {\n      color: red !important;\n      cursor: pointer; }\n\n.post-contanir .post-ui {\n    padding: 10px; }\n\n.post-contanir .img {\n    background-color: #89c4ff;\n    margin-top: 15px;\n    border-radius: 15px;\n    position: relative;\n    padding: 10px; }\n\n.post-contanir .img a {\n      color: #fff !important; }\n\n.post-contanir .img .p-post {\n      padding-left: 55px;\n      margin: 0;\n      overflow: auto; }\n\n.post-contanir .img .p-replay {\n      padding: 5px 0px 0 50px; }\n\n.post-contanir .img .replay-form {\n      padding: 15px; }\n\n.post-contanir .img .replay-form mat-form-field textarea {\n        background-color: #fff;\n        color: #3f51b5; }\n\n.post-contanir .img .clearfix {\n      clear: both; }\n\n.post-contanir .img p {\n      margin: 0; }\n\n.post-contanir .img i {\n      color: #fff; }\n\n.post-contanir .image {\n    position: relative;\n    width: 40px;\n    height: 40px;\n    border-radius: 50%;\n    box-shadow: 0 0 5px 0px #000; }\n\n.post-contanir .replay {\n    border-radius: 20px;\n    background-color: #89c4ff;\n    padding-left: 0;\n    margin-left: 44px;\n    padding: 1px 20px;\n    margin-top: 11px;\n    color: #fff; }\n\n.post-contanir .replay a {\n      color: #000 !important;\n      font-size: 18px;\n      font-weight: bold; }\n\n.post-contanir .comment mat-form-field {\n    width: 100%; }\n\n.btn-contaniar {\n  text-align: right; }\n"
+module.exports = "mat-form-field {\n  width: 100%; }\n\n.post-form {\n  width: 95%;\n  border-radius: 2%;\n  margin: 10px auto;\n  box-shadow: 2px 2px 9px;\n  padding: 20px; }\n\n.post-form .example-container mat-form-field {\n    width: 100%; }\n\n.post-form .btn-contaniar {\n    width: 100%;\n    direction: rtl; }\n\n.post-form textarea {\n    height: 75px; }\n\n.post-contanir {\n  box-shadow: 2px 2px 9px;\n  width: 95%;\n  border-radius: 2%;\n  margin: 10px auto;\n  border: 1px solid #89c4ff;\n  padding: 15px;\n  margin-top: 15px;\n  background-color: #fff;\n  color: #000;\n  position: relative; }\n\n.post-contanir a {\n    color: #000;\n    font-size: 18px;\n    font-weight: bold; }\n\n.post-contanir .post-contant form textarea {\n    background-color: #89c4ff;\n    padding: 5px;\n    color: #fff; }\n\n.post-contanir .edit {\n    text-align: right; }\n\n.post-contanir .edit .edit-icon {\n      color: #89c4ff;\n      cursor: pointer; }\n\n.post-contanir .edit .delete-icon {\n      color: red !important;\n      cursor: pointer; }\n\n.post-contanir .post-ui {\n    padding: 10px; }\n\n.post-contanir .img {\n    background-color: #89c4ff;\n    margin-top: 15px;\n    border-radius: 15px;\n    position: relative;\n    padding: 10px; }\n\n.post-contanir .img a {\n      color: #fff !important; }\n\n.post-contanir .img .p-post {\n      padding-left: 55px;\n      margin: 0;\n      overflow: auto; }\n\n.post-contanir .img .p-replay {\n      padding: 5px 0px 0 50px; }\n\n.post-contanir .img .replay-form {\n      padding: 15px; }\n\n.post-contanir .img .replay-form mat-form-field textarea {\n        background-color: #fff;\n        color: #3f51b5; }\n\n.post-contanir .img .clearfix {\n      clear: both; }\n\n.post-contanir .img p {\n      margin: 0; }\n\n.post-contanir .img i {\n      color: #fff; }\n\n.post-contanir .image {\n    position: relative;\n    width: 40px;\n    height: 40px;\n    border-radius: 50%;\n    box-shadow: 0 0 5px 0px #000; }\n\n.post-contanir .replay {\n    border-radius: 20px;\n    background-color: #89c4ff;\n    padding-left: 0;\n    margin-left: 44px;\n    padding: 1px 20px;\n    margin-top: 11px;\n    color: #fff; }\n\n.post-contanir .replay a {\n      color: #000 !important;\n      font-size: 18px;\n      font-weight: bold; }\n\n.post-contanir .comment mat-form-field {\n    width: 100%; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvdXNlci91c2VyLXBvc3RzL0U6XFxhcHBzXFxOZXcgTUVBTiBzdGFrZVxcWU9EQVxcZnJvbnQvc3JjXFxhcHBcXHVzZXJcXHVzZXItcG9zdHNcXHVzZXItcG9zdHMuY29tcG9uZW50LnNjc3MiLCJzcmMvYXBwL3VzZXIvdXNlci1wb3N0cy9FOlxcYXBwc1xcTmV3IE1FQU4gc3Rha2VcXFlPREFcXGZyb250L3NyY1xcYXNzZXRzXFxzYXNzXFxfY29sb3Iuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFLQTtFQUNJLFlBQVcsRUFDZDs7QUFDRDtFQUNJLFdBQVU7RUFDVixrQkFBaUI7RUFDakIsa0JBQWlCO0VBQ2pCLHdCQUF1QjtFQUN2QixjQUFhLEVBYWhCOztBQWxCRDtJQVFZLFlBQVcsRUFDZDs7QUFUVDtJQVlRLFlBQVc7SUFDWCxlQUFjLEVBQ2pCOztBQWRMO0lBZ0JRLGFBQVksRUFDZjs7QUFFTDtFQUNJLHdCQUF1QjtFQUN2QixXQUFVO0VBQ1Ysa0JBQWlCO0VBQ2pCLGtCQUFpQjtFQUNqQiwwQkMvQmM7RURnQ2QsY0FBYTtFQUNiLGlCQUFnQjtFQUNoQix1QkNuQ2E7RURvQ2IsWUNsQ1k7RURtQ1osbUJBQWtCLEVBcUdyQjs7QUEvR0Q7SUFZUSxZQ3JDUTtJRHNDUixnQkFBZTtJQUNmLGtCQUFpQixFQUVwQjs7QUFoQkw7SUFvQmdCLDBCQUF5QjtJQUN6QixhQUFZO0lBQ1osWUFBVyxFQUNkOztBQXZCYjtJQTRCWSxrQkFBaUIsRUFXcEI7O0FBdkNUO01BOEJnQixlQ3hERTtNRHlERixnQkFBZSxFQUVsQjs7QUFqQ2I7TUFtQ2dCLHNCQUFxQjtNQUNyQixnQkFBZSxFQUVsQjs7QUF0Q2I7SUF5Q1ksY0FBYSxFQUNoQjs7QUExQ1Q7SUE0Q1EsMEJDdEVVO0lEdUVWLGlCQUFnQjtJQUNoQixvQkFBbUI7SUFDbkIsbUJBQWtCO0lBQ2xCLGNBQWEsRUFnQ2hCOztBQWhGTDtNQWtEWSx1QkFBOEIsRUFDakM7O0FBbkRUO01BcURZLG1CQUFrQjtNQUNsQixVQUFTO01BQ1QsZUFBYyxFQUNqQjs7QUF4RFQ7TUEwRFksd0JBQXVCLEVBQzFCOztBQTNEVDtNQTZEWSxjQUFhLEVBT2hCOztBQXBFVDtRQWdFb0IsdUJDM0ZIO1FENEZHLGVDekZELEVEMEZGOztBQWxFakI7TUFzRVksWUFBVyxFQUNkOztBQXZFVDtNQXlFWSxVQUFTLEVBQ1o7O0FBMUVUO01BNEVZLFlDdkdLLEVEd0dSOztBQTdFVDtJQW1GUSxtQkFBa0I7SUFDbEIsWUFBVTtJQUNWLGFBQVk7SUFDWixtQkFBa0I7SUFDbEIsNkJDaEhRLEVEaUhYOztBQXhGTDtJQTBGUSxvQkFBbUI7SUFDbkIsMEJDckhVO0lEc0hWLGdCQUFlO0lBQ2Ysa0JBQWlCO0lBQ2pCLGtCQUFpQjtJQUNqQixpQkFBZ0I7SUFDaEIsWUMzSFMsRURrSVo7O0FBdkdMO01Ba0dZLHVCQUE2QjtNQUM3QixnQkFBZTtNQUNmLGtCQUFpQixFQUVwQjs7QUF0R1Q7SUEwR1ksWUFBVyxFQUNkIiwiZmlsZSI6InNyYy9hcHAvdXNlci91c2VyLXBvc3RzL3VzZXItcG9zdHMuY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyJAaW1wb3J0ICcuLi8uLi8uLi9hc3NldHMvc2Fzcy9jb2xvcic7XHJcbkBpbXBvcnQgJy4uLy4uLy4uL2Fzc2V0cy9zYXNzL3NoYXJlZCc7XHJcblxyXG5cclxuXHJcbm1hdC1mb3JtLWZpZWxke1xyXG4gICAgd2lkdGg6IDEwMCU7XHJcbn1cclxuLnBvc3QtZm9ybXtcclxuICAgIHdpZHRoOiA5NSU7XHJcbiAgICBib3JkZXItcmFkaXVzOiAyJTtcclxuICAgIG1hcmdpbjogMTBweCBhdXRvO1xyXG4gICAgYm94LXNoYWRvdzogMnB4IDJweCA5cHg7XHJcbiAgICBwYWRkaW5nOiAyMHB4O1xyXG4gICAgLmV4YW1wbGUtY29udGFpbmVye1xyXG4gICAgICAgIG1hdC1mb3JtLWZpZWxke1xyXG4gICAgICAgICAgICB3aWR0aDogMTAwJTtcclxuICAgICAgICB9XHJcbiAgICB9XHJcbiAgICAuYnRuLWNvbnRhbmlhcntcclxuICAgICAgICB3aWR0aDogMTAwJTtcclxuICAgICAgICBkaXJlY3Rpb246IHJ0bDtcclxuICAgIH1cclxuICAgIHRleHRhcmVhe1xyXG4gICAgICAgIGhlaWdodDogNzVweDtcclxuICAgIH1cclxufSAgICAgXHJcbi5wb3N0LWNvbnRhbmlye1xyXG4gICAgYm94LXNoYWRvdzogMnB4IDJweCA5cHg7XHJcbiAgICB3aWR0aDogOTUlO1xyXG4gICAgYm9yZGVyLXJhZGl1czogMiU7XHJcbiAgICBtYXJnaW46IDEwcHggYXV0bztcclxuICAgIGJvcmRlcjogMXB4IHNvbGlkICRtaWRfY29sb3I7XHJcbiAgICBwYWRkaW5nOiAxNXB4O1xyXG4gICAgbWFyZ2luLXRvcDogMTVweDtcclxuICAgIGJhY2tncm91bmQtY29sb3I6ICRsaWdodF9jb2xvcjtcclxuICAgIGNvbG9yOiAkZGFya19jb2xvcjtcclxuICAgIHBvc2l0aW9uOiByZWxhdGl2ZTtcclxuICAgIGF7XHJcbiAgICAgICAgY29sb3I6ICRkYXJrX2NvbG9yO1xyXG4gICAgICAgIGZvbnQtc2l6ZTogMThweDtcclxuICAgICAgICBmb250LXdlaWdodDogYm9sZDtcclxuXHJcbiAgICB9XHJcbiAgICAucG9zdC1jb250YW50e1xyXG4gICAgICAgIGZvcm17XHJcbiAgICAgICAgICAgIHRleHRhcmVhe1xyXG4gICAgICAgICAgICAgICAgYmFja2dyb3VuZC1jb2xvcjogIzg5YzRmZjtcclxuICAgICAgICAgICAgICAgIHBhZGRpbmc6IDVweDtcclxuICAgICAgICAgICAgICAgIGNvbG9yOiAjZmZmO1xyXG4gICAgICAgICAgICB9XHJcblxyXG4gICAgICAgIH1cclxuICAgIH1cclxuICAgICAgICAuZWRpdHtcclxuICAgICAgICAgICAgdGV4dC1hbGlnbjogcmlnaHQ7XHJcbiAgICAgICAgICAgIC5lZGl0LWljb257XHJcbiAgICAgICAgICAgICAgICBjb2xvcjokbWlkX2NvbG9yO1xyXG4gICAgICAgICAgICAgICAgY3Vyc29yOiBwb2ludGVyO1xyXG5cclxuICAgICAgICAgICAgfVxyXG4gICAgICAgICAgICAuZGVsZXRlLWljb257XHJcbiAgICAgICAgICAgICAgICBjb2xvcjogcmVkICFpbXBvcnRhbnQ7XHJcbiAgICAgICAgICAgICAgICBjdXJzb3I6IHBvaW50ZXI7XHJcblxyXG4gICAgICAgICAgICB9XHJcbiAgICAgICAgfVxyXG4gICAgICAgIC5wb3N0LXVpe1xyXG4gICAgICAgICAgICBwYWRkaW5nOiAxMHB4O1xyXG4gICAgICAgIH1cclxuICAgIC5pbWd7XHJcbiAgICAgICAgYmFja2dyb3VuZC1jb2xvcjogJG1pZF9jb2xvcjtcclxuICAgICAgICBtYXJnaW4tdG9wOiAxNXB4O1xyXG4gICAgICAgIGJvcmRlci1yYWRpdXM6IDE1cHg7XHJcbiAgICAgICAgcG9zaXRpb246IHJlbGF0aXZlO1xyXG4gICAgICAgIHBhZGRpbmc6IDEwcHg7XHJcbiAgICAgICAgYXtcclxuICAgICAgICAgICAgY29sb3I6ICRsaWdodF9jb2xvciAhaW1wb3J0YW50O1xyXG4gICAgICAgIH1cclxuICAgICAgICAucC1wb3N0e1xyXG4gICAgICAgICAgICBwYWRkaW5nLWxlZnQ6IDU1cHg7XHJcbiAgICAgICAgICAgIG1hcmdpbjogMDtcclxuICAgICAgICAgICAgb3ZlcmZsb3c6IGF1dG87XHJcbiAgICAgICAgfVxyXG4gICAgICAgIC5wLXJlcGxheXtcclxuICAgICAgICAgICAgcGFkZGluZzogNXB4IDBweCAwIDUwcHg7IFxyXG4gICAgICAgIH1cclxuICAgICAgICAucmVwbGF5LWZvcm17XHJcbiAgICAgICAgICAgIHBhZGRpbmc6IDE1cHg7XHJcbiAgICAgICAgICAgIG1hdC1mb3JtLWZpZWxke1xyXG4gICAgICAgICAgICAgICAgdGV4dGFyZWF7XHJcbiAgICAgICAgICAgICAgICAgICAgYmFja2dyb3VuZC1jb2xvcjogJGxpZ2h0X2NvbG9yO1xyXG4gICAgICAgICAgICAgICAgICAgIGNvbG9yOiAkbWlkMl9jb2xvcjtcclxuICAgICAgICAgICAgICAgIH1cclxuICAgICAgICAgICAgfVxyXG4gICAgICAgIH1cclxuICAgICAgICAuY2xlYXJmaXh7XHJcbiAgICAgICAgICAgIGNsZWFyOiBib3RoO1xyXG4gICAgICAgIH1cclxuICAgICAgICBwe1xyXG4gICAgICAgICAgICBtYXJnaW46IDA7XHJcbiAgICAgICAgfVxyXG4gICAgICAgIGl7XHJcbiAgICAgICAgICAgIGNvbG9yOiAkbGlnaHRfY29sb3I7XHJcbiAgICAgICAgfVxyXG4gICAgICAgIC8vIEBleHRlbmQgJWZvcm07XHJcblxyXG4gICAgfVxyXG5cclxuICAgIC5pbWFnZXtcclxuICAgICAgICBwb3NpdGlvbjogcmVsYXRpdmU7XHJcbiAgICAgICAgd2lkdGg6NDBweDtcclxuICAgICAgICBoZWlnaHQ6IDQwcHg7XHJcbiAgICAgICAgYm9yZGVyLXJhZGl1czogNTAlO1xyXG4gICAgICAgIGJveC1zaGFkb3c6IDAgMCA1cHggMHB4ICRkYXJrX2NvbG9yO1xyXG4gICAgfVxyXG4gICAgLnJlcGxheXtcclxuICAgICAgICBib3JkZXItcmFkaXVzOiAyMHB4O1xyXG4gICAgICAgIGJhY2tncm91bmQtY29sb3I6ICRtaWRfY29sb3I7XHJcbiAgICAgICAgcGFkZGluZy1sZWZ0OiAwO1xyXG4gICAgICAgIG1hcmdpbi1sZWZ0OiA0NHB4O1xyXG4gICAgICAgIHBhZGRpbmc6IDFweCAyMHB4O1xyXG4gICAgICAgIG1hcmdpbi10b3A6IDExcHg7XHJcbiAgICAgICAgY29sb3I6ICRsaWdodF9jb2xvcjtcclxuICAgICAgICBhe1xyXG4gICAgICAgICAgICBjb2xvcjogJGRhcmtfY29sb3IgIWltcG9ydGFudDtcclxuICAgICAgICAgICAgZm9udC1zaXplOiAxOHB4O1xyXG4gICAgICAgICAgICBmb250LXdlaWdodDogYm9sZDtcclxuXHJcbiAgICAgICAgfVxyXG4gICAgfVxyXG4gICAgLmNvbW1lbnR7XHJcbiAgICAgICAgbWF0LWZvcm0tZmllbGR7XHJcbiAgICAgICAgICAgIHdpZHRoOiAxMDAlO1xyXG4gICAgICAgIH1cclxuXHJcbiAgICAgICAgXHJcbiAgICB9XHJcbn1cclxuXHJcbiIsIiRsaWdodF9jb2xvcjojZmZmO1xyXG4kbWlkX2NvbG9yOiM4OWM0ZmY7XHJcbiRkYXJrX2NvbG9yOiMwMDA7XHJcbiRtaWQyX2NvbG9yOiMzZjUxYjU7XHJcbiRzdWNjZXNzX2NvbG9yOiNhOGY3YTg7XHJcbiRkYW5nZXJfY29sb3I6cmdiKDI1NSwgOTgsIDkzKTsiXX0= */"
 
 /***/ }),
 
@@ -8734,13 +9157,33 @@ var UserPostsComponent = /** @class */ (function () {
         this._http = _http;
         this.url = this._services.url;
         this.posts = [];
-        this._socketIoServices.ongetid().subscribe(function (data) {
-            console.log('data id =', data);
+        this._socketIoServices.onGetReplay().subscribe(function (res) {
+            if (res.success) {
+                var data = res.data;
+                var postsArray = _this.posts;
+                for (var _i = 0, postsArray_1 = postsArray; _i < postsArray_1.length; _i++) {
+                    var post = postsArray_1[_i];
+                    if (post._id == data.postId) {
+                        for (var _a = 0, _b = post.comment; _a < _b.length; _a++) {
+                            var comment = _b[_a];
+                            if (comment._id == data.commentId) {
+                                comment.replay.push(data);
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        this._socketIoServices.onGetComment().subscribe(function (res) {
+            var postsArr = _this.posts;
+            for (var _i = 0, postsArr_1 = postsArr; _i < postsArr_1.length; _i++) {
+                var post = postsArr_1[_i];
+                if (post._id == res.data.postId) {
+                    post.comment.push(res.data);
+                }
+            }
         });
         var user = JSON.parse(localStorage.getItem('user'));
-        this._socketIoServices.getMessages().subscribe(function (res) {
-            console.log(res);
-        });
         this._socketIoServices.getErrorMessage().subscribe(function (res) {
             _this._snackBar.open(res.error, 'Undo', { duration: 5000 });
         });
@@ -8862,29 +9305,15 @@ var UserPostsComponent = /** @class */ (function () {
             body: comm,
             username: user.username,
             image: user.image,
-            userId: this.user._id
+            userId: this.user._id,
+            postId: id
         };
         if (comment.body === undefined || comment.body === '') {
             this._snackBar.open('sorry u must writ anything', 'Undo', { duration: 10000 });
         }
         else {
-            this._http.get("http://localhost:3000/post/oo/oo/" + id).subscribe(function (res) {
-                console.log(res);
-            });
-            // this._socketIoServices.onComment(comment)
-            // this._services.postComment(comment, id).subscribe((res:any)=>{
-            //   console.log(res)
-            //     if (res.success) {
-            //       let i = res.comment.slice(-1).pop()
-            //       po.push(i)
-            //       event.target.firstElementChild.firstElementChild.firstElementChild.firstElementChild.firstElementChild.value = '';
-            //     }else{
-            //       this._snackBar.open(res.errMSG, 'Undo', {duration: 10000})
-            //     }
-            //   },
-            //   (error)=>{
-            //     this._snackBar.open(error.message, 'Undo', {duration: 10000})
-            // })
+            this._socketIoServices.onComment(comment);
+            event.target.firstElementChild.firstElementChild.firstElementChild.firstElementChild.firstElementChild.value = '';
         }
     }; // post comment form
     // to get more comments
@@ -8913,8 +9342,6 @@ var UserPostsComponent = /** @class */ (function () {
     // desplay edit replay form
     UserPostsComponent.prototype.displayReplayForm = function (event) {
         event.target.parentElement.lastChild.classList.toggle('d-none');
-        // event.target.parentElement.parentElement.firstChild.nextSibling.nextSibling.classList.toggle('d-none')
-        // event.target.parentElement.firstElementChild.classList.add('d-none')
     }; // desplay edit replay form
     // edit comment
     UserPostsComponent.prototype.editComment = function (event, postId, commentId, body) {
@@ -8962,10 +9389,11 @@ var UserPostsComponent = /** @class */ (function () {
     };
     // post replay form
     UserPostsComponent.prototype.postReplay = function (event, postId, commentId, rep, replays) {
-        var _this = this;
         var user = JSON.parse(localStorage.getItem('user'));
         event.target.firstChild.value = '';
         var replay = {
+            commentId: commentId,
+            postId: postId,
             body: rep,
             username: user.username,
             userImage: user.image,
@@ -8973,23 +9401,12 @@ var UserPostsComponent = /** @class */ (function () {
         };
         if (replay.body === undefined || replay.body === '') {
             this._snackBar.open('sorry you must write anything', 'Undo', { duration: 10000 });
+            return false;
         }
-        else {
-            this._services.postReplay(postId, commentId, replay).subscribe(function (res) {
-                if (res.success) {
-                    rep = '';
-                    var i = res.comment.replay.slice(-1).pop();
-                    event.target.firstChild.classList.remove('d-none');
-                    event.target.classList.add('d-none');
-                    replays.push(i);
-                }
-                else {
-                    _this._snackBar.open(res.errMSG, 'Undo', { duration: 10000 });
-                }
-            }, function (error) {
-                _this._snackBar.open(error.message, 'Undo', { duration: 10000 });
-            });
-        }
+        this._socketIoServices.onReplay(replay);
+        var o = event.target.firstElementChild.firstElementChild.firstElementChild.firstElementChild.firstElementChild.value = '';
+        event.target.firstChild.classList.remove('d-none');
+        event.target.classList.add('d-none');
     }; // post replay form
     UserPostsComponent.prototype.editReplay = function (event, postId, commentId, replayId, body) {
         var _this = this;
@@ -9055,12 +9472,13 @@ var UserPostsComponent = /** @class */ (function () {
 /*!*********************************************!*\
   !*** ./src/app/user/user-routing.module.ts ***!
   \*********************************************/
-/*! exports provided: UserRoutingModule */
+/*! exports provided: UserRoutingModule, userComponaent */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UserRoutingModule", function() { return UserRoutingModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "userComponaent", function() { return userComponaent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 /* harmony import */ var _profile_profile_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./profile/profile.component */ "./src/app/user/profile/profile.component.ts");
@@ -9070,12 +9488,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _messages_messages_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./messages/messages.component */ "./src/app/user/messages/messages.component.ts");
 /* harmony import */ var _notfacation_notfacation_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./notfacation/notfacation.component */ "./src/app/user/notfacation/notfacation.component.ts");
 /* harmony import */ var _search_search_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./search/search.component */ "./src/app/user/search/search.component.ts");
+/* harmony import */ var _post_post_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./post/post.component */ "./src/app/user/post/post.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -9092,6 +9512,7 @@ var routes = [
             { path: 'messages', component: _messages_messages_component__WEBPACK_IMPORTED_MODULE_6__["MessagesComponent"] },
             { path: 'notfacation', component: _notfacation_notfacation_component__WEBPACK_IMPORTED_MODULE_7__["NotfacationComponent"] },
             { path: 'profile', component: _profile_profile_component__WEBPACK_IMPORTED_MODULE_2__["ProfileComponent"] },
+            { path: 'post', component: _post_post_component__WEBPACK_IMPORTED_MODULE_9__["PostComponent"] },
             { path: 'search', component: _search_search_component__WEBPACK_IMPORTED_MODULE_8__["SearchComponent"] },
             { path: '**', component: _shared_sharedComponents_error_error_component__WEBPACK_IMPORTED_MODULE_3__["ErrorComponent"] }
         ] },
@@ -9108,6 +9529,14 @@ var UserRoutingModule = /** @class */ (function () {
     return UserRoutingModule;
 }());
 
+var userComponaent = [
+    _post_post_component__WEBPACK_IMPORTED_MODULE_9__["PostComponent"],
+    _user_home_user_home_component__WEBPACK_IMPORTED_MODULE_5__["UserHomeComponent"],
+    _messages_messages_component__WEBPACK_IMPORTED_MODULE_6__["MessagesComponent"],
+    _notfacation_notfacation_component__WEBPACK_IMPORTED_MODULE_7__["NotfacationComponent"],
+    _profile_profile_component__WEBPACK_IMPORTED_MODULE_2__["ProfileComponent"],
+    _search_search_component__WEBPACK_IMPORTED_MODULE_8__["SearchComponent"],
+];
 
 
 /***/ }),
@@ -9125,33 +9554,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
 /* harmony import */ var _user_routing_module__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./user-routing.module */ "./src/app/user/user-routing.module.ts");
-/* harmony import */ var _user_home_user_home_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./user-home/user-home.component */ "./src/app/user/user-home/user-home.component.ts");
-/* harmony import */ var _shared_shared_module__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../shared/shared.module */ "./src/app/shared/shared.module.ts");
-/* harmony import */ var _angular_material_dialog__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/material/dialog */ "./node_modules/@angular/material/esm5/dialog.es5.js");
-/* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm5/material.es5.js");
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
-/* harmony import */ var _profile_profile_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./profile/profile.component */ "./src/app/user/profile/profile.component.ts");
-/* harmony import */ var _find_friend_contanir_find_friend_contanir_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./find-friend-contanir/find-friend-contanir.component */ "./src/app/user/find-friend-contanir/find-friend-contanir.component.ts");
-/* harmony import */ var _send_message_send_message_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./send-message/send-message.component */ "./src/app/user/send-message/send-message.component.ts");
-/* harmony import */ var _navbar_navbar_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./navbar/navbar.component */ "./src/app/user/navbar/navbar.component.ts");
-/* harmony import */ var _user_posts_user_posts_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./user-posts/user-posts.component */ "./src/app/user/user-posts/user-posts.component.ts");
-/* harmony import */ var _home_home_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./home/home.component */ "./src/app/user/home/home.component.ts");
-/* harmony import */ var _messages_messages_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./messages/messages.component */ "./src/app/user/messages/messages.component.ts");
-/* harmony import */ var _notfacation_notfacation_component__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./notfacation/notfacation.component */ "./src/app/user/notfacation/notfacation.component.ts");
-/* harmony import */ var _search_search_component__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./search/search.component */ "./src/app/user/search/search.component.ts");
-/* harmony import */ var _confirm_remove_remove_component__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./confirm-remove/remove.component */ "./src/app/user/confirm-remove/remove.component.ts");
-/* harmony import */ var _angular_material_menu__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @angular/material/menu */ "./node_modules/@angular/material/esm5/menu.es5.js");
+/* harmony import */ var _shared_shared_module__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../shared/shared.module */ "./src/app/shared/shared.module.ts");
+/* harmony import */ var _angular_material_dialog__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/material/dialog */ "./node_modules/@angular/material/esm5/dialog.es5.js");
+/* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm5/material.es5.js");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
+/* harmony import */ var _find_friend_contanir_find_friend_contanir_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./find-friend-contanir/find-friend-contanir.component */ "./src/app/user/find-friend-contanir/find-friend-contanir.component.ts");
+/* harmony import */ var _send_message_send_message_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./send-message/send-message.component */ "./src/app/user/send-message/send-message.component.ts");
+/* harmony import */ var _navbar_navbar_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./navbar/navbar.component */ "./src/app/user/navbar/navbar.component.ts");
+/* harmony import */ var _user_posts_user_posts_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./user-posts/user-posts.component */ "./src/app/user/user-posts/user-posts.component.ts");
+/* harmony import */ var _home_home_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./home/home.component */ "./src/app/user/home/home.component.ts");
+/* harmony import */ var _confirm_remove_remove_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./confirm-remove/remove.component */ "./src/app/user/confirm-remove/remove.component.ts");
+/* harmony import */ var _angular_material_menu__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @angular/material/menu */ "./node_modules/@angular/material/esm5/menu.es5.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-
-
-
-
-
 
 
 
@@ -9172,46 +9591,42 @@ var UserModule = /** @class */ (function () {
     UserModule = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["NgModule"])({
             declarations: [
-                _user_home_user_home_component__WEBPACK_IMPORTED_MODULE_3__["UserHomeComponent"],
-                _profile_profile_component__WEBPACK_IMPORTED_MODULE_8__["ProfileComponent"],
-                _find_friend_contanir_find_friend_contanir_component__WEBPACK_IMPORTED_MODULE_9__["FindFriendContanirComponent"],
-                _send_message_send_message_component__WEBPACK_IMPORTED_MODULE_10__["SendMessageComponent"],
-                _navbar_navbar_component__WEBPACK_IMPORTED_MODULE_11__["NavbarComponent"],
-                _user_posts_user_posts_component__WEBPACK_IMPORTED_MODULE_12__["UserPostsComponent"],
-                _home_home_component__WEBPACK_IMPORTED_MODULE_13__["HomeComponent"],
-                _messages_messages_component__WEBPACK_IMPORTED_MODULE_14__["MessagesComponent"],
-                _notfacation_notfacation_component__WEBPACK_IMPORTED_MODULE_15__["NotfacationComponent"],
-                _search_search_component__WEBPACK_IMPORTED_MODULE_16__["SearchComponent"],
-                _confirm_remove_remove_component__WEBPACK_IMPORTED_MODULE_17__["ConfirmRemoveComponent"]
+                _user_routing_module__WEBPACK_IMPORTED_MODULE_2__["userComponaent"],
+                _find_friend_contanir_find_friend_contanir_component__WEBPACK_IMPORTED_MODULE_7__["FindFriendContanirComponent"],
+                _send_message_send_message_component__WEBPACK_IMPORTED_MODULE_8__["SendMessageComponent"],
+                _navbar_navbar_component__WEBPACK_IMPORTED_MODULE_9__["NavbarComponent"],
+                _user_posts_user_posts_component__WEBPACK_IMPORTED_MODULE_10__["UserPostsComponent"],
+                _home_home_component__WEBPACK_IMPORTED_MODULE_11__["HomeComponent"],
+                _confirm_remove_remove_component__WEBPACK_IMPORTED_MODULE_12__["ConfirmRemoveComponent"],
             ],
             imports: [
                 _angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"],
-                _shared_shared_module__WEBPACK_IMPORTED_MODULE_4__["SharedModule"],
+                _shared_shared_module__WEBPACK_IMPORTED_MODULE_3__["SharedModule"],
                 _user_routing_module__WEBPACK_IMPORTED_MODULE_2__["UserRoutingModule"],
-                _angular_material__WEBPACK_IMPORTED_MODULE_6__["MatButtonModule"],
-                _angular_forms__WEBPACK_IMPORTED_MODULE_7__["FormsModule"],
+                _angular_material__WEBPACK_IMPORTED_MODULE_5__["MatButtonModule"],
+                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormsModule"],
                 _user_routing_module__WEBPACK_IMPORTED_MODULE_2__["UserRoutingModule"],
-                _shared_shared_module__WEBPACK_IMPORTED_MODULE_4__["SharedModule"],
-                _angular_material__WEBPACK_IMPORTED_MODULE_6__["MatGridListModule"],
-                _angular_material__WEBPACK_IMPORTED_MODULE_6__["MatInputModule"],
-                _angular_material_dialog__WEBPACK_IMPORTED_MODULE_5__["MatDialogModule"],
-                _angular_material__WEBPACK_IMPORTED_MODULE_6__["MatIconModule"],
-                _angular_material__WEBPACK_IMPORTED_MODULE_6__["MatSnackBarModule"],
-                _angular_material_menu__WEBPACK_IMPORTED_MODULE_18__["MatMenuModule"]
+                _shared_shared_module__WEBPACK_IMPORTED_MODULE_3__["SharedModule"],
+                _angular_material__WEBPACK_IMPORTED_MODULE_5__["MatGridListModule"],
+                _angular_material__WEBPACK_IMPORTED_MODULE_5__["MatInputModule"],
+                _angular_material_dialog__WEBPACK_IMPORTED_MODULE_4__["MatDialogModule"],
+                _angular_material__WEBPACK_IMPORTED_MODULE_5__["MatIconModule"],
+                _angular_material__WEBPACK_IMPORTED_MODULE_5__["MatSnackBarModule"],
+                _angular_material_menu__WEBPACK_IMPORTED_MODULE_13__["MatMenuModule"]
             ],
             exports: [
-                _shared_shared_module__WEBPACK_IMPORTED_MODULE_4__["SharedModule"],
-                _angular_material__WEBPACK_IMPORTED_MODULE_6__["MatButtonModule"],
-                _angular_material__WEBPACK_IMPORTED_MODULE_6__["MatGridListModule"],
-                _angular_material__WEBPACK_IMPORTED_MODULE_6__["MatInputModule"],
-                _angular_material_dialog__WEBPACK_IMPORTED_MODULE_5__["MatDialogModule"],
-                _angular_material__WEBPACK_IMPORTED_MODULE_6__["MatIconModule"],
-                _angular_material_menu__WEBPACK_IMPORTED_MODULE_18__["MatMenuModule"],
-                _send_message_send_message_component__WEBPACK_IMPORTED_MODULE_10__["SendMessageComponent"]
+                _shared_shared_module__WEBPACK_IMPORTED_MODULE_3__["SharedModule"],
+                _angular_material__WEBPACK_IMPORTED_MODULE_5__["MatButtonModule"],
+                _angular_material__WEBPACK_IMPORTED_MODULE_5__["MatGridListModule"],
+                _angular_material__WEBPACK_IMPORTED_MODULE_5__["MatInputModule"],
+                _angular_material_dialog__WEBPACK_IMPORTED_MODULE_4__["MatDialogModule"],
+                _angular_material__WEBPACK_IMPORTED_MODULE_5__["MatIconModule"],
+                _angular_material_menu__WEBPACK_IMPORTED_MODULE_13__["MatMenuModule"],
+                _send_message_send_message_component__WEBPACK_IMPORTED_MODULE_8__["SendMessageComponent"]
             ],
             entryComponents: [
-                _send_message_send_message_component__WEBPACK_IMPORTED_MODULE_10__["SendMessageComponent"],
-                _confirm_remove_remove_component__WEBPACK_IMPORTED_MODULE_17__["ConfirmRemoveComponent"]
+                _send_message_send_message_component__WEBPACK_IMPORTED_MODULE_8__["SendMessageComponent"],
+                _confirm_remove_remove_component__WEBPACK_IMPORTED_MODULE_12__["ConfirmRemoveComponent"]
             ]
         })
     ], UserModule);

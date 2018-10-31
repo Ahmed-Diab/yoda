@@ -34,7 +34,7 @@ io.on("connection", (socket)=>{
             friendsAreConncting[socket._id]               = socket;
             friendsAreConncting[socket._id].friends       = user.friends || [];
             friendsAreConncting[socket._id].friendRequest = user.friendRequest || [];
-            friendsAreConncting[socket._id].username         = user.username
+            friendsAreConncting[socket._id].username      = user.username
             friendsAreConncting[socket._id].image         = user.image
           }
         })
@@ -232,7 +232,7 @@ io.on("connection", (socket)=>{
                                     if (err) {
                                       friendsAreConncting[userId].emit('Error', {error:err.message}) 
                                     }else{
-                                        if (post.userId in friendsAreConncting && post.userId != comment.userId) {
+                                        if (post.userId in friendsAreConncting && post.userId != userId) {
                                           friendsAreConncting[post.userId].emit('new notification', {data:not});
                                           friendsAreConncting[post.userId].emit('new text notifications', `${username} replay comment on your post`);
                                         }// save
@@ -442,7 +442,9 @@ socket.on('get friends requset', (id)=>{
                       const e = friendRequest[i]
                       if(e === userId){
                         friendRequest.splice(i, 1);
-                        friendsAreConncting[friendId].friendRequest.splice(i, 1);
+                        if (friendId in friendsAreConncting) {
+                          friendsAreConncting[friendId].friendRequest.splice(i, 1); 
+                        }
                         break;
                       }// end if
                   } // end for

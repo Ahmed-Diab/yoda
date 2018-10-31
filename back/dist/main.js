@@ -68,8 +68,7 @@ var routes = [
     { path: 'login', component: _components_login_login_component__WEBPACK_IMPORTED_MODULE_2__["LoginComponent"], data: { depth: 'login' } },
     { path: '', redirectTo: 'login', pathMatch: 'full', data: { depth: 'login' } },
     { path: 'register', component: _components_register_register_component__WEBPACK_IMPORTED_MODULE_4__["RegisterComponent"], data: { depth: 'register' } },
-    { path: 'user', loadChildren: './user/user.module#UserModule', data: { depth: 'home' },
-        canActivate: [_guards_login_guard_guard__WEBPACK_IMPORTED_MODULE_5__["LoginGuardGuard"]]
+    { path: 'user', loadChildren: './user/user.module#UserModule', canActivate: [_guards_login_guard_guard__WEBPACK_IMPORTED_MODULE_5__["LoginGuardGuard"]]
     },
     { path: '**', component: _shared_sharedComponents_error_error_component__WEBPACK_IMPORTED_MODULE_3__["ErrorComponent"] }
 ];
@@ -111,7 +110,7 @@ module.exports = "<!-- <app-navbar class=\"navbar\"></app-navbar> -->\n<div >\n 
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".container {\n  padding-top: 100px; }\n"
+module.exports = ".container {\n  padding-top: 100px; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvRTpcXGFwcHNcXE5ldyBNRUFOIHN0YWtlXFxZT0RBXFxmcm9udC9zcmNcXGFwcFxcYXBwLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksbUJBQWtCLEVBQ3JCIiwiZmlsZSI6InNyYy9hcHAvYXBwLmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLmNvbnRhaW5lcntcclxuICAgIHBhZGRpbmctdG9wOiAxMDBweDtcclxufSJdfQ== */"
 
 /***/ }),
 
@@ -274,7 +273,7 @@ module.exports = "<div class=\"login\">\n    <mat-grid-list cols=\"{{col}}\" row
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".login {\n  margin: auto;\n  width: 90%; }\n  .login /deep/ mat-grid-list mat-grid-tile img {\n    width: 100%; }\n  .login /deep/ mat-grid-list mat-grid-tile .example-form {\n    width: 90%; }\n  .login /deep/ mat-grid-list mat-grid-tile .example-form .example-full-width {\n      width: 100%; }\n  .login /deep/ mat-grid-list mat-grid-tile .example-form .example-full-width input::-webkit-input-placeholder {\n        color: red !important; }\n  .login /deep/ mat-grid-list mat-grid-tile .example-form .example-full-width input::-ms-input-placeholder {\n        color: red !important; }\n  .login /deep/ mat-grid-list mat-grid-tile .example-form .example-full-width input::placeholder {\n        color: red !important; }\n  .login /deep/ mat-grid-list mat-grid-tile .example-form .btn-contaniar {\n      direction: rtl; }\n"
+module.exports = ".login {\n  margin: auto;\n  width: 90%; }\n  .login /deep/ mat-grid-list mat-grid-tile img {\n    width: 100%; }\n  .login /deep/ mat-grid-list mat-grid-tile .example-form {\n    width: 90%; }\n  .login /deep/ mat-grid-list mat-grid-tile .example-form .example-full-width {\n      width: 100%; }\n  .login /deep/ mat-grid-list mat-grid-tile .example-form .example-full-width input::-webkit-input-placeholder {\n        color: red !important; }\n  .login /deep/ mat-grid-list mat-grid-tile .example-form .example-full-width input::-ms-input-placeholder {\n        color: red !important; }\n  .login /deep/ mat-grid-list mat-grid-tile .example-form .example-full-width input::placeholder {\n        color: red !important; }\n  .login /deep/ mat-grid-list mat-grid-tile .example-form .btn-contaniar {\n      direction: rtl; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvY29tcG9uZW50cy9sb2dpbi9FOlxcYXBwc1xcTmV3IE1FQU4gc3Rha2VcXFlPREFcXGZyb250L3NyY1xcYXBwXFxjb21wb25lbnRzXFxsb2dpblxcbG9naW4uY29tcG9uZW50LnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQ0E7RUFDQSxhQUFZO0VBQ1IsV0FBVSxFQXdCYjtFQTFCRDtJQU1nQixZQUFXLEVBQ2Q7RUFQYjtJQVVnQixXQUFVLEVBYVg7RUF2QmY7TUFZb0IsWUFBVyxFQU9oQjtFQW5CZjtRQWU0QixzQkFBcUIsRUFDeEI7RUFoQnpCO1FBZTRCLHNCQUFxQixFQUN4QjtFQWhCekI7UUFlNEIsc0JBQXFCLEVBQ3hCO0VBaEJ6QjtNQXFCZ0IsZUFBYyxFQUNqQiIsImZpbGUiOiJzcmMvYXBwL2NvbXBvbmVudHMvbG9naW4vbG9naW4uY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyJAaW1wb3J0ICcuLi8uLi8uLi9hc3NldHMvc2Fzcy9jb2xvcic7XHJcbi5sb2dpbntcclxubWFyZ2luOiBhdXRvO1xyXG4gICAgd2lkdGg6IDkwJTtcclxuICAgIC9kZWVwLyBtYXQtZ3JpZC1saXN0e1xyXG4gICAgICAgIG1hdC1ncmlkLXRpbGV7XHJcbiAgICAgICAgICAgIGltZ3tcclxuICAgICAgICAgICAgICAgIHdpZHRoOiAxMDAlO1xyXG4gICAgICAgICAgICB9XHJcbiAgICBcclxuICAgICAgICAgICAgLmV4YW1wbGUtZm9ybSB7XHJcbiAgICAgICAgICAgICAgICB3aWR0aDogOTAlO1xyXG4gICAgICAgICAgICAgICAgLmV4YW1wbGUtZnVsbC13aWR0aCB7XHJcbiAgICAgICAgICAgICAgICAgICAgd2lkdGg6IDEwMCU7XHJcbiAgICAgICAgICAgICAgICAgICAgaW5wdXR7XHJcbiAgICAgICAgICAgICAgICAgICAgICAgICY6OnBsYWNlaG9sZGVye1xyXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgY29sb3I6IHJlZCAhaW1wb3J0YW50O1xyXG4gICAgICAgICAgICAgICAgICAgICAgICB9XHJcbiAgICAgICAgICAgICAgICAgICAgfVxyXG4gICAgXHJcbiAgICAgICAgICAgICAgfVxyXG4gICAgICAgICAgICAgIC5idG4tY29udGFuaWFye1xyXG4gICAgICAgICAgICAgICAgZGlyZWN0aW9uOiBydGw7XHJcbiAgICAgICAgICAgIH1cclxuICAgICAgICAgICAgICB9XHJcbiAgICAgICAgfVxyXG4gICAgfVxyXG59XHJcbiJdfQ== */"
 
 /***/ }),
 
@@ -413,7 +412,7 @@ module.exports = "<div class=\"register\">\n    <mat-grid-list cols=\"{{col}}\" 
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".register {\n  margin: auto;\n  width: 90%; }\n  .register .imagestyle {\n    width: 150px;\n    height: 150px;\n    position: relative;\n    top: 75px; }\n  .register .imagestyle img {\n      width: 150px;\n      height: 150px;\n      border-radius: 50%;\n      box-shadow: 0px 0px 10px #ccc; }\n  .register /deep/ mat-grid-list mat-grid-tile img {\n    width: 100%; }\n  .register /deep/ mat-grid-list mat-grid-tile .user_image {\n    opacity: 0;\n    position: absolute;\n    width: 150px;\n    left: 50%;\n    height: 150px;\n    border-radius: 50%;\n    -webkit-transform: translateX(-50%);\n            transform: translateX(-50%);\n    box-shadow: 0 0 5px;\n    border-radius: 5x; }\n  .register /deep/ mat-grid-list mat-grid-tile .user-selected-image {\n    z-index: -2;\n    opacity: 1;\n    border-radius: 0%;\n    border-radius: 5px; }\n  .register /deep/ mat-grid-list mat-grid-tile form {\n    width: 90%;\n    margin: auto;\n    position: relative; }\n  .register /deep/ mat-grid-list mat-grid-tile form .example-half-width {\n      width: 40%;\n      padding-right: 5%; }\n  .register /deep/ mat-grid-list mat-grid-tile form .example-full-width {\n      width: 100%;\n      position: relative; }\n  .register /deep/ mat-grid-list mat-grid-tile form .example-full-width input::-webkit-input-placeholder {\n        color: red !important; }\n  .register /deep/ mat-grid-list mat-grid-tile form .example-full-width input::-ms-input-placeholder {\n        color: red !important; }\n  .register /deep/ mat-grid-list mat-grid-tile form .example-full-width input::placeholder {\n        color: red !important; }\n  .register /deep/ mat-grid-list mat-grid-tile form .example-full-width mat-icon {\n        cursor: pointer; }\n  .register /deep/ mat-grid-list mat-grid-tile form .btn-contaniar {\n      direction: rtl;\n      margin-top: 15px; }\n  .register /deep/ mat-grid-list mat-grid-tile form p {\n      font-size: 12px;\n      color: red;\n      margin: 0; }\n"
+module.exports = ".register {\n  margin: auto;\n  width: 90%; }\n  .register .imagestyle {\n    width: 150px;\n    height: 150px;\n    position: relative;\n    top: 75px; }\n  .register .imagestyle img {\n      width: 150px;\n      height: 150px;\n      border-radius: 50%;\n      box-shadow: 0px 0px 10px #ccc; }\n  .register /deep/ mat-grid-list mat-grid-tile img {\n    width: 100%; }\n  .register /deep/ mat-grid-list mat-grid-tile .user_image {\n    opacity: 0;\n    position: absolute;\n    width: 150px;\n    left: 50%;\n    height: 150px;\n    border-radius: 50%;\n    -webkit-transform: translateX(-50%);\n            transform: translateX(-50%);\n    box-shadow: 0 0 5px;\n    border-radius: 5x; }\n  .register /deep/ mat-grid-list mat-grid-tile .user-selected-image {\n    z-index: -2;\n    opacity: 1;\n    border-radius: 0%;\n    border-radius: 5px; }\n  .register /deep/ mat-grid-list mat-grid-tile form {\n    width: 90%;\n    margin: auto;\n    position: relative; }\n  .register /deep/ mat-grid-list mat-grid-tile form .example-half-width {\n      width: 40%;\n      padding-right: 5%; }\n  .register /deep/ mat-grid-list mat-grid-tile form .example-full-width {\n      width: 100%;\n      position: relative; }\n  .register /deep/ mat-grid-list mat-grid-tile form .example-full-width input::-webkit-input-placeholder {\n        color: red !important; }\n  .register /deep/ mat-grid-list mat-grid-tile form .example-full-width input::-ms-input-placeholder {\n        color: red !important; }\n  .register /deep/ mat-grid-list mat-grid-tile form .example-full-width input::placeholder {\n        color: red !important; }\n  .register /deep/ mat-grid-list mat-grid-tile form .example-full-width mat-icon {\n        cursor: pointer; }\n  .register /deep/ mat-grid-list mat-grid-tile form .btn-contaniar {\n      direction: rtl;\n      margin-top: 15px; }\n  .register /deep/ mat-grid-list mat-grid-tile form p {\n      font-size: 12px;\n      color: red;\n      margin: 0; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvY29tcG9uZW50cy9yZWdpc3Rlci9FOlxcYXBwc1xcTmV3IE1FQU4gc3Rha2VcXFlPREFcXGZyb250L3NyY1xcYXBwXFxjb21wb25lbnRzXFxyZWdpc3RlclxccmVnaXN0ZXIuY29tcG9uZW50LnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBRUE7RUFDSSxhQUFZO0VBQ1osV0FBVSxFQTJFYjtFQTdFRDtJQUlRLGFBQVk7SUFDWixjQUFhO0lBQ2IsbUJBQWtCO0lBQ2xCLFVBQVMsRUFPWjtFQWRMO01BU1MsYUFBWTtNQUNaLGNBQWE7TUFDYixtQkFBa0I7TUFDbEIsOEJBQTZCLEVBQzdCO0VBYlQ7SUFtQmdCLFlBQVcsRUFDZDtFQXBCYjtJQXdCZ0IsV0FBUztJQUNULG1CQUFrQjtJQUNsQixhQUFZO0lBQ1osVUFBUztJQUNULGNBQWE7SUFDYixtQkFBa0I7SUFDbEIsb0NBQTJCO1lBQTNCLDRCQUEyQjtJQUMzQixvQkFBbUI7SUFDbkIsa0JBQWlCLEVBQ2xCO0VBakNmO0lBbUNnQixZQUFXO0lBQ1gsV0FBVTtJQUNWLGtCQUFpQjtJQUNqQixtQkFBa0IsRUFHbkI7RUF6Q2Y7SUEyQ2dCLFdBQVU7SUFDVixhQUFZO0lBQ1osbUJBQWtCLEVBNkJyQjtFQTFFYjtNQWlEb0IsV0FBVTtNQUNWLGtCQUFpQixFQUNwQjtFQW5EakI7TUFxRG9CLFlBQVc7TUFDWCxtQkFBa0IsRUFVdkI7RUFoRWY7UUEwRDRCLHNCQUFxQixFQUN4QjtFQTNEekI7UUEwRDRCLHNCQUFxQixFQUN4QjtFQTNEekI7UUEwRDRCLHNCQUFxQixFQUN4QjtFQTNEekI7UUE4RHdCLGdCQUFlLEVBQ2xCO0VBL0RyQjtNQWtFZ0IsZUFBYztNQUNkLGlCQUFnQixFQUNuQjtFQXBFYjtNQXNFZ0IsZ0JBQWU7TUFDZixXQUFVO01BQ1YsVUFBUyxFQUNaIiwiZmlsZSI6InNyYy9hcHAvY29tcG9uZW50cy9yZWdpc3Rlci9yZWdpc3Rlci5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIkBpbXBvcnQgJy4uLy4uLy4uL2Fzc2V0cy9zYXNzL2NvbG9yJztcclxuXHJcbi5yZWdpc3RlcntcclxuICAgIG1hcmdpbjogYXV0bztcclxuICAgIHdpZHRoOiA5MCU7XHJcbiAgICAuaW1hZ2VzdHlsZXtcclxuICAgICAgICB3aWR0aDogMTUwcHg7XHJcbiAgICAgICAgaGVpZ2h0OiAxNTBweDtcclxuICAgICAgICBwb3NpdGlvbjogcmVsYXRpdmU7XHJcbiAgICAgICAgdG9wOiA3NXB4O1xyXG4gICAgICAgIGltZ3tcclxuICAgICAgICAgd2lkdGg6IDE1MHB4O1xyXG4gICAgICAgICBoZWlnaHQ6IDE1MHB4O1xyXG4gICAgICAgICBib3JkZXItcmFkaXVzOiA1MCU7XHJcbiAgICAgICAgIGJveC1zaGFkb3c6IDBweCAwcHggMTBweCAjY2NjO1xyXG4gICAgICAgIH1cclxuICAgIH1cclxuICAgIC9kZWVwLyBtYXQtZ3JpZC1saXN0e1xyXG5cclxuICAgICAgICBtYXQtZ3JpZC10aWxle1xyXG4gICAgICAgICAgICBpbWd7XHJcbiAgICAgICAgICAgICAgICB3aWR0aDogMTAwJTtcclxuICAgICAgICAgICAgfVxyXG5cclxuXHJcbiAgICAgICAgICAgIC51c2VyX2ltYWdle1xyXG4gICAgICAgICAgICAgICAgb3BhY2l0eTowO1xyXG4gICAgICAgICAgICAgICAgcG9zaXRpb246IGFic29sdXRlO1xyXG4gICAgICAgICAgICAgICAgd2lkdGg6IDE1MHB4O1xyXG4gICAgICAgICAgICAgICAgbGVmdDogNTAlO1xyXG4gICAgICAgICAgICAgICAgaGVpZ2h0OiAxNTBweDtcclxuICAgICAgICAgICAgICAgIGJvcmRlci1yYWRpdXM6IDUwJTtcclxuICAgICAgICAgICAgICAgIHRyYW5zZm9ybTogdHJhbnNsYXRlWCgtNTAlKTtcclxuICAgICAgICAgICAgICAgIGJveC1zaGFkb3c6IDAgMCA1cHg7XHJcbiAgICAgICAgICAgICAgICBib3JkZXItcmFkaXVzOiA1eDtcclxuICAgICAgICAgICAgICB9XHJcbiAgICAgICAgICAgICAgLnVzZXItc2VsZWN0ZWQtaW1hZ2V7XHJcbiAgICAgICAgICAgICAgICB6LWluZGV4OiAtMjtcclxuICAgICAgICAgICAgICAgIG9wYWNpdHk6IDE7XHJcbiAgICAgICAgICAgICAgICBib3JkZXItcmFkaXVzOiAwJTtcclxuICAgICAgICAgICAgICAgIGJvcmRlci1yYWRpdXM6IDVweDtcclxuXHJcblxyXG4gICAgICAgICAgICAgIH1cclxuICAgICAgICAgICAgZm9ybXtcclxuICAgICAgICAgICAgICAgIHdpZHRoOiA5MCU7XHJcbiAgICAgICAgICAgICAgICBtYXJnaW46IGF1dG87XHJcbiAgICAgICAgICAgICAgICBwb3NpdGlvbjogcmVsYXRpdmU7XHJcblxyXG5cclxuICAgICAgICAgICAgICAgIC5leGFtcGxlLWhhbGYtd2lkdGh7XHJcbiAgICAgICAgICAgICAgICAgICAgd2lkdGg6IDQwJTtcclxuICAgICAgICAgICAgICAgICAgICBwYWRkaW5nLXJpZ2h0OiA1JTtcclxuICAgICAgICAgICAgICAgIH1cclxuICAgICAgICAgICAgICAgIC5leGFtcGxlLWZ1bGwtd2lkdGgge1xyXG4gICAgICAgICAgICAgICAgICAgIHdpZHRoOiAxMDAlO1xyXG4gICAgICAgICAgICAgICAgICAgIHBvc2l0aW9uOiByZWxhdGl2ZTtcclxuICAgICAgICAgICAgICAgICAgICBcclxuICAgICAgICAgICAgICAgICAgICBpbnB1dHtcclxuICAgICAgICAgICAgICAgICAgICAgICAgJjo6cGxhY2Vob2xkZXJ7XHJcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICBjb2xvcjogcmVkICFpbXBvcnRhbnQ7XHJcbiAgICAgICAgICAgICAgICAgICAgICAgIH1cclxuICAgICAgICAgICAgICAgICAgICB9XHJcbiAgICAgICAgICAgICAgICAgICAgbWF0LWljb257XHJcbiAgICAgICAgICAgICAgICAgICAgICAgIGN1cnNvcjogcG9pbnRlcjtcclxuICAgICAgICAgICAgICAgICAgICB9XHJcbiAgICAgICAgICAgICAgfVxyXG4gICAgICAgICAgICAgIC5idG4tY29udGFuaWFye1xyXG4gICAgICAgICAgICAgICAgZGlyZWN0aW9uOiBydGw7XHJcbiAgICAgICAgICAgICAgICBtYXJnaW4tdG9wOiAxNXB4O1xyXG4gICAgICAgICAgICB9XHJcbiAgICAgICAgICAgIHB7XHJcbiAgICAgICAgICAgICAgICBmb250LXNpemU6IDEycHg7XHJcbiAgICAgICAgICAgICAgICBjb2xvcjogcmVkO1xyXG4gICAgICAgICAgICAgICAgbWFyZ2luOiAwO1xyXG4gICAgICAgICAgICB9XHJcbiAgICAgICAgICAgIH1cclxuICAgICAgICB9XHJcbiAgICB9XHJcbn1cclxuIl19 */"
 
 /***/ }),
 
@@ -435,6 +434,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm5/material.es5.js");
 /* harmony import */ var _services_services_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../services/services.service */ "./src/app/services/services.service.ts");
 /* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/platform-browser */ "./node_modules/@angular/platform-browser/fesm5/platform-browser.js");
+/* harmony import */ var src_app_services_validate_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! src/app/services/validate.service */ "./src/app/services/validate.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -444,6 +444,7 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -463,7 +464,7 @@ var MyErrorStateMatcher = /** @class */ (function () {
 
 // tslint:disable-next-line:no-duplicate-imports
 var RegisterComponent = /** @class */ (function () {
-    function RegisterComponent(_element, _auth, _router, _snackBar, _services, _title) {
+    function RegisterComponent(_element, _auth, _router, _snackBar, _services, _title, _validate) {
         var _this = this;
         this._element = _element;
         this._auth = _auth;
@@ -471,6 +472,7 @@ var RegisterComponent = /** @class */ (function () {
         this._snackBar = _snackBar;
         this._services = _services;
         this._title = _title;
+        this._validate = _validate;
         this.hide = true;
         this.col = 2;
         // row:number = 2;
@@ -544,7 +546,7 @@ var RegisterComponent = /** @class */ (function () {
             return false;
         } // check all fildes required 
         // use valed email services
-        if (!this._services.passwordValdation(this.password)) {
+        if (!this._validate.passwordValdation(this.password)) {
             this._snackBar.open('Make shure Minimum 8 characters, at least one uppercase letter, one lowercase letter and one numberr', 'Undo', {
                 duration: 5000
             });
@@ -589,7 +591,8 @@ var RegisterComponent = /** @class */ (function () {
             _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"],
             _angular_material__WEBPACK_IMPORTED_MODULE_4__["MatSnackBar"],
             _services_services_service__WEBPACK_IMPORTED_MODULE_5__["ServicesService"],
-            _angular_platform_browser__WEBPACK_IMPORTED_MODULE_6__["Title"]])
+            _angular_platform_browser__WEBPACK_IMPORTED_MODULE_6__["Title"],
+            src_app_services_validate_service__WEBPACK_IMPORTED_MODULE_7__["ValidateService"]])
     ], RegisterComponent);
     return RegisterComponent;
 }());
@@ -853,13 +856,14 @@ var ServicesService = /** @class */ (function () {
         this._http = _http;
         this._router = _router;
         // url='';
-        this.url = 'http://localhost:3000';
+        this.url = 'http://192.168.20.103:3000';
         this.friendsReq = new rxjs__WEBPACK_IMPORTED_MODULE_2__["BehaviorSubject"](0);
         this.friendsReqLength = this.friendsReq.asObservable();
     }
     ServicesService.prototype.changefriendsReq = function (num) {
         this.friendsReq.next(num);
     };
+    // post http module
     ServicesService.prototype.getPosts = function (userId) {
         return this._http.get(this.url + "/post/" + userId + "/user").pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError));
     };
@@ -872,24 +876,30 @@ var ServicesService = /** @class */ (function () {
     ServicesService.prototype.addPost = function (po) {
         return this._http.post(this.url + "/post/addText", po).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError));
     };
-    ServicesService.prototype.postComment = function (comment, id) {
-        return this._http.post(this.url + "/post/" + id + "/comment", comment).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError));
+    ServicesService.prototype.getPost = function (postId) {
+        return this._http.get(this.url + "/post/" + postId).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError));
     };
+    // comment http module
     ServicesService.prototype.editComment = function (postId, commentId, data) {
-        return this._http.post(this.url + "/post/" + postId + "/" + commentId + "/comment/edit", data).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError));
+        return this._http.post(this.url + "/comment/" + postId + "/" + commentId + "/edit", data).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError));
     };
     ServicesService.prototype.removeComment = function (postId, commentId) {
-        return this._http.get(this.url + "/post/" + postId + "/" + commentId + "/comment/remove").pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError));
+        return this._http.get(this.url + "/comment/" + postId + "/" + commentId + "/remove").pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError));
     };
+    ServicesService.prototype.getPostComment = function (id) {
+        return this._http.get(this.url + "/comment/" + id + "/all").pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError));
+    };
+    // replay http module
     ServicesService.prototype.postReplay = function (id, commentId, replay) {
-        return this._http.post(this.url + "/post/" + id + "/" + commentId + "/replay", replay).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError));
+        return this._http.post(this.url + "/replay/" + id + "/" + commentId, replay).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError));
     };
     ServicesService.prototype.editReplay = function (postId, commentId, replayId, data) {
-        return this._http.post(this.url + "/post/" + postId + "/" + commentId + "/" + replayId + "/replay/edit", data).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError));
+        return this._http.post(this.url + "/replay/" + postId + "/" + commentId + "/" + replayId + "/edit", data).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError));
     };
     ServicesService.prototype.removeReplay = function (postId, commentId, replayId) {
-        return this._http.get(this.url + "/post/" + postId + "/" + commentId + "/" + replayId + "/replay/remove").pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError));
+        return this._http.get(this.url + "/replay/" + postId + "/" + commentId + "/" + replayId + "/remove").pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError));
     };
+    // user http module
     ServicesService.prototype.getUserFriends = function (id) {
         return this._http.get(this.url + "/users/" + id + "/user/friends").pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError));
     };
@@ -918,10 +928,7 @@ var ServicesService = /** @class */ (function () {
         return this._http.get(this.url + "/users/" + id + "/" + reqId + "/acceptFriendRequst").pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError));
     };
     ServicesService.prototype.getUserPosts = function (id) {
-        return this._http.get(this.url + "/post/" + id).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError));
-    };
-    ServicesService.prototype.getPostComment = function (id) {
-        return this._http.get(this.url + "/post/" + id + "/all/comment").pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError));
+        return this._http.get(this.url + "/post/" + id + "/posts").pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError));
     };
     ServicesService.prototype.unfriend = function (userId, friendId) {
         return this._http.get(this.url + "/users/find/" + userId + "/" + friendId + "/unfriend").pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError));
@@ -951,21 +958,6 @@ var ServicesService = /** @class */ (function () {
         return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(error);
     };
     ;
-    ServicesService.prototype.getProfile = function (id) {
-        localStorage.setItem('profileId', id);
-        this._router.navigate(['/profile']);
-        // this.changeProfileId(id)
-    };
-    // password valdation
-    ServicesService.prototype.passwordValdation = function (password) {
-        var t = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d$@$!%*?&]{8,}/;
-        if (!t.test(password)) {
-            return false;
-        }
-        else {
-            return true;
-        }
-    }; // password valdation
     ServicesService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
             providedIn: 'root'
@@ -974,6 +966,53 @@ var ServicesService = /** @class */ (function () {
             _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"]])
     ], ServicesService);
     return ServicesService;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/services/validate.service.ts":
+/*!**********************************************!*\
+  !*** ./src/app/services/validate.service.ts ***!
+  \**********************************************/
+/*! exports provided: ValidateService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ValidateService", function() { return ValidateService; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var ValidateService = /** @class */ (function () {
+    function ValidateService() {
+    }
+    // password valdation
+    ValidateService.prototype.passwordValdation = function (password) {
+        var t = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d$@$!%*?&]{8,}/;
+        if (!t.test(password)) {
+            return false;
+        }
+        else {
+            return true;
+        }
+    }; // password valdation
+    ValidateService = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
+            providedIn: 'root'
+        }),
+        __metadata("design:paramtypes", [])
+    ], ValidateService);
+    return ValidateService;
 }());
 
 
@@ -1056,7 +1095,7 @@ module.exports = "<p>\n  error works!\n</p>\n"
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ""
+module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL3NoYXJlZC9zaGFyZWRDb21wb25lbnRzL2Vycm9yL2Vycm9yLmNvbXBvbmVudC5zY3NzIn0= */"
 
 /***/ }),
 
@@ -1162,7 +1201,7 @@ Object(_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_1__["platformB
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! e:\apps\New MEAN stake\YODA\front\src\main.ts */"./src/main.ts");
+module.exports = __webpack_require__(/*! E:\apps\New MEAN stake\YODA\front\src\main.ts */"./src/main.ts");
 
 
 /***/ })

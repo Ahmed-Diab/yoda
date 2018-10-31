@@ -229,8 +229,38 @@ router.get('/:id', (req, res, next)=>{
           var u = [] = users.filter(item=>{
             return item.username.toLocaleLowerCase().includes(username)
           }) // filter
-          let users_5 = [] = u.slice(0, 10);
+          let users_5 = [] = u.slice(0, 5);
           if (users_5.length >= 1) {
+            res.json({success:true, users:users_5, usersLength:u.length})
+          }else{
+            res.json({success:true, users:false})
+          }
+      }// else
+    }) // users find
+  })// find users by user name
+
+// find users by user name
+  router.get('/find/:username/:id/:index', (req, res, next)=>{
+    var username = req.params.username,
+        id       = req.params.id,
+        usersIndex    = Number(req.params.index);
+    User.find({}, (err, users)=>{
+      if (err) {
+        res.json({success:false, errMSG:err.message})
+      }else{
+          for (let i = 0; i < users.length; i++) {
+            const user = users[i];
+            if (user._id == id) {
+              users.splice(i, 1)
+              break;
+            }// if
+          }// for
+          var u = [] = users.filter(item=>{
+            return item.username.toLocaleLowerCase().includes(username)
+          }) // filter
+          let users_5 = [] = u.slice(usersIndex, usersIndex+5);
+          console.log(usersIndex+2)
+          if (u.length >= usersIndex) {
             res.json({success:true, users:users_5})
           }else{
             res.json({success:true, users:false})
