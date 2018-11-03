@@ -23,6 +23,7 @@ io.on("connection", (socket)=>{
     io.sockets.emit('usersId', {success:true, friendsAreConncting:Object.keys(friendsAreConncting)})
   }
   socket.on('join', function(data){
+    console.log('dataaaaaaaaaaaaaaa', data)
       if(data._id in friendsAreConncting){
         return false;
       }else{

@@ -1,0 +1,14 @@
+mat-grid-list{
+    background-color: aquamarine;
+
+    mat-grid-tile{
+        app-navbar{
+            width: 100%
+        }
+        .mat-figure{
+            align-items: start;
+            justify-content: start;
+            background-color: aquamarine;
+        }
+    } 
+}

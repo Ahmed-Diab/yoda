@@ -1,13 +1,14 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ErrorComponent } from './sharedComponent/error/error.component';
+// import { ErrorComponent } from './sharedComponent/error/error.component';
 import { LoginComponent } from './component/login/login.component';
 
 const routes: Routes = [
-  {path:'', redirectTo:'login', pathMatch:'full'},
   {path:'login', component:LoginComponent},
 
-  {path:'**', component:ErrorComponent}
+  {path:'', redirectTo:'login', pathMatch:'full'}
+
+  // {path:'**', component:ErrorComponent}
 ];
 
 @NgModule({
@@ -17,7 +18,6 @@ const routes: Routes = [
 export class AppRoutingModule { }
 
 export const routingComponant = [
-
-
+  LoginComponent
 
 ]
