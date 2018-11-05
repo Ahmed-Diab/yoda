@@ -1,0 +1,26 @@
+@import '../../../assets/scss/color';
+.register{
+    mat-grid-list{
+        padding: 0;
+        mat-grid-tile{
+            padding: 0;
+            .example-form{
+                width: 40%;
+                margin-top: 20px;
+                padding: 20px 30px;
+                box-shadow: 0 0 10px $darkColor;
+                border-radius: 5px;
+                mat-form-field{
+                    padding: 0;
+                    width: 100%;
+                }
+            }
+            @media (max-width:778px) {
+                .example-form{
+                    width: 90%;
+                }
+            }
+        }
+    }
+
+}

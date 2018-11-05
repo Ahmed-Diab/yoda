@@ -1,15 +1,32 @@
-import { Component } from '@angular/core';
-export interface Tile {
-  color: string;
-  cols: number;
-  rows: number;
-  text: string;
-}
+import { Component, ViewChild, OnInit } from '@angular/core';
+import { routerTransition } from './module/routerAnimation';
+import { Router, ActivatedRoute } from '@angular/router';
+import { ServicesService } from './services/services.service';
+
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  animations:[routerTransition]
+
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
+  isUser:boolean = false;
+  urlPath:string = 'edfgds'
+  constructor(
+    private _services:ServicesService
+    ){
+
+  }
+  ngOnInit(): void {
+    this._services.crancePathName.subscribe((res:string)=>{this.urlPath = res})
+
+  }
+
+  getDepth(outlet){
+    return  outlet.activatedRouteData.animation || null;
+  }
+  
+  
 }

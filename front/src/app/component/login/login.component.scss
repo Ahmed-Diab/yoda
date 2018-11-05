@@ -1,0 +1,27 @@
+@import '../../../assets/scss/color';
+
+.login{
+    /deep/mat-grid-list{
+        padding: 20px;
+
+        mat-grid-tile{
+            .example-container{
+                box-shadow: 0 0 10px $darkColor;
+                border-radius: 5px;
+                padding: 30px;
+                width: 90%;
+                .mat-form-field{
+                    width: 100%
+                }
+            }
+            img{
+                box-shadow: 0 0 10px $darkColor;
+                border-radius: 5px;
+                width: 80%;
+                height: 75%;
+            }
+        }
+
+    }
+
+}

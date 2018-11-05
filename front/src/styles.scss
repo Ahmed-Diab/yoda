@@ -8,18 +8,27 @@
 }
 body{
     font-family: Arial, Helvetica, sans-serif;
+    overflow-x: hidden
 }
 
 
 
 // globale classee
+.text-right{
+    text-align: right;
+}
 .clear-fix{
     clear: both;
 }
-
-.contanir{
+.d-none{
+    display: none;
+}
+.container{
     width: 80%;
-    margin: 0 auto;
+    margin: 70px auto;
+}
+a{
+    text-decoration: none;
 }
 
 @media(max-width:578px){

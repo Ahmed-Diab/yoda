@@ -1,8 +1,28 @@
-
-<button mat-fab><mat-icon>home</mat-icon></button>
- 
- <h1>log in</h1>
-
-<p>
-  login works!
-</p>
+<div class="login">
+  <mat-grid-list cols="{{cols}}" rowHeight="400px">
+    <mat-grid-tile>
+      <div class="example-container">
+        <mat-form-field>
+          <input [(ngModel)]="user" matInput placeholder="Username or Email">
+        </mat-form-field>
+        <mat-form-field>
+          <input [(ngModel)]="password" matInput placeholder="Password" [type]="hide ? 'password' : 'text'" >
+          <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </mat-form-field>
+        <div class="text-right">
+          <button mat-raised-button color="primary" (click)="onLogin()">login</button>  
+        </div>
+        <button mat-raised-button (click)="onLoginByGoogle()">
+          Login By Google
+        </button> 
+        <p class="text-right">
+            <a  [routerLink]="[ '/register']">Register</a>
+            <a  [routerLink]="[ '/user']">Register</a>
+        </p>
+</div>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <img src="./../../../assets/images/yoda.png" alt="login image">
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>

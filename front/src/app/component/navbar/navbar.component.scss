@@ -1,9 +1,21 @@
+@import '../../../assets/scss/color';
+.d-sm-none, .d-lg-none{
+    display: none;
+}
 nav{
+    padding: 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: +5000000;
+    background-color: $darkColor;
+    color: $lightColor;
+    overflow: hidden !important;
     .right-side{
         width: 20%;
         float: left;
         height: 100%;
-
     }
     ul{
         width: 80%;
@@ -12,16 +24,23 @@ nav{
         list-style: none;
         text-align: right;
         li{
+            text-align: left;
             display: inline-block;
             padding: 5px;
             margin-right: 10px;
+            height: 100%;
+            cursor: pointer;
+            mat-icon{
+                float: left;
+            }
 
             .d-lg{
-                display: none
+                float: left;
+                display: none;
+                line-height: 30px;
+                text-transform: capitalize;
             }
-            span{
-                display: block;
-            }
+
             @media(min-width:992px){
                 .d-lg{
                     display: block
@@ -29,6 +48,58 @@ nav{
             }
         }
 
+    }
+    .notifications, .messages, .friends-requst{
+        width: 300px;
+        overflow: auto;
+        background: $lightColor;
+        color: $darkColor;
+        position: fixed;
+        z-index: +1000;
+        top: 83px;
+        bottom: 0;
+        right: 0%;
+        padding: 5px 20px;
+        mat-icon{
+            float: right;
+            cursor: pointer;
+        }
+        .notification{
+            padding: 25px 10px;
+            p{
+                img{
+                    width: 30px;
+                    height: 30px;
+                    border-radius: 50%;
+                }
+                a{
+                    color: $darkColor;
+                }
+            }
+
+        }
+    }
+
+    @media(max-width:992px){
+        .notifications, .messages, .friends-requst{
+            right: 26px !important;
+            &::before{
+                display: none;
+            }
+        }
+    }
+    @media(max-width:778px){
+        .d-sm-none{
+            display: block;
+        }
+        .notifications, .messages, .friends-requst{
+            display: none;
+        }
+    }
+    @media(min-width:778px){
+        .d-lg-none{
+            display: block;
+        }
     }
 
 }

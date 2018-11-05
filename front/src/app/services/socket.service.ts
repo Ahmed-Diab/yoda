@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import io from 'socket.io-client';
-const socket = io('http://localhost:3000/');
+// const socket = io('http://localhost:3000/');
 
 
 @Injectable({
@@ -8,7 +8,7 @@ const socket = io('http://localhost:3000/');
 })
 export class SocketService {
   constructor() { }
-  join(data){
-    socket.emit('join', data)
-  }
+  // join(data){
+  //   socket.emit('join', data)
+  // }
 }
