@@ -2,7 +2,7 @@
   <div class="right-side">
     <h2>YODA</h2>
   </div>
-  <ul class="d-lg-none">
+  <ul class="d-lg-none" *ngIf="urlPath === 'user'">
     <li>
       <a [routerLink]="[ '/user']">
         <span class="d-lg">home</span> <mat-icon>home</mat-icon>
@@ -26,7 +26,7 @@
       <div class="clear-fix"></div>
     </li> 
   </ul>
-  <ul class="d-sm-none">
+  <ul class="d-sm-none" *ngIf="urlPath === 'user'">
       <li>
         <a [routerLink]="[ '/home', routeParam ]">
           <mat-icon>home</mat-icon>

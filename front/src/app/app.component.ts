@@ -12,7 +12,6 @@ import { ServicesService } from './services/services.service';
 
 })
 export class AppComponent implements OnInit{
-  isUser:boolean = false;
   urlPath:string = 'edfgds'
   constructor(
     private _services:ServicesService
@@ -20,7 +19,6 @@ export class AppComponent implements OnInit{
 
   }
   ngOnInit(): void {
-    this._services.crancePathName.subscribe((res:string)=>{this.urlPath = res})
 
   }
 

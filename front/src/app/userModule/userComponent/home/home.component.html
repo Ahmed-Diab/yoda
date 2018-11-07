@@ -1,0 +1,22 @@
+<div class="home">
+    <mat-grid-list cols="4" rowHeight="1:.5">
+            <mat-grid-tile [colspan]='3'>
+                <form class="post-form">
+                    <mat-form-field>
+                        <textarea matInput placeholder="post"></textarea>
+                    </mat-form-field>
+                    <div class="text-right">
+                        <button mat-raised-button color='primary' >post</button>
+                    </div>
+                </form>
+            </mat-grid-tile>
+            <mat-grid-tile [colspan]='1'>
+                <div class="search">
+                    <mat-form-field>
+                        <input (keyup)='findFrind()' [(ngModel)]="frindName" name="name" matInput placeholder="find user">
+                        <mat-icon matSuffix (click)="findFrind()">search</mat-icon>
+                    </mat-form-field>
+                </div>
+            </mat-grid-tile>
+    </mat-grid-list>
+</div>

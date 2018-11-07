@@ -14,15 +14,17 @@ const storage = multer.diskStorage({
       callback(null, 'user-images/')
   },
   filename: function(req, file, cd){
-    let username = req.body.username
-      cd(null, username.replace(/\s+/g,"-") + "-" + Date.now() + path.extname(file.originalname));
+    let username = req.body.username;
+    console.log(file)
+    console.log(req.body)
+      // cd(null, username.replace(/\ss+/g,"-") + "-" + Date.now() + path.extname(file.originalname));
   }
 })// end path to save images & rename images
 
 // start handel multer file size and use check file type fun
 const upload = multer({
    storage:storage,
-   limits: {fileSize: 10000000,},
+   limits: {fileSize: 10000000000,},
    fileFilter: function(req, file, cb){
      checkFileType(file, cb);
    }
@@ -112,6 +114,9 @@ router.post('/login', (req, res, next) => {
 
 // registry  
 router.post('/register', (req, res, next)=>{
+  console.log(req.body)
+  console.log(req.file)
+
   upload(req, res, (err) => {
     if(err instanceof multer.MulterError)  {
       return  res.json({success:false, errMSG: err.message});

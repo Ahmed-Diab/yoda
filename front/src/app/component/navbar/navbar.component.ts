@@ -34,9 +34,13 @@ export class NavbarComponent implements OnInit {
   isNotifications = false;
   isMessages      = false;
   isFriendsRequst = false;
+  urlPath:string  = '';
+
   constructor(
     private _services:ServicesService
   ) {
+    this._services.crancePathName.subscribe((res:string)=>{this.urlPath = res})
+
     
    }
   ngOnInit() {

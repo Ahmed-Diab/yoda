@@ -8,11 +8,19 @@ import { AuthService } from './services/auth.service';
 import { SocketService } from './services/socket.service';
 import { HttpService } from './services/http.service';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatButtonModule, MatInputModule, MatIconModule, MatGridListModule, MatFormFieldModule} from '@angular/material';
+import {MatButtonModule,
+  MatNativeDateModule, 
+  MatInputModule, 
+  MatIconModule, 
+  MatGridListModule, 
+  MatFormFieldModule,
+  MatSnackBarModule,
+  MatDatepickerModule} from '@angular/material';
+import { FacebookModule, FacebookService } from 'ngx-facebook';
 
 import { NavbarComponent } from './component/navbar/navbar.component';
 import { RegisterComponent } from './component/register/register.component';
-import { SharedModule } from './sharedComponent/shared.module';
+import { SharedModule } from './sharedModule/shared.module';
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,16 +40,23 @@ import { SharedModule } from './sharedComponent/shared.module';
     MatIconModule,
     MatInputModule,
     MatGridListModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatSnackBarModule,
+    FacebookModule.forRoot()
   ],
   exports:[
     MatButtonModule,
     MatIconModule,
     MatGridListModule,
     MatInputModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatNativeDateModule,
+    MatDatepickerModule,
+    MatSnackBarModule
   ],
-  providers: [AuthService, SocketService, HttpService],
+  providers: [AuthService, SocketService, HttpService, FacebookService],
   bootstrap: [AppComponent]
 
 })

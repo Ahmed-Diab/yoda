@@ -9,6 +9,8 @@ const usersRouter = require('./routes/users');
 const postRouter = require('./routes/post');
 const commentRouter = require('./routes/comment');
 const replayRouter = require('./routes/replay');
+const authRouter = require('./routes/auth');
+
 const cors = require('cors');
 const mongoose = require('mongoose');
 const keys = require('./config/keys')
@@ -40,6 +42,8 @@ app.use('/users', usersRouter);
 app.use('/post', postRouter);
 app.use('/comment', commentRouter);
 app.use('/replay', replayRouter);
+app.use('/auth', authRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -6,14 +6,17 @@
           <input [(ngModel)]="user" matInput placeholder="Username or Email">
         </mat-form-field>
         <mat-form-field>
-          <input [(ngModel)]="password" matInput placeholder="Password" [type]="hide ? 'password' : 'text'" >
+          <input [(ngModel)]="password" matInput placeholder="Password" [type]="'hide' ? 'password' : 'text'" >
           <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
         </mat-form-field>
         <div class="text-right">
           <button mat-raised-button color="primary" (click)="onLogin()">login</button>  
         </div>
-        <button mat-raised-button (click)="onLoginByGoogle()">
+        <button id="googleBtn" mat-raised-button (click)="onLoginByGoogle()">
           Login By Google
+        </button> 
+        <button mat-raised-button (click)="loginWithFB()">
+          Login By Facebook
         </button> 
         <p class="text-right">
             <a  [routerLink]="[ '/register']">Register</a>
@@ -21,7 +24,7 @@
         </p>
 </div>
     </mat-grid-tile>
-    <mat-grid-tile>
+    <mat-grid-tile *ngIf="isSmall">
       <img src="./../../../assets/images/yoda.png" alt="login image">
     </mat-grid-tile>
   </mat-grid-list>

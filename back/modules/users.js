@@ -51,7 +51,7 @@ var newUser = mongoose.Schema({
     },
     friends:{
       type:Array
-    },
+    }, 
     holdAcceptFriendRequest:{
       type:Array
     },

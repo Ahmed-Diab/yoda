@@ -2,6 +2,7 @@ const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 const User = require('../modules/users');
 const config = require('../config/keys');
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
 module.exports = function(passport) {
   let opts = {};
@@ -19,4 +20,16 @@ module.exports = function(passport) {
       }
     });
   }));
+
+// google stritge
+  passport.use('google', new GoogleStrategy({
+    callbackURL:'/auth/google/redirect',
+    clientID:config.google.clientID,
+    clientSecret:config.google.clientSecret,
+}, () =>{
+    console.log('profile');
+}
+)
+);
+
 }

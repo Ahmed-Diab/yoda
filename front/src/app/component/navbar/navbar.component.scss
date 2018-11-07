@@ -1,4 +1,6 @@
 @import '../../../assets/scss/color';
+@import '../../../assets/scss/sheard';
+
 .d-sm-none, .d-lg-none{
     display: none;
 }
@@ -66,16 +68,7 @@ nav{
         }
         .notification{
             padding: 25px 10px;
-            p{
-                img{
-                    width: 30px;
-                    height: 30px;
-                    border-radius: 50%;
-                }
-                a{
-                    color: $darkColor;
-                }
-            }
+            @extend %p_notification;
 
         }
     }
