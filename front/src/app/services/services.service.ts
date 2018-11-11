@@ -7,16 +7,16 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 
 export class ServicesService {
-  private pathName = new BehaviorSubject<string>('hello');
-  crancePathName = this.pathName.asObservable();
+  // private pathName = new BehaviorSubject<string>('hello');
+  // crancePathName = this.pathName.asObservable();
   public  url:string = 'http://localhost:3000';
 
   // public  url:string = '';
   constructor() { }
 
-  changePathName(path){
-    this.pathName.next(path)
-  }
+  // changePathName(path){
+  //   this.pathName.next(path)
+  // }
 
   handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {

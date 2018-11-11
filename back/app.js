@@ -10,16 +10,16 @@ const postRouter = require('./routes/post');
 const commentRouter = require('./routes/comment');
 const replayRouter = require('./routes/replay');
 const authRouter = require('./routes/auth');
-
 const cors = require('cors');
 const mongoose = require('mongoose');
 const keys = require('./config/keys')
 const app = express();
 
+
 mongoose.connect(keys.database, { useNewUrlParser: true });
 // // On Connection
 mongoose.connection.on('connected', () => {
-  console.log('Connected to Database');
+  console.log('Connected to Database at 27017');
 });
 // // On Error
 mongoose.connection.on('error', (err) => {
@@ -32,7 +32,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'dist/')));
 app.use(express.static(path.join(__dirname, 'public/')));
-app.use(express.static(path.join(__dirname, 'user-images/')));
+app.use(express.static(path.join(__dirname, 'users_images/')));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(cors())

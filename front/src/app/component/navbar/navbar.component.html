@@ -1,8 +1,13 @@
 <nav>
   <div class="right-side">
-    <h2>YODA</h2>
+    <h2 *ngIf="user" >YODA 
+      <a [routerLink]="[ '/user']">
+        <img class="username" src="{{url}}/{{user.image}}" alt="{{user.username}} image">
+        <span class="username">{{user.username}}</span> 
+      </a>
+    </h2>
   </div>
-  <ul class="d-lg-none" *ngIf="urlPath === 'user'">
+  <ul class="d-lg-none">
     <li>
       <a [routerLink]="[ '/user']">
         <span class="d-lg">home</span> <mat-icon>home</mat-icon>
@@ -26,7 +31,7 @@
       <div class="clear-fix"></div>
     </li> 
   </ul>
-  <ul class="d-sm-none" *ngIf="urlPath === 'user'">
+  <ul class="d-sm-none">
       <li>
         <a [routerLink]="[ '/home', routeParam ]">
           <mat-icon>home</mat-icon>

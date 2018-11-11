@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, Renderer2 } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { ServicesService } from 'src/app/services/services.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -28,19 +29,19 @@ import { ServicesService } from 'src/app/services/services.service';
   ]
 })
 export class NavbarComponent implements OnInit {
-  // @ViewChild('messages')      messages;
-  // @ViewChild('notifications') notifications;
-  // @ViewChild('friendsRequst') friendsRequst;
   isNotifications = false;
   isMessages      = false;
   isFriendsRequst = false;
-  urlPath:string  = '';
+  user:any;
+  url:string = this._services.url;
 
   constructor(
-    private _services:ServicesService
+    private _services:ServicesService,
+    private _auth:AuthService,
+    private _router:Router
   ) {
-    this._services.crancePathName.subscribe((res:string)=>{this.urlPath = res})
-
+    this.user = JSON.parse(localStorage.getItem('user'))
+    console.log(this.user)
     
    }
   ngOnInit() {
@@ -70,7 +71,8 @@ export class NavbarComponent implements OnInit {
   }
 
   logout(){
-    
+    this._auth.logout();
+    this._router.navigate(['/login'])
   }
   
 

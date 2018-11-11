@@ -5,6 +5,7 @@ import { ServicesService } from 'src/app/services/services.service';
 import {MatSnackBar} from '@angular/material';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -19,27 +20,22 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 })
 export class RegisterComponent implements OnInit {
 
-  emailForm = new FormControl('', [
+  email = new FormControl('', [
     Validators.required,
     Validators.email
   ]);
-  usernameForm = new FormControl('', [
+  username = new FormControl('', [
     Validators.required
   ]);
-  passwordForm = new FormControl('', [
+  password = new FormControl('', [
     Validators.required
   ]);
-  rePasswordForm = new FormControl('', [
+  rePassword = new FormControl('', [
     Validators.required
   ]);
-  dateOfBirthForm = new FormControl('', [
+  dateOfBirth = new FormControl('', [
     Validators.required
   ])
-  username:string;
-  password:string;
-  rePassword:string;
-  dateOfBirth:Date;
-  email:string
   matcher = new MyErrorStateMatcher();
   imagesURL:string  = '../../assets/images/yoda.png';
   constructor(
@@ -47,11 +43,12 @@ export class RegisterComponent implements OnInit {
     private _snackBar:MatSnackBar,
     private _element:ElementRef,
     private _auth:AuthService,
-    private _router:Router
+    private _router:Router,
+    private _http:HttpClient
   ) { }
 
   ngOnInit() {
-    this._services.changePathName('')
+    window.scrollTo(0,0)
   }
 
 
@@ -67,53 +64,55 @@ export class RegisterComponent implements OnInit {
     }
 
     onRegisterSubmit() {
-      if (this.usernameForm.hasError('required')){
+      if (this.username.hasError('required')){
         this._snackBar.open('plz check username filde', 'Undo', {
           duration: 3000
         });
         return false
       }
-      if (this.emailForm.hasError('required')){
+      if (this.email.hasError('required')){
         this._snackBar.open('plz check email filde', 'Undo', {
           duration: 3000
         });
         return false
 
       }
-      if (this.emailForm.hasError('email')){
+      if (this.email.hasError('email')){
         this._snackBar.open('plz check email filde and enter valid email', 'Undo', {
           duration: 3000
         });
         return false
 
       }
-      if (this.dateOfBirthForm.hasError('required')){
+      if (this.dateOfBirth.hasError('required')){
         this._snackBar.open('plz check date of birth filde', 'Undo', {
           duration: 3000
         });
         return false
 
       }
-      if (this.passwordForm.hasError('required')){
+      if (this.password.hasError('required')){
         this._snackBar.open('plz check password filde', 'Undo', {
           duration: 3000
         });
         return false
 
       }
-      if (this.rePasswordForm.hasError('required')){
+      if (this.rePassword.hasError('required')){
         this._snackBar.open('plz check re password filde', 'Undo', {
           duration: 3000
         });
       }
 
-      if (this.password != this.rePassword) {
+      if (this.password.value != this.rePassword.value) {
         this._snackBar.open('plz make shure password filde is equal re password', 'Undo', {
           duration: 3000
         }); 
         return false
       }  
-      let inputEl: HTMLInputElement = this._element.nativeElement.querySelector('#userImage');
+      let inputEl: HTMLInputElement = this._element.nativeElement.querySelector('#photo');
+
+
       var formData = new FormData();
   //  //create a new fromdata instance
       if (inputEl.files.length !== 1) {
@@ -123,15 +122,19 @@ export class RegisterComponent implements OnInit {
         return false;
     }
     
-         formData.append("userImage", inputEl.files.item(0));
-         formData.append('username', JSON.stringify(this.username))
-         formData.append('dateOfBirth',JSON.stringify(this.dateOfBirth))
-         formData.append('password', this.password)
-         formData.append('email', this.email)
+    formData.append('username', this.username.value)
+    formData.append('dateOfBirth',this.dateOfBirth.value)
+    formData.append('password', this.password.value)
+    formData.append('email', this.email.value)
+    formData.append('photo', inputEl.files.item(0))
+    // this._http.post('http://localhost:3000/users/register', formData).subscribe(res=>{console.log(res)})
+
     this._auth.registerUser(formData).subscribe((data:any) => {
-      alert(data)
     if(data.success) {
       this._router.navigate(['/login']);
+      this._snackBar.open(data.MSG, 'Undo', {
+        duration: 3000
+      }); 
     }else{
       this._snackBar.open(data.errMSG, 'Undo', {
         duration: 3000

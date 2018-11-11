@@ -11,40 +11,61 @@ const path = require('path');
 // start path to save images & rename images
 const storage = multer.diskStorage({
   destination: function (req, file, callback) {
-      callback(null, 'user-images/')
+    var fileName = req.body.username.replace(/ /g,"_")
+    fs.mkdir(`users_images/${fileName}`,function(err) {
+      if(err) {
+          return false;
+      }else{
+        callback(null, `users_images/${fileName}`)
+      }
+    })
   },
   filename: function(req, file, cd){
     let username = req.body.username;
-    console.log(file)
-    console.log(req.body)
-      // cd(null, username.replace(/\ss+/g,"-") + "-" + Date.now() + path.extname(file.originalname));
+      cd(null, username.replace(/ /g,"-") + "-" + Date.now() + path.extname(file.originalname));
   }
 })// end path to save images & rename images
-
-// start handel multer file size and use check file type fun
-const upload = multer({
-   storage:storage,
-   limits: {fileSize: 10000000000,},
-   fileFilter: function(req, file, cb){
-     checkFileType(file, cb);
-   }
-}).single('userImage') // end handel multer file size and use check file type fun
-
-// start check file type 
-function checkFileType(file, cb) {
-  const filetypes = /jpeg|jpg|png/;
-  const extname   = filetypes.test(path.extname(file.originalname).toLowerCase());
-  const mimetype  = filetypes.test(file.mimetype)
-  if(mimetype && extname){
-    return cb(null, true);
-  } else{
-    cb('Error: must be image');
-
+  
+  // start handel multer file size and use check file type fun
+  const upload = multer({
+     storage:storage,
+     limits: {fileSize: 10000000000,},
+     fileFilter: function(req, file, cb){
+       User.findOne({'email':req.body.email}, (err, user)=>{
+         if (err) {
+           cb();
+         }if(user) {
+          cb();
+        }if(!user) {
+          User.findOne({"username":req.body.username}, (err, user)=>{
+            if (err) {
+              cb();
+            }
+            if(user){
+              cb();
+            }
+            if(!user){
+              checkFileType(file, cb);
+            }
+      }) //User findOne
+     }
+    })
   }
-} // end check file type 
+  }).single('photo') // end handel multer file size and use check file type fun
+  
+  // start check file type 
+  function checkFileType(file, cb) {
+    const filetypes = /jpeg|jpg|png/;
+    const extname   = filetypes.test(path.extname(file.originalname).toLowerCase());
+    const mimetype  = filetypes.test(file.mimetype)
+    if(mimetype && extname){
+      return cb(null, true);
+    } else{
+      cb('Error: must be image');
+    }
+  } // end check file type 
+  
 // to varfay user
-
-
 router.post('/login', (req, res, next) => {
     const user = req.body.user;
     const password = req.body.password;
@@ -79,7 +100,7 @@ router.post('/login', (req, res, next) => {
         }); // end User.comparePassword
       }); // end User.getUserByUsername
     }else{
-      User.getUserByUsername(user, (err, user) => {
+      User.getUserByUsername(user, (err, user)=>{
         if(err) throw err;
         if(!user) {
           return res.json({success: false, errMSG: 'User not found'});
@@ -111,45 +132,40 @@ router.post('/login', (req, res, next) => {
     } // get user by user name
 
   }); 
-
 // registry  
 router.post('/register', (req, res, next)=>{
-  console.log(req.body)
-  console.log(req.file)
-
   upload(req, res, (err) => {
     if(err instanceof multer.MulterError)  {
       return  res.json({success:false, errMSG: err.message});
     } else{
-       var  password    = req.body.password,
-            email       = req.body.email,
-            image       = req.file.filename,
-            dateOfBirth = req.body.dateOfBirth,
-            username    = req.body.username,
-            newUser     = new User({
-            username    :username,
-            password    :password,
-            email       :email,
-            image       :image,
-            dateOfBirth :dateOfBirth
-        });
-      User.findOne({"email":email}, (err, user)=>{
+      User.findOne({"email":req.body.email}, (err, user)=>{
         if (err) {
-          res.json({success: false, errMSG:err.message})
+          res.json({success: false, errMSG:err.message});
         }
         if(user){
           res.json({success: false, errMSG:'this email is alredy taken'});
-          return false;
         }
         if(!user){
           User.findOne({"username":req.body.username}, (err, user)=>{
             if (err) {
-              res.json({success: false, errMSG:err.message})
+              res.json({success: false, errMSG:err.message});
             }
             if(user){
               res.json({success: false, errMSG:'this username is alredy taken'})
             }
             if(!user){
+              var  password    = req.body.password,
+              email       = req.body.email,
+              image       = req.file.filename,
+              dateOfBirth = req.body.dateOfBirth,
+              username    = req.body.username,
+              newUser     = new User({
+              username    :username,
+              password    :password,
+              email       :email,
+              image       :`${username.replace(/ /g, '_')}/${image}`,
+              dateOfBirth :dateOfBirth
+          });
               User.addUser(newUser, (err)=>{
                 if (err) {
                     res.json({errMSG:err.message})

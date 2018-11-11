@@ -11,7 +11,7 @@ export class HttpService {
     private _http:HttpClient,
     private _services:ServicesService
   ) { }
-
+// user
   login(data){
     return this._http.post(`${this._services.url}`, data)
   }
@@ -21,6 +21,7 @@ export class HttpService {
   register(data){
     return this._http.post(`${this._services.url}`, data)
   }
+
   
 
 }

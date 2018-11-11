@@ -1,8 +1,4 @@
-<!-- <mat-grid-list cols="2" rowHeight='50px' *ngIf="isUser"> -->
-    <!-- <mat-grid-tile [colspan]='2'> -->
-      <app-navbar > </app-navbar>
-    <!-- </mat-grid-tile> -->
-<!-- </mat-grid-list> -->
+<app-navbar *ngIf="_auth.loggedIn()"> </app-navbar>
 <div class="container" [@routeAnimation]="getDepth(myOutlet)">
     <router-outlet #myOutlet='outlet'></router-outlet>
 </div>

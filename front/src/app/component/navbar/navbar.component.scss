@@ -15,12 +15,15 @@ nav{
     color: $lightColor;
     overflow: hidden !important;
     .right-side{
-        width: 20%;
+        width: 30%;
         float: left;
-        height: 100%;
+        @extend %user_containr;
+        .username{
+            display: inline-block;
+        }
     }
     ul{
-        width: 80%;
+        width: 70%;
         height: 100%;
         float: left;
         list-style: none;
@@ -73,26 +76,54 @@ nav{
         }
     }
 
-    @media(max-width:992px){
-        .notifications, .messages, .friends-requst{
-            right: 26px !important;
-            &::before{
-                display: none;
-            }
-        }
-    }
-    @media(max-width:778px){
-        .d-sm-none{
-            display: block;
-        }
-        .notifications, .messages, .friends-requst{
+}
+@media(max-width:992px){
+    .notifications, .messages, .friends-requst{
+        right: 26px !important;
+        &::before{
             display: none;
         }
     }
-    @media(min-width:778px){
-        .d-lg-none{
-            display: block;
+    .right-side{
+        width: 40%;
+    }
+    ul{
+        width: 60%;
+    }
+}
+@media(max-width:778px){
+    nav{
+        padding: 10px;
+    .right-side{
+        width: 30%;
+        .username{
+            display: none;
         }
     }
+    ul{
+        width: 70%;
+        li{
+            mat-icon{
+                font-size: 18px;
+                width: 18px;
+                height: 18px;
+            }
+        }
+    }
+    .d-sm-none{
+        display: block;
+    }
+    .notifications, .messages, .friends-requst{
+        display: none;
+    }
+}
+}
 
+@media(min-width:778px){
+    .d-lg-none{
+        display: block;
+    }
+    .username{
+        display: none;
+    }
 }

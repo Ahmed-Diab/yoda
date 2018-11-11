@@ -16,7 +16,6 @@ export class AuthService {
   ) {
     this.isDev = true;  // Change to false before deployment
   }
-  
   registerUser(data) {
     return this._http.post( `http://localhost:3000/users/register`, data).pipe(
       catchError(this._service.handleError)

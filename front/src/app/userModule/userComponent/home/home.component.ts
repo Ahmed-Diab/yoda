@@ -12,7 +12,7 @@ export class HomeComponent implements OnInit {
   constructor(
     private _services:ServicesService
   ) {
-    this._services.changePathName('user')
+    // this._services.changePathName('user')
 
    }
 
