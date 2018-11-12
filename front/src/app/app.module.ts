@@ -22,18 +22,12 @@ import { FacebookModule, FacebookService } from 'ngx-facebook';
 import { NavbarComponent } from './component/navbar/navbar.component';
 import { RegisterComponent } from './component/register/register.component';
 import { SharedModule } from './sharedModule/shared.module';
-import { PostComponent } from './userModule/userComponent/post/post.component';
-import { CommentComponent } from './userModule/userComponent/post/comment/comment.component';
-import { ReplayComponent } from './userModule/userComponent/post/comment/replay/replay.component';
 @NgModule({
   declarations: [
     AppComponent,
     routingComponant,
     NavbarComponent,
-    RegisterComponent,
-    PostComponent,
-    CommentComponent,
-    ReplayComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,

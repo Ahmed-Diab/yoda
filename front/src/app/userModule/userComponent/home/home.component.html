@@ -1,14 +1,15 @@
 <div class="home">
-    <mat-grid-list cols="4" rowHeight="1:1">
+    <mat-grid-list cols="4" rowHeight="100vh">
             <mat-grid-tile [colspan]='3'>
-                <form class="post-form">
+                <form class="post-form" (submit)='addNewPost(user, newPost)'>
                     <mat-form-field>
-                        <textarea matInput placeholder="post"></textarea>
+                        <textarea name='newPost' [(ngModel)]="newPost" matInput placeholder="post"></textarea>
                     </mat-form-field>
                     <div class="text-right">
                         <button mat-raised-button color='primary' >post</button>
                     </div>
                 </form>
+               <app-post [user]='user'></app-post>
             </mat-grid-tile>
             <mat-grid-tile [colspan]='1'>
                 <div class="search">

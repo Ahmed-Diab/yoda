@@ -13,7 +13,6 @@ const port = normalizePort(process.env.PORT || '3000');
 const Posts = require('../modules/post');
 const User = require('../modules/users');
 const friendsAreConncting = {};
-const allFriends = [];
 app.set('port', port);
 // socket io connect
 io.on("connection", (socket)=>{
@@ -22,16 +21,15 @@ io.on("connection", (socket)=>{
   function updateFriendsAreConncting(){
     io.sockets.emit('usersId', {success:true, friendsAreConncting:Object.keys(friendsAreConncting)})
   }
-  socket.on('join', function(data){
-    console.log('dataaaaaaaaaaaaaaa', data)
-      if(data._id in friendsAreConncting){
+  socket.on('join', function(id){
+      if(id in friendsAreConncting){
         return false;
       }else{
-        User.findById(data._id, (err, user)=>{
+        User.findById(id, (err, user)=>{
           if (err) {
             io.sockets.emit('Error', {error:err.message})
           }else{
-            socket._id = data._id;
+            socket._id = id;
             friendsAreConncting[socket._id]               = socket;
             friendsAreConncting[socket._id].friends       = user.friends || [];
             friendsAreConncting[socket._id].friendRequest = user.friendRequest || [];
@@ -88,8 +86,8 @@ io.on("connection", (socket)=>{
                           friendsAreConncting[userId].emit('Error', {error:err.message}) 
                         }else{
                             if (friend._id in friendsAreConncting) {
-                              friendsAreConncting[friend.id].emit('new notification', {data:not});
-                              friendsAreConncting[friend._id].emit('new post', {success:true, data:post});
+                              friendsAreConncting[friend.id].emit('new notification', not);
+                              friendsAreConncting[friend._id].emit('new post', post);
                               friendsAreConncting[friend._id].emit('new text notifications', `${username} add new post `);
                             }
                             // if (userId in friendsAreConncting) {
@@ -102,7 +100,7 @@ io.on("connection", (socket)=>{
               }// if
             }// for
             if (userId in friendsAreConncting) {
-              friendsAreConncting[userId].emit('new post', {success:true, data:post});
+              friendsAreConncting[userId].emit('new post', post);
             }
           }// else
         })// user find
@@ -116,7 +114,7 @@ io.on("connection", (socket)=>{
         body      = data.body,
         username  = data.username,
         userId    = data.userId,
-        userImage = data.image;
+        userImage = data.userImage;
     Posts.findByIdAndUpdate(postId, {
         $push:{"comment":{
             userId   :userId, 
@@ -132,7 +130,7 @@ io.on("connection", (socket)=>{
         }else{
           User.findById(post.userId, (err, user)=>{
             if (err) {
-              friendsAreConncting[userId].emit('Error', {error:err.message})
+              friendsAreConncting[userId].emit('Error', err.message)
             }else{
               var not = {
                 type     :'post',
@@ -144,10 +142,13 @@ io.on("connection", (socket)=>{
           user.notifications.push(not)
           user.save((err)=>{
           if (err) {
-            friendsAreConncting[userId].emit('Error', {error:err.message}) 
+            if (userId in friendsAreConncting){
+              friendsAreConncting[userId].emit('Error',err.message) 
+
+            }
           }else{
-            if (post.userId in friendsAreConncting) {
-              friendsAreConncting[post.userId].emit('new notification', {data:not});
+            if (post.userId in friendsAreConncting && post.userId != userId) {
+              friendsAreConncting[post.userId].emit('new notification', not);
               friendsAreConncting[post.userId].emit('new text notifications', `${username} add comment in your post `);
             }// save
           }// else
@@ -156,12 +157,11 @@ io.on("connection", (socket)=>{
           if (userId in friendsAreConncting) {
             for (const friendId of friendsAreConncting[userId].friends) {
               if (friendId in friendsAreConncting) {
-                friendsAreConncting[friendId].emit('new comment', {success:true, data:com});
+                friendsAreConncting[friendId].emit('new comment', com);
               }// if
             } // for
-            friendsAreConncting[userId].emit('new comment', {success:true, data:com});
+            friendsAreConncting[userId].emit('new comment', com);
           }
-
             }// else
           }) // user find by id
         }// else
@@ -178,7 +178,7 @@ io.on("connection", (socket)=>{
         userImage = data.userImage;
         Posts.findById(postId, (err, post)=>{
           if (err) {
-            io.sockets.emit('Error', {success:false, error:err.message})
+            io.sockets.emit('Error', err.message)
           }else{
               post.comment.forEach(comment => {
                 var uId;
@@ -193,11 +193,11 @@ io.on("connection", (socket)=>{
                       })
                       post.save((err)=>{
                           if (err) {
-                            friendsAreConncting[userId].emit('Error', {success:false, data:err.message});
+                            friendsAreConncting[userId].emit('Error', err.message);
                           }else{
                             User.find({}, (err, users)=>{
                               if (err) {
-                                friendsAreConncting[userId].emit('Error', {error:err.message})
+                                friendsAreConncting[userId].emit('Error', err.message)
                               }else{
                                 users.forEach((user)=>{
                                   if (user._id == uId) {
@@ -211,10 +211,10 @@ io.on("connection", (socket)=>{
                                 user.notifications.push(not)
                                 user.save((err)=>{
                                 if (err) {
-                                  friendsAreConncting[userId].emit('Error', {error:err.message}) 
+                                  friendsAreConncting[userId].emit('Error', err.message) 
                                 }else{
                                     if (uId in friendsAreConncting && userId != uId ) {
-                                      friendsAreConncting[uId].emit('new notification', {data:not});
+                                      friendsAreConncting[uId].emit('new notification', not);
                                       friendsAreConncting[uId].emit('new text notifications', `${username} replay your comment `);
                                     }// save
                                   }// else
@@ -231,28 +231,28 @@ io.on("connection", (socket)=>{
                                     user.notifications.push(not)
                                     user.save((err)=>{
                                     if (err) {
-                                      friendsAreConncting[userId].emit('Error', {error:err.message}) 
+                                      friendsAreConncting[userId].emit('Error', err.message) 
                                     }else{
                                         if (post.userId in friendsAreConncting && post.userId != userId) {
-                                          friendsAreConncting[post.userId].emit('new notification', {data:not});
+                                          friendsAreConncting[post.userId].emit('new notification', not);
                                           friendsAreConncting[post.userId].emit('new text notifications', `${username} replay comment on your post`);
                                         }// save
                                       }// else
                                     })// friend save
                                   }// if
                                 })// for each  
-                              }// else
+                              }// else 
                             }) // user find by id
                             var com           = post.comment.pop(),
                                 rep           = com.replay.pop();
                                 rep.postId    = postId;
                                 rep.commentId = commentId;
-                            for (const friendId of friendsAreConncting[userId].friends) {
-                              if (friendId in friendsAreConncting) {
-                                friendsAreConncting[friendId].emit('new replay', {success:true, data:rep});
-                              }
-                            }// for
-                            friendsAreConncting[userId].emit('new replay', {success:true, data:rep});
+                              for (const friendId of friendsAreConncting[userId].friends) {
+                                if (friendId in friendsAreConncting) {
+                                  friendsAreConncting[friendId].emit('new replay', rep);
+                                }
+                              }// for
+                              friendsAreConncting[userId].emit('new replay', rep);
                           }// else
                       }) // post save
                   } // if

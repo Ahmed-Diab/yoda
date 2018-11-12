@@ -40,9 +40,7 @@ export class NavbarComponent implements OnInit {
     private _auth:AuthService,
     private _router:Router
   ) {
-    this.user = JSON.parse(localStorage.getItem('user'))
-    console.log(this.user)
-    
+    this.user = JSON.parse(localStorage.getItem('user'))    
    }
   ngOnInit() {
 

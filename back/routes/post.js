@@ -42,7 +42,7 @@ router.get('/:userId/user', function(req, res, next) {
                         for (const x of posts) {
                             if (x.comment) {
                                 if (x.userId === userId) {
-                                    var allComments = [] = x.comment
+                                    var allComments = [] = x.comment;
                                     var z           = allComments.slice(-1)
                                     var l           = {
                                         body          :x.body,
@@ -52,7 +52,7 @@ router.get('/:userId/user', function(req, res, next) {
                                         userId        :x.userId,
                                         userImage     :x.userImage,
                                         createdAt     :x.createdAt,
-                                        comment      :z,
+                                        comment       :z,
                                         commentsLength:allComments.length
                                     }
                                     arrPosts.push(l);
@@ -64,16 +64,17 @@ router.get('/:userId/user', function(req, res, next) {
                             for (const i of friends) {
                                 if (post.userId === i) {
                                     var allComments = [] = post.comment
-                                    var z = allComments.slice(-1)
-                                    var l = {
-                                        _id           :post._id,
-                                        userId        :post.userId,
-                                        userId        :post.userId,
-                                        username      :post.username,
-                                        userImage     :post.userImage,
-                                        body          :post.body,
-                                        createdAt     :post.createdAt,
-                                        comment      :z,
+
+                                    var z = allComments.slice(-1);
+                                    var l           = {
+                                        body          :x.body,
+                                        _id           :x._id,
+                                        userId        :x.userId,
+                                        username      :x.username,
+                                        userId        :x.userId,
+                                        userImage     :x.userImage,
+                                        createdAt     :x.createdAt,
+                                        comment       :z,
                                         commentsLength:allComments.length
                                     }
                                     arrPosts.push(l);

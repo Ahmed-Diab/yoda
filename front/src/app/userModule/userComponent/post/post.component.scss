@@ -1,0 +1,10 @@
+@import '../../../../assets/scss/color';
+@import '../../../../assets/scss/sheard';
+
+.post{
+    margin: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid $darkColor;
+    @extend %user_post;
+}   

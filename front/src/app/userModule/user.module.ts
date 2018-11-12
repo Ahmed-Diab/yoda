@@ -5,8 +5,17 @@ import { SharedModule } from '../sharedModule/shared.module';
 import { MatGridListModule, MatInputModule, MatFormFieldModule, MatButtonModule, MatIconModule,  } from '@angular/material';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { PostComponent } from './userComponent/post/post.component';
+import { ReplayComponent } from './userComponent/post/comment/replay/replay.component';
+import { CommentComponent } from './userComponent/post/comment/comment.component';
 
 @NgModule({
+  declarations: [
+    CommentComponent,
+    PostComponent,
+    ReplayComponent,
+    components
+  ],
   imports: [
     CommonModule,
     UserRoutingModule,
@@ -17,10 +26,10 @@ import { HttpClientModule } from '@angular/common/http';
     MatButtonModule,
     MatIconModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+
     
   ],
-  declarations: [components],
   exports:[
     MatGridListModule,
     MatFormFieldModule,

@@ -1,0 +1,6 @@
+@import '../../../../../../assets/scss/color';
+@import '../../../../../../assets/scss/sheard';
+.replay{
+    margin-left: 40px;
+    @extend %user_post;
+}

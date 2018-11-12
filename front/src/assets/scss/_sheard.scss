@@ -21,5 +21,29 @@
             box-shadow: 0 0 5px $darkColor;
         }
     }
-
+}
+%user_post{
+    .post-user{
+        @extend %user_containr;
+        font-weight: bold;
+       a{ color: $darkColor;}
+    }
+    .post-body{
+        padding: 10px 40px;
+    }
+    .post-date{
+        font-size: 12px;
+    }
+    .see-more{
+        cursor: pointer;
+    }
+    .comment-form{
+        width: 100%;
+        .mat-form-field{
+            width: 100%;
+            textarea{
+                width: 100%;
+            }
+        }
+    }
 }
