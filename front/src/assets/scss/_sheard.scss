@@ -32,7 +32,7 @@
         padding: 10px 40px;
     }
     .post-date{
-        font-size: 12px;
+        font-size: 10px;
     }
     .see-more{
         cursor: pointer;
@@ -44,6 +44,16 @@
             textarea{
                 width: 100%;
             }
+        }
+    }
+}
+%form{
+    width: 90%;
+    margin: 10px auto;
+    .mat-form-field{
+        width: 100%;
+        textarea{
+            width: 100%;
         }
     }
 }

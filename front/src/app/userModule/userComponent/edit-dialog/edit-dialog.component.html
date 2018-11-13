@@ -1,0 +1,11 @@
+<mat-dialog-content *ngIf="data.type == 'post'">Edit Post</mat-dialog-content>
+<mat-dialog-content *ngIf="data.type == 'comment'">Edit comment</mat-dialog-content>
+<mat-dialog-content *ngIf="data.type == 'replay'">Edit replay</mat-dialog-content>
+<form class="edit-form" >
+    <mat-form-field>
+        <textarea name='edit' [(ngModel)]="data.body" matInput ></textarea>
+    </mat-form-field>
+    <div class="text-right">
+        <button mat-raised-button color='primary' [mat-dialog-close]="data">edit</button>
+    </div>
+</form>

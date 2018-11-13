@@ -26,6 +26,13 @@
     }
     .search{
         width:100%;
+        padding: 10px;
+        @extend %user_post;
+        button{
+            margin-left: 5px;
+            padding-right: 0px;
+            font-size: 12px
+        }
 
         mat-form-field{
             width:100%;

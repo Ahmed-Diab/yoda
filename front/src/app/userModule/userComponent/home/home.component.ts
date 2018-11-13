@@ -15,6 +15,7 @@ export class HomeComponent implements OnInit {
 
   frindName:string = '';
   newPost:string = '';
+  users:any = [];
   public user:User;
   posts:Post[];
   constructor(
@@ -35,7 +36,19 @@ export class HomeComponent implements OnInit {
 
   }
   findFrind(){
-    console.log(this.frindName)
+    this._httpService.findUserByUsername(this.frindName||'00', this.user._id)
+    .subscribe((res:any)=>{
+      if (res.success) {
+        console.log(res.users)
+        this.users = res.users;
+      }else{
+        this._snakBar.open(res.errMSG, 'undo', {duration:3000})
+      }
+    },(error)=>{
+      this._snakBar.open(error.message, 'undo', {duration:5000})
+
+
+    })
   }
 
   addNewPost(user, postBody){

@@ -1,0 +1,7 @@
+<mat-dialog-content *ngIf="data.type == 'post'">Are you sure you want delete this post?</mat-dialog-content>
+<mat-dialog-content *ngIf="data.type == 'comment'">Are you sure you want delete this comment?</mat-dialog-content>
+<mat-dialog-content *ngIf="data.type == 'replay'">Are you sure you want delete this replay?</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-raised-button color='primary' mat-dialog-close>No</button>
+  <button mat-raised-button color='warn'[mat-dialog-close]="data">Yes</button>
+</mat-dialog-actions>

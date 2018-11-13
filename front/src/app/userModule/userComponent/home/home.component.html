@@ -16,6 +16,22 @@
                     <mat-form-field>
                         <input (keyup)='findFrind()' [(ngModel)]="frindName" name="name" matInput placeholder="find user">
                         <mat-icon matSuffix (click)="findFrind()">search</mat-icon>
+                        <div class="users" *ngFor="let user of users">
+                            <p class="post-user">
+                                <a [routerLink]="[ '/user/profile', user._id ]">
+                                    <img src="{{_services.url}}/{{user.image}}" alt="{{user.username}}"> {{user.username | titlecase }}
+                                </a>
+                            </p>
+                            <p class="text-right">
+                                <button mat-raised-button><mat-icon>group_add</mat-icon></button>
+                                <button mat-raised-button color='warn'>unfriend<mat-icon>delete</mat-icon></button>
+                                <br>
+                                <br>
+                                <button mat-raised-button>Accept</button>
+                                <button mat-raised-button>Iggnor</button>
+
+                            </p>
+                        </div>
                     </mat-form-field>
                 </div>
             </mat-grid-tile>

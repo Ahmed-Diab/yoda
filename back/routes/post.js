@@ -135,8 +135,8 @@ router.get('/:userId/user', function(req, res, next) {
 //     })
 // })// add post
 // edit post
-router.post('/addText/:id/edit', (req, res, next)=>{
-    var id   = req.params.id,
+router.post('/:postId/edit', (req, res, next)=>{
+    var id   = req.params.postId,
         body = req.body.body;
     Post.findByIdAndUpdate(id, {
         body     :body,
@@ -151,8 +151,8 @@ router.post('/addText/:id/edit', (req, res, next)=>{
 })// edit post
 
 // remove post
-router.get('/addText/:id/remove', (req, res, next)=>{
-    let id = req.params.id;
+router.get('/:postId/remove', (req, res, next)=>{
+    let id = req.params.postId;
     Post.findByIdAndRemove(id, (err)=>{
         if (err) {
             res.json({success:false, errMSG:err.message})

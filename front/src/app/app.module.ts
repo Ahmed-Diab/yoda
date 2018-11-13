@@ -27,7 +27,7 @@ import { SharedModule } from './sharedModule/shared.module';
     AppComponent,
     routingComponant,
     NavbarComponent,
-    RegisterComponent
+    RegisterComponent,
   ],
   imports: [
     BrowserModule,
