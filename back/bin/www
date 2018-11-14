@@ -35,6 +35,15 @@ io.on("connection", (socket)=>{
             friendsAreConncting[socket._id].friendRequest = user.friendRequest || [];
             friendsAreConncting[socket._id].username      = user.username
             friendsAreConncting[socket._id].image         = user.image
+
+            var notifications = []
+            for (const not of user.notifications) {
+              if (!not.isRead) {
+                notifications.push(not)
+              }
+            }
+            friendsAreConncting[id].emit('get Length', {notLength:notifications.length, friendsLength:user.friendRequest.length})
+
           }
         })
         updateFriendsAreConncting();
@@ -316,18 +325,15 @@ io.on("connection", (socket)=>{
     })  // new friend notfation
 
 socket.on('get friends requset', (id)=>{
-  for (const friendRequest in friendsAreConncting[id]) {
-    if (friendsAreConncting[id].hasOwnProperty(friendRequest)) {
-      const element = friendsAreConncting[id][friendRequest];
-      var friendRequstIds = [] = friendsAreConncting[id].friendRequest;
+    if (id in friendsAreConncting) {
       User.find({}, (err, users)=>{
         if (err) {
-          io.sockets.emit('Error',err.message)
+          io.sockets.emit('Error', err.message)
         }else{
           var userRequset = [];
-          users.forEach((user)=>{
-            for (const id of friendRequstIds) {
-              if (id == user._id) {
+          for (const frindId of friendsAreConncting[id].friendRequest) {
+            for (const user of users) {
+              if (frindId == user._id) {
                 var t = {
                   username:user.username,
                   image:user.image,
@@ -335,25 +341,16 @@ socket.on('get friends requset', (id)=>{
                 }
                 userRequset.push(t)
               }
+            }
           }
-          })
-          if (id in friendsAreConncting) {
             friendsAreConncting[id].emit('new friends requset', userRequset);
-          }
         }
       })
     }
-  }
-  // if (friendsAreConncting[id]) {
-
-  // }else{
-  //   return false;
-  // }
   })
 
   // cansel freind requst
   socket.on('ignore friend request', (data)=>{
-    console.log(data)
     var userId   = data.userId,
         friendId = data.friendId;
   User.find({}, (err, users)=>{
@@ -561,7 +558,7 @@ socket.on('get friends requset', (id)=>{
         friendsAreConncting[id].emit('Error', {success:false, error:err.message})
       }else{
         if (data.id in friendsAreConncting) {
-          friendsAreConncting[data.id].emit('all notification', {data:user.notifications});
+          friendsAreConncting[data.id].emit('all notification', user.notifications);
           user.notifications.forEach((not)=>{
             if(!not.isRead && data.isRead){
               not.isRead = true;

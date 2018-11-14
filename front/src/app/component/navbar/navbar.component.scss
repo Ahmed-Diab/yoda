@@ -22,38 +22,30 @@ nav{
             display: inline-block;
         }
     }
-    ul{
+    .ul{
         width: 70%;
         height: 100%;
         float: left;
         list-style: none;
         text-align: right;
-        li{
-            text-align: left;
+        span{
             display: inline-block;
-            padding: 5px;
-            margin-right: 10px;
-            height: 100%;
+            margin: 5px;
             cursor: pointer;
-            mat-icon{
-                float: left;
-            }
-            a{
-                color:$lightColor !important;
-            }
-            .d-lg{
-                float: left;
-                display: none;
-                line-height: 30px;
-                text-transform: capitalize;
-            }
-
-            @media(min-width:992px){
-                .d-lg{
-                    display: block
-                }
-            }
         }
+        a{
+            color:$lightColor !important;
+        }
+        .d-lg{
+            float: left;
+            display: none;
+        }
+
+    @media(min-width:992px){
+        .d-lg{
+            display: block
+        }
+    }
 
     }
     .notifications, .messages, .friends-requst{
@@ -63,7 +55,7 @@ nav{
         color: $darkColor;
         position: fixed;
         z-index: +1000;
-        top: 83px;
+        top: 87px;
         bottom: 0;
         right: 0%;
         padding: 5px 20px;
@@ -75,6 +67,16 @@ nav{
             padding: 25px 10px;
             @extend %p_notification;
 
+        }
+        .zero-request{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-50%);
+            -webkit-transform: translateX(-50%) translateY(-50%);
+            -moz-transform: translateX(-50%) translateY(-50%);
+            -o-transform: translateX(-50%) translateY(-50%);
+            padding: 10px;
         }
     }
 
@@ -89,7 +91,7 @@ nav{
     .right-side{
         width: 40%;
     }
-    ul{
+    .ul{
         width: 60%;
     }
 }
@@ -102,14 +104,12 @@ nav{
             display: none;
         }
     }
-    ul{
+    .ul{
         width: 70%;
-        li{
-            mat-icon{
-                font-size: 18px;
-                width: 18px;
-                height: 18px;
-            }
+        mat-icon{
+            font-size: 18px;
+            width: 18px;
+            height: 18px;
         }
     }
     .d-sm-none{

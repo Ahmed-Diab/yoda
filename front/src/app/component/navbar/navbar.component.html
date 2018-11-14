@@ -7,57 +7,61 @@
       </a>
     </h2>
   </div>
-  <ul class="d-lg-none">
-    <li>
+  <div class="d-lg-none ul">
+    <span>
       <a [routerLink]="[ '/user']">
-        <span class="d-lg">home</span> <mat-icon>home</mat-icon>
-        <div class="clear-fix"></div>
+        <i class="d-lg">home </i>
+        <mat-icon>home</mat-icon> 
       </a>
-    </li>
-    <li (click)="toggleNotifications()">
-      <span class="d-lg">notifications</span> <mat-icon>notifications</mat-icon>
-      <div class="clear-fix"></div>
-    </li>
-    <li (click)="toggleMessages()">
-      <span class="d-lg">messages</span> <mat-icon>message</mat-icon>
-      <div class="clear-fix"></div>
-    </li> 
-    <li (click)="toggleFriendsRequst()">
-      <span class="d-lg">friends requst</span> <mat-icon>group</mat-icon>
-      <div class="clear-fix"></div>
-    </li>
-    <li (click)='logout()'>
-      <span class="d-lg">logout</span> <mat-icon>logout</mat-icon>
-      <div class="clear-fix"></div>
-    </li> 
-  </ul>
-  <ul class="d-sm-none">
-      <li>
+    </span>
+    <span (click)="toggleNotifications()">
+        <i class="d-lg">notifications </i> <mat-icon>notifications</mat-icon>
+        <i>{{notLength}}</i>
+    </span>
+    <span (click)="toggleMessages()">
+        <i class="d-lg">messages</i>
+        <mat-icon>message</mat-icon> 
+    </span> 
+    <span (click)="toggleFriendsRequst()">
+        <i class="d-lg">friends requst</i>
+        <mat-icon>group</mat-icon>
+        <i>{{friendsLength}}</i>
+    </span>
+    <span (click)='logout()'>
+      <i class="d-lg">logout </i> 
+      <mat-icon>logout</mat-icon>
+    </span> 
+  </div>
+  <!-- <div class="clear-fix"></div> -->
+
+  <div class="d-sm-none ul">
+      <span>
         <a [routerLink]="[ '/home', routeParam ]">
           <mat-icon>home</mat-icon>
         </a>
-      </li>
-      <li>
+      </span>
+      <span>
         <a [routerLink]="[ '/user/Notifications']">
           <mat-icon>notifications</mat-icon>
+          <i>{{notLength}}</i>
         </a>
-      </li>
-      <li>
+      </span>
+      <span>
           <a [routerLink]="[ '/user/Notifications']">
             <mat-icon>message</mat-icon>
           </a>
-      </li> 
-      <li>
+        </span> 
+      <span>
         <a [routerLink]="[ '/user/Notifications']">
           <mat-icon>group</mat-icon>
+          <i>{{friendsLength}}</i>
         </a>
-      </li>
-      <li (click)='logout()'>
+      </span>
+      <span (click)='logout()'>
         <mat-icon>logout</mat-icon>
-      </li> 
-    </ul>
-    
-  <div class="clear-fix"></div>
+      </span> 
+    </div>
+    <div class="clear-fix"></div>
   <div  [@openClose]="isNotifications ? 'in' : 'out'"  class="notifications">
     <mat-icon (click)="close($event)">close</mat-icon>
     <div class="notification">
@@ -90,17 +94,22 @@
   </div>
   <div [@openClose]="isFriendsRequst ? 'in' : 'out'" class="friends-requst">
       <mat-icon (click)="close($event)">close</mat-icon>
-      <div class="notification">
-        <p>
-          <a [routerLink]="[ '/path', routeParam ]">
-            <img src="../../../assets/images/yoda.png" alt=""> Ahmed Diab
-          </a> 
-        </p>
-        <p>
-          <a [routerLink]="[ '/path', routeParam ]">
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rerum, aperiam.
-          </a> 
-        </p>
+      <div class="notification" ngi *ngIf="friendsRequsts.length > 0;else zeroRequst">
+          <div class="users" *ngFor="let friend of friendsRequsts">
+              <p class="post-user">
+                  <a [routerLink]="[ '/user/profile', friend._id ]">
+                      <img src="{{_services.url}}/{{friend.image}}" alt="{{friend.username}}"> {{friend.username | titlecase }}
+                  </a>
+              </p>
+              <p class="text-right">
+                  <button mat-raised-button (click)="acceptFrindRequst(friend)">Accept</button>
+                  <button mat-raised-button (click)="ignoreFriendRequest(friend)">ignore</button>
+              </p>
+          </div>
       </div>
-  </div>
+
+      <ng-template #zeroRequst>
+          <h3 class="zero-request">you don't have requst yet</h3>          
+      </ng-template>
+      </div>
 </nav>

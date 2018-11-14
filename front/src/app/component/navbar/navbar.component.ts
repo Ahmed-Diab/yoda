@@ -4,6 +4,9 @@ import { ActivatedRoute, Route, Router } from '@angular/router';
 import { ServicesService } from 'src/app/services/services.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { SocketService } from 'src/app/services/socket.service';
+import { User } from 'src/app/module/user';
+import { HttpService } from 'src/app/services/http.service';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-navbar',
@@ -30,19 +33,37 @@ import { SocketService } from 'src/app/services/socket.service';
   ]
 })
 export class NavbarComponent implements OnInit {
-  isNotifications = false;
-  isMessages      = false;
-  isFriendsRequst = false;
-  user:any;
-  url:string = this._services.url;
+  isNotifications     = false;
+  isMessages          = false;
+  isFriendsRequst     = false;
+  user:User;
+  url:string          = this._services.url;
+  notifictions:any    = [];
+  friendsRequsts:any = [];
+  notLength:number;
+  friendsLength:number;
 
   constructor(
     private _services:ServicesService,
     private _auth:AuthService,
     private _router:Router,
-    private _socket:SocketService
+    private _socket:SocketService,
+    private _httpService:HttpService,
+    private _snakBar:MatSnackBar
   ) {
     this.user = JSON.parse(localStorage.getItem('user'));
+
+    this._socket.getLength().subscribe((res:{friendsLength:number, notLength:number})=>{
+      this.friendsLength = res.friendsLength;
+      this.notLength = res.notLength;
+    })
+    this._socket.getAllNotification().subscribe((res:Notification[])=>{
+      this.notifictions = res;
+    })
+
+    this._socket.getNewFriendsRequset().subscribe((res:any)=>{
+      this.friendsRequsts = res;
+    })
 
    }
   ngOnInit() {
@@ -52,12 +73,18 @@ export class NavbarComponent implements OnInit {
     this.isNotifications  = !this.isNotifications;
     this.isMessages       = false;
     this.isFriendsRequst  = false;
+    if(this.isNotifications){
+      this._socket.onNotifications({id:this.user._id, isRead:true})
+    }
 
   }
   toggleFriendsRequst() {
     this.isFriendsRequst  = !this.isFriendsRequst
     this.isNotifications  = false;
     this.isMessages       = false;
+    if(this.isFriendsRequst){
+      this._socket.onGetFriendRequst(this.user._id)
+    }
   }
   toggleMessages() {
     this.isFriendsRequst  = false
@@ -76,5 +103,38 @@ export class NavbarComponent implements OnInit {
     this._router.navigate(['/login'])
   }
   
+  acceptFrindRequst(friend){
+
+      for (let i = 0; i < this.friendsRequsts.length; i++) {
+        const req = this.friendsRequsts[i];
+        if (req._id == friend._id) {
+          this._socket.onAcceptFriendRequest({
+            user:{
+              username:this.user.username, 
+              _id:this.user._id, 
+              image:this.user.image}, 
+            friend:{
+              _id:friend._id, 
+              username:friend.username, 
+              image:friend.image}
+            })
+          this.friendsRequsts.splice(req, -1)
+        } 
+      }
+  }
+
+  ignoreFriendRequest(friend){
+    for (let i = 0; i < this.friendsRequsts.length; i++) {
+      const req = this.friendsRequsts[i];
+      if (req._id == friend._id) {
+        this._socket.onIgnoreFriendRequest({
+          userId:this.user._id, 
+          friendId:friend._id
+        })
+        this.friendsRequsts.splice(req, -1)
+      } 
+    }
+  }
+
 
 }

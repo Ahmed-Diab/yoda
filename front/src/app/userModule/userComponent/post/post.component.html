@@ -26,7 +26,7 @@
         <p class="post-date text-right">
             {{comment.createdAt | date:'MMM d, y, h:mm:ss a'}}
         </p>
-        <div class="replay" *ngFor="let replay of comment.replay | slice:0:2">
+        <div class="replay" *ngFor="let replay of comment.replay">
             <p class="text-right edit-icon" >
                         <mat-icon *ngIf="user._id === replay.userId" (click)='openEditPostDailog(post, "replay", comment, replay)'>edit</mat-icon>
                         <mat-icon *ngIf="user._id === replay.userId || user._id === post.userId || user._id === comment.userId"  (click)='openRemoveDialog($event, replay, "replay", comment)'>close</mat-icon>

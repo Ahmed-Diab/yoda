@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import io from 'socket.io-client';
 import { Observable } from 'rxjs';
 import { Post } from '../module/post';
-import { Replay } from '../module/replay';
 const socket = io('http://localhost:3000/');
 
 
@@ -39,11 +38,37 @@ export class SocketService {
     })     
     return observable;
   }
+  getLength(){
+    let observable = new Observable((observer) => {
+      socket.on('get Length', (data:string) => {
+        observer.next(data);    
+      });
+      return () => {
+        socket.disconnect();
+      };  
+    })     
+    return observable;
+  }
 
   getNewTextNotifications(){
     let observable = new Observable((observer) => {
       socket.on('new text notifications', (data:string) => {
         observer.next(data);    
+      });
+      return () => {
+        socket.disconnect();
+      };  
+    })     
+    return observable;
+  }
+
+  onNotifications(data){
+    socket.emit('notifications', data)
+  }
+  getAllNotification(){
+    let observable = new Observable((observer) => {
+      socket.on('all notification', (data) => {
+            observer.next(data);    
       });
       return () => {
         socket.disconnect();
@@ -59,16 +84,13 @@ export class SocketService {
   onAcceptFriendRequest(data){
     socket.emit('accept friend request', data)
   }
+  onGetFriendRequst(data){
+    socket.emit('get friends requset', data)
+  }
 
   getNewFriendsRequset(){
     let observable = new Observable((observer) => {
-      socket.on('new friends requset', (data:{
-            type     :string,
-            _id      :string,
-            username :string,
-            userImage:string,
-            body     :string
-          }) => {
+      socket.on('new friends requset', (data) => {
             observer.next(data);    
       });
       return () => {

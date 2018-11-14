@@ -54,7 +54,6 @@ export class HomeComponent implements OnInit {
         this._httpService.getUserById(this.user._id).subscribe((res:any)=>{
           if (res.success) {
             var data = res.user;
-            console.log(data)
             for (const id of data.friends) {
               for (const user of usersArr) {
                 if (id == user._id) {
