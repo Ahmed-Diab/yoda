@@ -243,7 +243,6 @@ openEditPostDailog(post, type, comment, replay){
   // add new replay
   addReplay(event, commentId, postId, username, userId, userImage){
     var body = event.target.firstElementChild.querySelector('textarea').value;
-    console.log(body)
     let replay = {
       postId    :postId,
       commentId :commentId,

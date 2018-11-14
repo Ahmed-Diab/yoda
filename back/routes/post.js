@@ -64,16 +64,15 @@ router.get('/:userId/user', function(req, res, next) {
                             for (const i of friends) {
                                 if (post.userId === i) {
                                     var allComments = [] = post.comment
-
                                     var z = allComments.slice(-1);
                                     var l           = {
-                                        body          :x.body,
-                                        _id           :x._id,
-                                        userId        :x.userId,
-                                        username      :x.username,
-                                        userId        :x.userId,
-                                        userImage     :x.userImage,
-                                        createdAt     :x.createdAt,
+                                        body          :post.body,
+                                        _id           :post._id,
+                                        userId        :post.userId,
+                                        username      :post.username,
+                                        userId        :post.userId,
+                                        userImage     :post.userImage,
+                                        createdAt     :post.createdAt,
                                         comment       :z,
                                         commentsLength:allComments.length
                                     }

@@ -350,7 +350,7 @@ router.get('/find', (req, res, next)=>{
 // })
 
 // find users by id and remove from friends
-router.get('/find/:userId/:friendId/unfriend', (req, res, next)=>{
+router.get('/:userId/:friendId/unfriend', (req, res, next)=>{
   var userId   = req.params.userId;
   var friendId = req.params.friendId;
   User.find({}, (err, users)=>{

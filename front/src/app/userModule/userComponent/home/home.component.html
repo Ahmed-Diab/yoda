@@ -14,25 +14,25 @@
             <mat-grid-tile [colspan]='1'>
                 <div class="search">
                     <mat-form-field>
-                        <input (keyup)='findFrind()' [(ngModel)]="frindName" name="name" matInput placeholder="find user">
+                        <input autocomplete="off" (keyup)='findFrind()' [(ngModel)]="frindName" name="name" matInput placeholder="find user">
                         <mat-icon matSuffix (click)="findFrind()">search</mat-icon>
-                        <div class="users" *ngFor="let user of users">
+                    </mat-form-field>
+                    <div class="users" *ngIf="users.length > 0">
+                        <div class="users" *ngFor="let friend of users">
                             <p class="post-user">
-                                <a [routerLink]="[ '/user/profile', user._id ]">
-                                    <img src="{{_services.url}}/{{user.image}}" alt="{{user.username}}"> {{user.username | titlecase }}
+                                <a [routerLink]="[ '/user/profile', friend._id ]">
+                                    <img src="{{_services.url}}/{{friend.image}}" alt="{{friend.username}}"> {{friend.username | titlecase }}
                                 </a>
                             </p>
                             <p class="text-right">
-                                <button mat-raised-button><mat-icon>group_add</mat-icon></button>
-                                <button mat-raised-button color='warn'>unfriend<mat-icon>delete</mat-icon></button>
-                                <br>
-                                <br>
-                                <button mat-raised-button>Accept</button>
-                                <button mat-raised-button>Iggnor</button>
-
+                                <button *ngIf="!friend.isFriend && !friend.isFriendRequest && !friend.isHold" mat-raised-button (click)='addToFrinds(friend)'><mat-icon>group_add</mat-icon></button>
+                                <button *ngIf="friend.isFriend" mat-raised-button color='warn' (click)="unfriendUser(friend)">unfriend<mat-icon>delete</mat-icon></button>
+                                <button *ngIf="friend.isFriendRequest" mat-raised-button (click)="acceptFrindRequst(friend)">Accept</button>
+                                <button *ngIf="friend.isHold" mat-raised-button (click)="cansleFriendRequst(friend)">cansle</button>
+                                <button *ngIf="friend.isFriendRequest" mat-raised-button (click)="ignoreFriendRequest(friend)">ignore</button>
                             </p>
                         </div>
-                    </mat-form-field>
+                    </div>
                 </div>
             </mat-grid-tile>
     </mat-grid-list>

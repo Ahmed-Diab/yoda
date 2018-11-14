@@ -1,7 +1,7 @@
 <div class="post" *ngFor="let post of posts;let p = index; trackBy:index" >
     <p class="text-right edit-icon" >
-        <mat-icon (click)='openEditPostDailog(post, "post", "", "")'>edit</mat-icon>
-        <mat-icon (click)='openRemoveDialog($event, post, "post")'>close</mat-icon>
+        <mat-icon *ngIf="user._id === post.userId" (click)='openEditPostDailog(post, "post", "", "")'>edit</mat-icon>
+        <mat-icon *ngIf="user._id === post.userId" (click)='openRemoveDialog($event, post, "post")'>close</mat-icon>
     </p>
     <p class="post-user">
         <a [routerLink]="[ '/user/profile', post.userId ]">
@@ -14,8 +14,8 @@
     </p>
     <div class="comment" *ngFor="let comment of post.comment;let c = index; trackBy:index;">
         <p class="text-right edit-icon" >
-            <mat-icon (click)='openEditPostDailog(post, "comment", comment, "")'>edit</mat-icon>
-            <mat-icon (click)='openRemoveDialog($event, comment, "comment")'>close</mat-icon>
+            <mat-icon *ngIf="user._id === comment.userId" (click)='openEditPostDailog(post, "comment", comment, "")'>edit</mat-icon>
+            <mat-icon *ngIf="user._id === comment.userId || user._id === post.userId" (click)='openRemoveDialog($event, comment, "comment")'>close</mat-icon>
         </p>
         <p class="post-user">
             <a [routerLink]="[ '/user/profile', comment.userId ]">
@@ -28,8 +28,8 @@
         </p>
         <div class="replay" *ngFor="let replay of comment.replay | slice:0:2">
             <p class="text-right edit-icon" >
-                        <mat-icon (click)='openEditPostDailog(post, "replay", comment, replay)'>edit</mat-icon>
-                        <mat-icon (click)='openRemoveDialog($event, replay, "replay", comment)'>close</mat-icon>
+                        <mat-icon *ngIf="user._id === replay.userId" (click)='openEditPostDailog(post, "replay", comment, replay)'>edit</mat-icon>
+                        <mat-icon *ngIf="user._id === replay.userId || user._id === post.userId || user._id === comment.userId"  (click)='openRemoveDialog($event, replay, "replay", comment)'>close</mat-icon>
             </p>
             <p class="post-user">
                 <a [routerLink]="[ '/user/profile', replay.userId ]">

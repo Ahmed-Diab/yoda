@@ -3,6 +3,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { ServicesService } from 'src/app/services/services.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { SocketService } from 'src/app/services/socket.service';
 
 @Component({
   selector: 'app-navbar',
@@ -38,9 +39,11 @@ export class NavbarComponent implements OnInit {
   constructor(
     private _services:ServicesService,
     private _auth:AuthService,
-    private _router:Router
+    private _router:Router,
+    private _socket:SocketService
   ) {
-    this.user = JSON.parse(localStorage.getItem('user'))    
+    this.user = JSON.parse(localStorage.getItem('user'));
+
    }
   ngOnInit() {
 

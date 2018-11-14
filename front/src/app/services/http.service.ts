@@ -32,6 +32,14 @@ export class HttpService {
     return this._http.get(`${this._services.url}/users/find/${username}/${userId}`) 
     .pipe( catchError(this._services.handleError));
   }
+  getUserById(id){
+    return this._http.get(`${this._services.url}/users/${id}`) 
+    .pipe( catchError(this._services.handleError));
+  }
+  unFriendUser(userId, friendId){
+    return this._http.get(`${this._services.url}/users/${userId}/${friendId}/unfriend`) 
+    .pipe( catchError(this._services.handleError));
+  }
 
   // post 
   editPost(postId, body){

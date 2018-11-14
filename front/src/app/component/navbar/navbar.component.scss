@@ -38,7 +38,9 @@ nav{
             mat-icon{
                 float: left;
             }
-
+            a{
+                color:$lightColor !important;
+            }
             .d-lg{
                 float: left;
                 display: none;

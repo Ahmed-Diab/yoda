@@ -20,19 +20,25 @@
             width: 100%;
             textarea{
                 width:100%;
-
             }
         }
     }
     .search{
         width:100%;
         padding: 10px;
-        @extend %user_post;
-        button{
-            margin-left: 5px;
-            padding-right: 0px;
-            font-size: 12px
+        .users{
+            max-height: 300px;
+            overflow: auto;
+            padding: 5px 0;
+            border-bottom: 1px solid $darkColor;
+            @extend %user_post;
+            button{
+                margin-left: 5px;
+                padding-right: 0px;
+                font-size: 12px
+            }
         }
+
 
         mat-form-field{
             width:100%;
