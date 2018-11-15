@@ -13,16 +13,13 @@ body{
 mat-icon{
     cursor: pointer;
 }
-
-
-
 // globale classee
 .text-right{
-    text-align: right;
+    text-align: right !important;
     padding-top: 15px;
-
-    a{
-    }
+}
+.date{
+    font-size: 10px;
 }
 .clear-fix{
     clear: both;

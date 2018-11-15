@@ -35,15 +35,13 @@ io.on("connection", (socket)=>{
             friendsAreConncting[socket._id].friendRequest = user.friendRequest || [];
             friendsAreConncting[socket._id].username      = user.username
             friendsAreConncting[socket._id].image         = user.image
-
-            var notifications = []
+            var notifications = [];
             for (const not of user.notifications) {
               if (!not.isRead) {
                 notifications.push(not)
               }
             }
             friendsAreConncting[id].emit('get Length', {notLength:notifications.length, friendsLength:user.friendRequest.length})
-
           }
         })
         updateFriendsAreConncting();
@@ -558,7 +556,8 @@ socket.on('get friends requset', (id)=>{
         friendsAreConncting[id].emit('Error', {success:false, error:err.message})
       }else{
         if (data.id in friendsAreConncting) {
-          friendsAreConncting[data.id].emit('all notification', user.notifications);
+          var not = [] = user.notifications;
+          friendsAreConncting[data.id].emit('all notification', not.slice(-11, -1));
           user.notifications.forEach((not)=>{
             if(!not.isRead && data.isRead){
               not.isRead = true;

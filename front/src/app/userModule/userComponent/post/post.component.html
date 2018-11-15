@@ -9,7 +9,7 @@
         </a>
     </p>
     <p class="post-body">{{post.body}}</p>
-    <p class="post-date text-right">
+    <p class="date text-right">
         {{post.createdAt | date:'MMM d, y, h:mm:ss a'}}
     </p>
     <div class="comment" *ngFor="let comment of post.comment;let c = index; trackBy:index;">
@@ -23,7 +23,7 @@
             </a>
         </p>
         <p class="post-body">{{comment.body}}</p>
-        <p class="post-date text-right">
+        <p class="date text-right">
             {{comment.createdAt | date:'MMM d, y, h:mm:ss a'}}
         </p>
         <div class="replay" *ngFor="let replay of comment.replay">
@@ -37,7 +37,7 @@
                 </a>
             </p>
             <p class="post-body">{{replay.body }}{{r}}</p>
-            <p class="post-date text-right">
+            <p class="date text-right">
                 {{replay.createdAt | date:'MMM d, y, h:mm:ss a'}}
             </p>
           </div>

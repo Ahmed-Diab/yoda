@@ -27,7 +27,7 @@ export class SocketService {
     return observable;
   }
   // 
-  getNotification() {
+  getNewNotification() {
     let observable = new Observable((observer) => {
       socket.on('new notification', (data) => {
         observer.next(data);    

@@ -16,19 +16,19 @@
     </span>
     <span (click)="toggleNotifications()">
         <i class="d-lg">notifications </i> <mat-icon>notifications</mat-icon>
-        <i>{{notLength}}</i>
+        <i *ngIf="notLength > 0">{{notLength}}</i>
     </span>
     <span (click)="toggleMessages()">
-        <i class="d-lg">messages</i>
+        <i class="d-lg">messages</i>  
         <mat-icon>message</mat-icon> 
     </span> 
     <span (click)="toggleFriendsRequst()">
-        <i class="d-lg">friends requst</i>
+        <i class="d-lg">friends requst</i>  
         <mat-icon>group</mat-icon>
-        <i>{{friendsLength}}</i>
-    </span>
+        <i *ngIf="friendsLength > 0">{{friendsLength}}</i>
+      </span>
     <span (click)='logout()'>
-      <i class="d-lg">logout </i> 
+      <i class="d-lg">logout </i>  
       <mat-icon>logout</mat-icon>
     </span> 
   </div>
@@ -43,7 +43,7 @@
       <span>
         <a [routerLink]="[ '/user/Notifications']">
           <mat-icon>notifications</mat-icon>
-          <i>{{notLength}}</i>
+          <i *ngIf="notLength > 0">{{notLength}}</i>
         </a>
       </span>
       <span>
@@ -54,7 +54,7 @@
       <span>
         <a [routerLink]="[ '/user/Notifications']">
           <mat-icon>group</mat-icon>
-          <i>{{friendsLength}}</i>
+          <i *ngIf="friendsLength > 0">{{friendsLength}}</i>
         </a>
       </span>
       <span (click)='logout()'>
@@ -64,18 +64,19 @@
     <div class="clear-fix"></div>
   <div  [@openClose]="isNotifications ? 'in' : 'out'"  class="notifications">
     <mat-icon (click)="close($event)">close</mat-icon>
-    <div class="notification">
-        <p>
-          <a [routerLink]="[ '/path', routeParam ]">
-            <img src="../../../assets/images/yoda.png" alt=""> Ahmed Diab
-          </a> 
-        </p>
-        <p>
-          <a [routerLink]="[ '/path', routeParam ]">
-            Lorem ipsum dolor
-          </a> 
-        </p>
+    <div class="notification" *ngIf="notifictions.length > 0">
+      <div [ngClass]="{'is-read': not.isRead == fales}" class="users" *ngFor="let not of notifictions">
+          <a [routerLink]="[ '/user/post', not._id ]">
+          <p class="post-user">
+                  <img src="{{_services.url}}/{{not.userImage}}" alt="{{not.username}}"> {{not.username | titlecase }}
+          </p>
+          <p>
+            {{not.body}}
+          </p>
+          <p class="date text-right">{{not.createdAt  | date:'MMM d, y, h:mm:ss a'}}</p>
+        </a>
       </div>
+  </div>
   </div>
   <div [@openClose]="isMessages ? 'in' : 'out'" class="messages">
       <mat-icon (click)="close($event)">close</mat-icon>
@@ -94,7 +95,7 @@
   </div>
   <div [@openClose]="isFriendsRequst ? 'in' : 'out'" class="friends-requst">
       <mat-icon (click)="close($event)">close</mat-icon>
-      <div class="notification" ngi *ngIf="friendsRequsts.length > 0;else zeroRequst">
+      <div class="notification" *ngIf="friendsRequsts.length > 0;else zeroRequst">
           <div class="users" *ngFor="let friend of friendsRequsts">
               <p class="post-user">
                   <a [routerLink]="[ '/user/profile', friend._id ]">

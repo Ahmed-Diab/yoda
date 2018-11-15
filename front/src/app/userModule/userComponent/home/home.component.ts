@@ -26,8 +26,8 @@ export class HomeComponent implements OnInit {
   ) {
     this.user = JSON.parse(localStorage.getItem('user'))
     this._socket.onJoin(this.user._id)
-    this._socket.getNotification().subscribe((res:any)=>{
-      this._snakBar.open(res.body, 'undo', {duration:3000})
+    this._socket.getNewTextNotifications().subscribe((res:any)=>{
+      this._snakBar.open(res, 'undo', {duration:3000})
     })
 
     this._socket.getNewTextNotifications().subscribe((res:string)=>{

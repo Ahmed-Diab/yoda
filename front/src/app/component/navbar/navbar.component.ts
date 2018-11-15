@@ -16,12 +16,9 @@ import { MatSnackBar } from '@angular/material';
     trigger('openClose', [
       state('in', style({
         transform: 'translateX(0%)'
-        // transition: 'all ease'
-
       })),
       state('out', style({
         transform: 'translateX(100%)'
-        // transition: 'all ease'
       })),
       transition('in => out', [
         animate('.3s')
@@ -53,13 +50,21 @@ export class NavbarComponent implements OnInit {
   ) {
     this.user = JSON.parse(localStorage.getItem('user'));
 
+    this._socket.getNewNotification().subscribe((res:any)=>{
+      this.notLength+=1;
+      this.notifictions.unshift(res)
+    })
     this._socket.getLength().subscribe((res:{friendsLength:number, notLength:number})=>{
       this.friendsLength = res.friendsLength;
       this.notLength = res.notLength;
     })
-    this._socket.getAllNotification().subscribe((res:Notification[])=>{
-      this.notifictions = res;
+    this._socket.getAllNotification().subscribe((res:any)=>{
+      var t = [] = res;
+      this.notifictions = t.reverse();
+      console.log(t)
+
     })
+
 
     this._socket.getNewFriendsRequset().subscribe((res:any)=>{
       this.friendsRequsts = res;
@@ -73,10 +78,11 @@ export class NavbarComponent implements OnInit {
     this.isNotifications  = !this.isNotifications;
     this.isMessages       = false;
     this.isFriendsRequst  = false;
-    if(this.isNotifications){
+    if (this.isNotifications) {
       this._socket.onNotifications({id:this.user._id, isRead:true})
-    }
 
+    }
+    this.notLength = 0;
   }
   toggleFriendsRequst() {
     this.isFriendsRequst  = !this.isFriendsRequst
@@ -102,9 +108,7 @@ export class NavbarComponent implements OnInit {
     this._auth.logout();
     this._router.navigate(['/login'])
   }
-  
   acceptFrindRequst(friend){
-
       for (let i = 0; i < this.friendsRequsts.length; i++) {
         const req = this.friendsRequsts[i];
         if (req._id == friend._id) {
@@ -118,8 +122,8 @@ export class NavbarComponent implements OnInit {
               username:friend.username, 
               image:friend.image}
             })
-          this.friendsRequsts.splice(req, -1)
-        } 
+          this.friendsRequsts.splice(req, 1)
+        }
       }
   }
 
@@ -131,7 +135,7 @@ export class NavbarComponent implements OnInit {
           userId:this.user._id, 
           friendId:friend._id
         })
-        this.friendsRequsts.splice(req, -1)
+        this.friendsRequsts.splice(req, 1)
       } 
     }
   }

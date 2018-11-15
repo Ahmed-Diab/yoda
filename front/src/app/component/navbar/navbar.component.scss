@@ -1,6 +1,14 @@
 @import '../../../assets/scss/color';
 @import '../../../assets/scss/sheard';
 
+.is-read{
+    p, a{
+        color: $darkColor !important;
+
+    }
+    background-color: $lightColor;
+}
+
 .d-sm-none, .d-lg-none{
     display: none;
 }
@@ -55,10 +63,12 @@ nav{
         color: $darkColor;
         position: fixed;
         z-index: +1000;
-        top: 87px;
+        top: 86px;
         bottom: 0;
         right: 0%;
         padding: 5px 20px;
+        background-color: rgba($darkColor, .5);
+
         mat-icon{
             float: right;
             cursor: pointer;
@@ -66,7 +76,18 @@ nav{
         .notification{
             padding: 25px 10px;
             @extend %p_notification;
+            p{
+                text-align: left;
+                color: $lightColor;
+                padding: 5px 10px;
+            }
+            .post-user{
+                padding-top: 15px;   
+            }
+            a{
+                color: $lightColor;
 
+            }
         }
         .zero-request{
             position: absolute;
