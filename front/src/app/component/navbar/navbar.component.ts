@@ -15,10 +15,13 @@ import { MatSnackBar } from '@angular/material';
   animations: [
     trigger('openClose', [
       state('in', style({
-        transform: 'translateX(0%)'
+        transform: 'translateX(10%)',
+        width:'30%'
       })),
       state('out', style({
-        transform: 'translateX(100%)'
+        transform: 'translateX(165%)',
+        width:'0'
+
       })),
       transition('in => out', [
         animate('.3s')

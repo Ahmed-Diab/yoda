@@ -1,6 +1,6 @@
 <div class="home">
     <mat-grid-list cols="4" rowHeight="100vh">
-            <mat-grid-tile [colspan]='3'>
+            <mat-grid-tile [colspan]='colSpan'>
                 <form class="post-form" (submit)='addNewPost(user, newPost)'>
                     <mat-form-field>
                         <textarea name='newPost' [(ngModel)]="newPost" matInput placeholder="post"></textarea>
@@ -11,13 +11,13 @@
                 </form>
                <app-post [user]='user'></app-post>
             </mat-grid-tile>
-            <mat-grid-tile [colspan]='1'>
+            <mat-grid-tile *ngIf="bigScreen" [colspan]='1'>
                 <div class="search">
                     <mat-form-field>
                         <input autocomplete="off" (keyup)='findFrind()' [(ngModel)]="frindName" name="name" matInput placeholder="find user">
                         <mat-icon matSuffix (click)="findFrind()">search</mat-icon>
                     </mat-form-field>
-                    <div class="users" *ngIf="users.length > 0">
+                    <div class="users" *ngIf="users.length >= 1">
                         <div class="users" *ngFor="let friend of users">
                             <p class="post-user">
                                 <a [routerLink]="[ '/user/profile', friend._id ]">

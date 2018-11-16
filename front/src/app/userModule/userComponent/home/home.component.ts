@@ -18,24 +18,38 @@ export class HomeComponent implements OnInit {
   users:any = [];
   public user:User;
   posts:Post[];
+  colSpan = 3;
+  rows;
+  bigScreen:boolean = true;
   constructor(
     private _services:ServicesService,
     private _socket:SocketService,
     private _httpService:HttpService,
     private _snakBar:MatSnackBar
   ) {
+    if (window.innerWidth < 778) {
+      this.colSpan = 4;
+      this.bigScreen = false;
+    }else{
+      this.colSpan = 3;
+      this.bigScreen = true;
+
+    }
+    window.addEventListener('resize', ()=>{
+      if (window.innerWidth < 778) {
+        this.colSpan = 4;
+        this.bigScreen = false;
+      }else{
+        this.colSpan = 3;
+        this.bigScreen = true;
+
+      }
+    })
     this.user = JSON.parse(localStorage.getItem('user'))
     this._socket.onJoin(this.user._id)
     this._socket.getNewTextNotifications().subscribe((res:any)=>{
       this._snakBar.open(res, 'undo', {duration:3000})
-    })
 
-    this._socket.getNewTextNotifications().subscribe((res:string)=>{
-      this._snakBar.open(res, 'undo', {duration:3000})
-    })  
-
-    this._socket.getNewTextNotifications().subscribe((res:string)=>{
-      this._snakBar.open(res, 'undo', {duration:3000})
     })
 
     this._socket.getError().subscribe((res:string)=>{
@@ -47,8 +61,10 @@ export class HomeComponent implements OnInit {
 
   }
   findFrind(){
-    this._httpService.findUserByUsername(this.frindName||'00', this.user._id)
-    .subscribe((res:any)=>{
+    console.log(this.frindName)
+
+    this._httpService.findUserByUsername(this.frindName ||'00', this.user._id).subscribe((res:any)=>{
+      console.log(res)
       if (res.success) {
         var usersArr = res.users;
         this._httpService.getUserById(this.user._id).subscribe((res:any)=>{
@@ -78,6 +94,7 @@ export class HomeComponent implements OnInit {
             this.users = usersArr;
           }else{
             this._snakBar.open(res.errMSG, 'undo', {duration:3000})
+
           }
         },(error)=>{
           this._snakBar.open(error.message, 'undo', {duration:5000})
@@ -85,15 +102,18 @@ export class HomeComponent implements OnInit {
         // this.users = res.users;
       }else{
         this._snakBar.open(res.errMSG, 'undo', {duration:3000})
+
       }
     },(error)=>{
       this._snakBar.open(error.message, 'undo', {duration:5000})
+
     })
   }
 
   addNewPost(user, postBody){
     if (this.newPost == '' || undefined) {
       this._snakBar.open("cant't post empty filed", 'undo', {duration:3000})
+
       return false;
     }
     let post = {

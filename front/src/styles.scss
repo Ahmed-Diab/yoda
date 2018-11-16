@@ -28,8 +28,8 @@ mat-icon{
     display: none;
 }
 .container{
-    width: 80%;
-    margin: 70px auto;
+    width: 95%;
+    margin: 70px 0 0 auto;
 }
 
 a{
@@ -37,15 +37,14 @@ a{
 }
 
 @media(max-width:578px){
-    .contanir{
+    .container{
         width: 90%;
         margin: 0 auto;
     }
 }
 
-@media(max-width:578px){
-    .contanir{
-        width: 100%;
-        margin: 0 auto;
+@media(max-width:778px){
+    .container{
+        margin: 50px auto;
     }   
 }

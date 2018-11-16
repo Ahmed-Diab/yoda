@@ -99,11 +99,11 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
     })
   }
-  loginWithFB(){
-    this.fb.login()
-    .then((response: LoginResponse) => console.log(response))
-    .catch((error: any) => console.error('error      ',error));
-  }
+  // loginWithFB(){
+  //   this.fb.login()
+  //   .then((response: LoginResponse) => console.log(response))
+  //   .catch((error: any) => console.error('error      ',error));
+  // }
   ngAfterViewInit(){
     // this.onLoginByGoogle();
 }

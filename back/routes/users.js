@@ -207,7 +207,7 @@ router.get('/:id', (req, res, next)=>{
         res.json({success:true, user:data})
       }
   })
-})// find by id 
+})// find by id  
 
 // find all users by user name
   router.get('/find/all/:username/:id', (req, res, next)=>{
@@ -233,9 +233,10 @@ router.get('/:id', (req, res, next)=>{
   })// find all users by user name
 
   // find users by user name
-  router.get('/find/:username/:id', (req, res, next)=>{
+  router.get('/find/:username/:userId', (req, res, next)=>{
+    console.log(req.params)
     var username = req.params.username;
-    var id = req.params.id;
+    var id = req.params.userId;
     User.find({}, (err, users)=>{
       if (err) {
         res.json({success:false, errMSG:err.message})

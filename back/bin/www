@@ -27,7 +27,7 @@ io.on("connection", (socket)=>{
       }else{
         User.findById(id, (err, user)=>{
           if (err) {
-            io.sockets.emit('Error', {error:err.message})
+            io.sockets.emit('Error', err.message)
           }else{
             socket._id = id;
             friendsAreConncting[socket._id]               = socket;
@@ -69,11 +69,11 @@ io.on("connection", (socket)=>{
           })
     Posts.create(newPost, (err, post)=>{
       if (err) {
-        friendsAreConncting[userId].emit('Error', {error:err.message})
+        friendsAreConncting[userId].emit('Error', err.message)
       }else{
         User.find({}, (err, users)=>{
           if (err) {
-            friendsAreConncting[userId].emit('Error', {error:err.message})
+            friendsAreConncting[userId].emit('Error', err.message)
           }else{
             for (const user of users) {
               if (user._id == userId) {
@@ -90,7 +90,7 @@ io.on("connection", (socket)=>{
                       friend.notifications.push(not)
                       friend.save((err)=>{
                         if (err) {
-                          friendsAreConncting[userId].emit('Error', {error:err.message}) 
+                          friendsAreConncting[userId].emit('Error', err.message) 
                         }else{
                             if (friend._id in friendsAreConncting) {
                               friendsAreConncting[friend.id].emit('new notification', not);
@@ -353,7 +353,7 @@ socket.on('get friends requset', (id)=>{
         friendId = data.friendId;
   User.find({}, (err, users)=>{
   if (err) {
-    friendsAreConncting[userId].emit('Error', {success:false, error:err.message})
+    friendsAreConncting[userId].emit('Error', err.message)
   }else{
     let user = users.find((user)=>{return user._id == userId});
     if (user) {
@@ -369,7 +369,7 @@ socket.on('get friends requset', (id)=>{
         } // end for 
           user.save((err)=>{
             if (err) {
-              friendsAreConncting[userId].emit('Error', {success:false, error:err.message})
+              friendsAreConncting[userId].emit('Error', err.message)
             }else{
               let friend = users.find((friend)=>{return friend._id == friendId});
               if (friend) {
@@ -385,7 +385,7 @@ socket.on('get friends requset', (id)=>{
                   } // end for
                   friend.save((err)=>{
                     if (err) {
-                      friendsAreConncting[userId].emit('Error', {success:false, error:err.message})
+                      friendsAreConncting[userId].emit('Error', err.message)
                     }else{
                       if (userId in friendsAreConncting) {
                         friendsAreConncting[userId].friendRequest.splice(friendId, 1)
@@ -412,7 +412,7 @@ socket.on('get friends requset', (id)=>{
         console.log(data)
     User.find({}, (err, users)=>{
     if (err) {
-      friendsAreConncting[userId].emit('Error', {success:false, error:err.message})
+      friendsAreConncting[userId].emit('Error', err.message)
     }else{
       let user = users.find((user)=>{return user._id == userId});
       if (user) {
@@ -428,7 +428,7 @@ socket.on('get friends requset', (id)=>{
           } // end for 
             user.save((err)=>{
               if (err) {
-                friendsAreConncting[userId].emit('Error', {success:false, error:err.message})
+                friendsAreConncting[userId].emit('Error', err.message)
               }else{
                 let friend = users.find((friend)=>{return friend._id == friendId});
                 if (friend) {
@@ -446,7 +446,7 @@ socket.on('get friends requset', (id)=>{
                   } // end for
                   friend.save((err)=>{
                     if (err) {
-                      friendsAreConncting[userId].emit('Error', {success:false, error:err.message})
+                      friendsAreConncting[userId].emit('Error', err.message)
                     }else{
                       if(friendId in friendsAreConncting){
                         friendsAreConncting[friendId].friends.push(userId)
@@ -474,7 +474,7 @@ socket.on('get friends requset', (id)=>{
         friendId = data.friend._id;
     User.find({}, (err, users)=>{
       if (err) {
-        friendsAreConncting[userId].emit('Error', {success:false, error:err.message})
+        friendsAreConncting[userId].emit('Error', err.message)
       }else{
           users.forEach((user)=>{
             if(user._id == friendId){
@@ -500,7 +500,7 @@ socket.on('get friends requset', (id)=>{
                       } // end for 
                       user.save((err)=>{
                         if (err) {
-                          friendsAreConncting[userId].emit('Error', {success:false, error:err.message})
+                          friendsAreConncting[userId].emit('Error', err.message)
                         }else{
                           var userById = users.find((o)=>{return o._id == userId})
                           if(userById){
@@ -521,7 +521,7 @@ socket.on('get friends requset', (id)=>{
 
                                     userById.save((err)=>{
                                       if (err) {
-                                        friendsAreConncting[userId].emit('Error', {success:false, error:err.message})
+                                        friendsAreConncting[userId].emit('Error', err.message)
                                       }else{
                                         if (friendId in friendsAreConncting) {
                                           friendsAreConncting[friendId].emit('new text notifications', `${userById.username} accepted your request`);
@@ -553,7 +553,7 @@ socket.on('get friends requset', (id)=>{
   socket.on('notifications', (data)=>{
     User.findById(data.id, (err, user)=>{
       if (err) {
-        friendsAreConncting[id].emit('Error', {success:false, error:err.message})
+        friendsAreConncting[id].emit('Error', err.message)
       }else{
         if (data.id in friendsAreConncting) {
           var not = [] = user.notifications;
@@ -565,7 +565,7 @@ socket.on('get friends requset', (id)=>{
           })
           user.save((err)=>{
             if(err){
-              friendsAreConncting[data.id].emit('Error', {success:false, error:err.message})
+              friendsAreConncting[data.id].emit('Error', err.message)
             }
           })
         }

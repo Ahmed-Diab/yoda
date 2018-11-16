@@ -72,7 +72,6 @@ export class PostComponent implements OnInit {
         this._snakBar.open(res.errMSG, 'undo', {duration:4000})
       }
     }, (error)=>{
-      this._router.navigate(['/error'])
       this._snakBar.open(error.message, 'undo', {duration:3000})
     })
   }//on init

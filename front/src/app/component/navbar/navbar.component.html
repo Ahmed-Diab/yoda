@@ -36,23 +36,23 @@
 
   <div class="d-sm-none ul">
       <span>
-        <a [routerLink]="[ '/home', routeParam ]">
+        <a [routerLink]="[ '/user']">
           <mat-icon>home</mat-icon>
         </a>
       </span>
       <span>
-        <a [routerLink]="[ '/user/Notifications']">
+        <a [routerLink]="[ '/user/notifications']">
           <mat-icon>notifications</mat-icon>
           <i *ngIf="notLength > 0">{{notLength}}</i>
         </a>
       </span>
       <span>
-          <a [routerLink]="[ '/user/Notifications']">
+          <a [routerLink]="[ '/user/messages']">
             <mat-icon>message</mat-icon>
           </a>
         </span> 
       <span>
-        <a [routerLink]="[ '/user/Notifications']">
+        <a [routerLink]="[ '/user/friends-requsts']">
           <mat-icon>group</mat-icon>
           <i *ngIf="friendsLength > 0">{{friendsLength}}</i>
         </a>

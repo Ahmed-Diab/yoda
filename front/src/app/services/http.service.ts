@@ -30,7 +30,7 @@ export class HttpService {
   }
   findUserByUsername(username, userId){
     return this._http.get(`${this._services.url}/users/find/${username}/${userId}`) 
-    .pipe( catchError(this._services.handleError));
+              .pipe( catchError(this._services.handleError));
   }
   getUserById(id){
     return this._http.get(`${this._services.url}/users/${id}`) 
