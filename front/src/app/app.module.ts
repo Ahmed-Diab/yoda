@@ -2,8 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppRoutingModule, routingComponant } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HttpClientModule } from '@angular/common/http'
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from './services/auth.service';
 import { SocketService } from './services/socket.service';
 import { HttpService } from './services/http.service';
@@ -47,7 +47,7 @@ import { SharedModule } from './sharedModule/shared.module';
     MatSnackBarModule,
     FacebookModule.forRoot(),
   ],
-  exports:[
+  exports: [
     MatButtonModule,
     MatIconModule,
     MatGridListModule,
