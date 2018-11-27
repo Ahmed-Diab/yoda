@@ -34,6 +34,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 /* harmony import */ var _userComponent_home_home_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./userComponent/home/home.component */ "./src/app/userModule/userComponent/home/home.component.ts");
+/* harmony import */ var _userComponent_notifications_notifications_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./userComponent/notifications/notifications.component */ "./src/app/userModule/userComponent/notifications/notifications.component.ts");
+/* harmony import */ var _userComponent_friends_requsts_friends_requsts_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./userComponent/friends-requsts/friends-requsts.component */ "./src/app/userModule/userComponent/friends-requsts/friends-requsts.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -43,8 +45,12 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 
+
+
 var routes = [
-    { path: '', component: _userComponent_home_home_component__WEBPACK_IMPORTED_MODULE_2__["HomeComponent"] }
+    { path: '', component: _userComponent_home_home_component__WEBPACK_IMPORTED_MODULE_2__["HomeComponent"] },
+    { path: 'notifications', component: _userComponent_notifications_notifications_component__WEBPACK_IMPORTED_MODULE_3__["NotificationsComponent"] },
+    { path: 'friends-requsts', component: _userComponent_friends_requsts_friends_requsts_component__WEBPACK_IMPORTED_MODULE_4__["FriendsRequstsComponent"] }
 ];
 var UserRoutingModule = /** @class */ (function () {
     function UserRoutingModule() {
@@ -86,12 +92,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _userComponent_remove_dialog_remove_dialog_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./userComponent/remove-dialog/remove-dialog.component */ "./src/app/userModule/userComponent/remove-dialog/remove-dialog.component.ts");
 /* harmony import */ var _userComponent_edit_dialog_edit_dialog_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./userComponent/edit-dialog/edit-dialog.component */ "./src/app/userModule/userComponent/edit-dialog/edit-dialog.component.ts");
 /* harmony import */ var _userComponent_find_frind_find_frind_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./userComponent/find-frind/find-frind.component */ "./src/app/userModule/userComponent/find-frind/find-frind.component.ts");
+/* harmony import */ var _userComponent_friends_requsts_friends_requsts_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./userComponent/friends-requsts/friends-requsts.component */ "./src/app/userModule/userComponent/friends-requsts/friends-requsts.component.ts");
+/* harmony import */ var _userComponent_notifications_notifications_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./userComponent/notifications/notifications.component */ "./src/app/userModule/userComponent/notifications/notifications.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
+
 
 
 
@@ -113,7 +123,9 @@ var UserModule = /** @class */ (function () {
                 _user_routing_module__WEBPACK_IMPORTED_MODULE_2__["components"],
                 _userComponent_remove_dialog_remove_dialog_component__WEBPACK_IMPORTED_MODULE_8__["RemoveDialogComponent"],
                 _userComponent_edit_dialog_edit_dialog_component__WEBPACK_IMPORTED_MODULE_9__["EditDialogComponent"],
-                _userComponent_find_frind_find_frind_component__WEBPACK_IMPORTED_MODULE_10__["FindFrindComponent"]
+                _userComponent_find_frind_find_frind_component__WEBPACK_IMPORTED_MODULE_10__["FindFrindComponent"],
+                _userComponent_friends_requsts_friends_requsts_component__WEBPACK_IMPORTED_MODULE_11__["FriendsRequstsComponent"],
+                _userComponent_notifications_notifications_component__WEBPACK_IMPORTED_MODULE_12__["NotificationsComponent"]
             ],
             imports: [
                 _angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"],
@@ -169,7 +181,7 @@ module.exports = "<mat-dialog-content *ngIf=\"data.type == 'post'\">Edit Post</m
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL3VzZXJNb2R1bGUvdXNlckNvbXBvbmVudC9lZGl0LWRpYWxvZy9lZGl0LWRpYWxvZy5jb21wb25lbnQuc2NzcyJ9 */"
+module.exports = "form {\n  width: 100%; }\n  form mat-form-field {\n    width: 100%; }\n  form mat-form-field textarea {\n      width: 100%; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9ob21lL2RpYm8vRG9jdW1lbnRzL3dvcmsveW9kYS9mcm9udC9zcmMvYXBwL3VzZXJNb2R1bGUvdXNlckNvbXBvbmVudC9lZGl0LWRpYWxvZy9lZGl0LWRpYWxvZy5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLFlBQVcsRUFRZDtFQVREO0lBR1EsWUFBVyxFQUlkO0VBUEw7TUFLWSxZQUFXLEVBQ2QiLCJmaWxlIjoic3JjL2FwcC91c2VyTW9kdWxlL3VzZXJDb21wb25lbnQvZWRpdC1kaWFsb2cvZWRpdC1kaWFsb2cuY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyJmb3Jte1xuICAgIHdpZHRoOiAxMDAlO1xuICAgIG1hdC1mb3JtLWZpZWxke1xuICAgICAgICB3aWR0aDogMTAwJTtcbiAgICAgICAgdGV4dGFyZWF7XG4gICAgICAgICAgICB3aWR0aDogMTAwJTtcbiAgICAgICAgfVxuICAgIH1cblxufSJdfQ== */"
 
 /***/ }),
 
@@ -285,6 +297,117 @@ var FindFrindComponent = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/userModule/userComponent/friends-requsts/friends-requsts.component.html":
+/*!*****************************************************************************************!*\
+  !*** ./src/app/userModule/userComponent/friends-requsts/friends-requsts.component.html ***!
+  \*****************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "  <div class=\"friends-requsts\">\n    <div class=\"notification\" *ngIf=\"friendsRequsts.length > 0;else zeroRequst\">\n        <div class=\"users\" *ngFor=\"let friend of friendsRequsts\">\n            <p class=\"post-user\">\n                <a [routerLink]=\"[ '/user/profile', friend._id ]\">\n                    <img src=\"{{_services.url}}/{{friend.image}}\" alt=\"{{friend.username}}\"> {{friend.username | titlecase }}\n                </a>\n            </p>\n            <p class=\"text-right\">\n                <button mat-raised-button (click)=\"acceptFrindRequst(friend)\">Accept</button>\n                <button mat-raised-button (click)=\"ignoreFriendRequest(friend)\">ignore</button>\n            </p>\n        </div>\n      </div>\n      \n      <ng-template #zeroRequst>\n        <h3 class=\"zero-request\">you don't have requst yet</h3>          \n      </ng-template>\n    \n  </div>\n"
+
+/***/ }),
+
+/***/ "./src/app/userModule/userComponent/friends-requsts/friends-requsts.component.scss":
+/*!*****************************************************************************************!*\
+  !*** ./src/app/userModule/userComponent/friends-requsts/friends-requsts.component.scss ***!
+  \*****************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ".friends-requsts img {\n  width: 30px;\n  height: 30px;\n  border-radius: 50%; }\n\n.friends-requsts a {\n  color: #000; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9ob21lL2RpYm8vRG9jdW1lbnRzL3dvcmsveW9kYS9mcm9udC9zcmMvYXBwL3VzZXJNb2R1bGUvdXNlckNvbXBvbmVudC9mcmllbmRzLXJlcXVzdHMvZnJpZW5kcy1yZXF1c3RzLmNvbXBvbmVudC5zY3NzIiwiL2hvbWUvZGliby9Eb2N1bWVudHMvd29yay95b2RhL2Zyb250L3NyYy9hc3NldHMvc2Nzcy9fc2hlYXJkLnNjc3MiLCIvaG9tZS9kaWJvL0RvY3VtZW50cy93b3JrL3lvZGEvZnJvbnQvc3JjL2Fzc2V0cy9zY3NzL19jb2xvci5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUVBO0VDQ1EsWUFBVztFQUNYLGFBQVk7RUFDWixtQkFBa0IsRUFDckI7O0FESkw7RUNNUSxZQ05PLEVET1YiLCJmaWxlIjoic3JjL2FwcC91c2VyTW9kdWxlL3VzZXJDb21wb25lbnQvZnJpZW5kcy1yZXF1c3RzL2ZyaWVuZHMtcmVxdXN0cy5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIkBpbXBvcnQgJy4uLy4uLy4uLy4uL2Fzc2V0cy9zY3NzL2NvbG9yJztcbkBpbXBvcnQgJy4uLy4uLy4uLy4uL2Fzc2V0cy9zY3NzL3NoZWFyZCc7XG4uZnJpZW5kcy1yZXF1c3Rze1xuICAgIEBleHRlbmQgJXBfbm90aWZpY2F0aW9uO1xufSIsIkBpbXBvcnQgJy4vY29sb3InO1xuJXBfbm90aWZpY2F0aW9ue1xuICAgIGltZ3tcbiAgICAgICAgd2lkdGg6IDMwcHg7XG4gICAgICAgIGhlaWdodDogMzBweDtcbiAgICAgICAgYm9yZGVyLXJhZGl1czogNTAlO1xuICAgIH1cbiAgICBhe1xuICAgICAgICBjb2xvcjogJGRhcmtDb2xvcjtcbiAgICB9XG5cbn1cbiV1c2VyX2NvbnRhaW5ye1xuICAgIGF7XG4gICAgICAgIGNvbG9yOiAkbGlnaHRDb2xvcjtcbiAgICAgICAgZm9udC1zaXplOiAxNnB4O1xuICAgICAgICBpbWd7XG4gICAgICAgICAgICB3aWR0aDogNDBweDtcbiAgICAgICAgICAgIGhlaWdodDogNDBweDtcbiAgICAgICAgICAgIGJvcmRlci1yYWRpdXM6IDUwJTtcbiAgICAgICAgICAgIGJveC1zaGFkb3c6IDAgMCA1cHggJGRhcmtDb2xvcjtcbiAgICAgICAgfVxuICAgIH1cbn1cbiV1c2VyX3Bvc3R7XG4gICAgLnBvc3QtdXNlcntcbiAgICAgICAgQGV4dGVuZCAldXNlcl9jb250YWlucjtcbiAgICAgICAgZm9udC13ZWlnaHQ6IGJvbGQ7XG4gICAgICAgYXsgY29sb3I6ICRkYXJrQ29sb3I7fVxuICAgIH1cbiAgICAucG9zdC1ib2R5e1xuICAgICAgICBwYWRkaW5nOiAxMHB4IDQwcHg7XG4gICAgfVxuXG4gICAgLnNlZS1tb3Jle1xuICAgICAgICBjdXJzb3I6IHBvaW50ZXI7XG4gICAgfVxuICAgIC5jb21tZW50LWZvcm17XG4gICAgICAgIHdpZHRoOiAxMDAlO1xuICAgICAgICAubWF0LWZvcm0tZmllbGR7XG4gICAgICAgICAgICB3aWR0aDogMTAwJTtcbiAgICAgICAgICAgIHRleHRhcmVhe1xuICAgICAgICAgICAgICAgIHdpZHRoOiAxMDAlO1xuICAgICAgICAgICAgfVxuICAgICAgICB9XG4gICAgfVxufVxuJWZvcm17XG4gICAgd2lkdGg6IDkwJTtcbiAgICBtYXJnaW46IDEwcHggYXV0bztcbiAgICAubWF0LWZvcm0tZmllbGR7XG4gICAgICAgIHdpZHRoOiAxMDAlO1xuICAgICAgICB0ZXh0YXJlYXtcbiAgICAgICAgICAgIHdpZHRoOiAxMDAlO1xuICAgICAgICB9XG4gICAgfVxufSIsIiRsaWdodENvbG9yOiNmZmY7XG4kbWRDb2xvcjpyZ2IoMTE2LCAxMDcsIDEwNyk7XG4kZGFya0NvbG9yOiMwMDA7Il19 */"
+
+/***/ }),
+
+/***/ "./src/app/userModule/userComponent/friends-requsts/friends-requsts.component.ts":
+/*!***************************************************************************************!*\
+  !*** ./src/app/userModule/userComponent/friends-requsts/friends-requsts.component.ts ***!
+  \***************************************************************************************/
+/*! exports provided: FriendsRequstsComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FriendsRequstsComponent", function() { return FriendsRequstsComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var src_app_services_socket_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! src/app/services/socket.service */ "./src/app/services/socket.service.ts");
+/* harmony import */ var src_app_services_services_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/services/services.service */ "./src/app/services/services.service.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var FriendsRequstsComponent = /** @class */ (function () {
+    function FriendsRequstsComponent(_socket, _services) {
+        this._socket = _socket;
+        this._services = _services;
+        this.friendsRequsts = [];
+        this.user = JSON.parse(localStorage.getItem('user'));
+        this._socket.onGetFriendRequst(this.user._id);
+    }
+    FriendsRequstsComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this._socket.getNewFriendsRequset().subscribe(function (res) {
+            _this.friendsRequsts = res;
+        });
+    };
+    FriendsRequstsComponent.prototype.acceptFrindRequst = function (friend) {
+        for (var i = 0; i < this.friendsRequsts.length; i++) {
+            var req = this.friendsRequsts[i];
+            if (req._id === friend._id) {
+                this._socket.onAcceptFriendRequest({
+                    user: {
+                        username: this.user.username,
+                        _id: this.user._id,
+                        image: this.user.image
+                    },
+                    friend: {
+                        _id: friend._id,
+                        username: friend.username,
+                        image: friend.image
+                    }
+                });
+                this.friendsRequsts.splice(req, 1);
+                this._socket.onNotificationsAndfriedsReqLength(this.user._id);
+            }
+        }
+    };
+    FriendsRequstsComponent.prototype.ignoreFriendRequest = function (friend) {
+        for (var i = 0; i < this.friendsRequsts.length; i++) {
+            var req = this.friendsRequsts[i];
+            if (req._id === friend._id) {
+                this._socket.onIgnoreFriendRequest({
+                    userId: this.user._id,
+                    friendId: friend._id
+                });
+                this.friendsRequsts.splice(req, 1);
+                this._socket.onNotificationsAndfriedsReqLength(this.user._id);
+            }
+        }
+    };
+    FriendsRequstsComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'app-friends-requsts',
+            template: __webpack_require__(/*! ./friends-requsts.component.html */ "./src/app/userModule/userComponent/friends-requsts/friends-requsts.component.html"),
+            styles: [__webpack_require__(/*! ./friends-requsts.component.scss */ "./src/app/userModule/userComponent/friends-requsts/friends-requsts.component.scss")]
+        }),
+        __metadata("design:paramtypes", [src_app_services_socket_service__WEBPACK_IMPORTED_MODULE_1__["SocketService"],
+            src_app_services_services_service__WEBPACK_IMPORTED_MODULE_2__["ServicesService"]])
+    ], FriendsRequstsComponent);
+    return FriendsRequstsComponent;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/userModule/userComponent/home/home.component.html":
 /*!*******************************************************************!*\
   !*** ./src/app/userModule/userComponent/home/home.component.html ***!
@@ -292,7 +415,7 @@ var FindFrindComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"home\">\n    <mat-grid-list cols=\"4\" rowHeight=\"100vh\">\n            <mat-grid-tile [colspan]='colSpan'>\n                <form class=\"post-form\" (submit)='addNewPost(user, newPost)'>\n                    <mat-form-field>\n                        <textarea name='newPost' [(ngModel)]=\"newPost\" matInput placeholder=\"post\"></textarea>\n                    </mat-form-field>\n                    <div class=\"text-right\">\n                        <button mat-raised-button color='primary' >post</button>\n                    </div>\n                </form>\n               <app-post [user]='user'></app-post>\n            </mat-grid-tile>\n            <mat-grid-tile *ngIf=\"bigScreen\" [colspan]='1'>\n                <div class=\"search\">\n                    <mat-form-field>\n                        <input autocomplete=\"off\" (keyup)='findFrind()' [(ngModel)]=\"frindName\" name=\"name\" matInput placeholder=\"find user\">\n                        <mat-icon matSuffix (click)=\"findFrind()\">search</mat-icon>\n                    </mat-form-field>\n                    <div class=\"users\" *ngIf=\"users.length >= 1\">\n                        <div class=\"users\" *ngFor=\"let friend of users\">\n                            <p class=\"post-user\">\n                                <a [routerLink]=\"[ '/user/profile', friend._id ]\">\n                                    <img src=\"{{_services.url}}/{{friend.image}}\" alt=\"{{friend.username}}\"> {{friend.username | titlecase }}\n                                </a>\n                            </p>\n                            <p class=\"text-right\">\n                                <button *ngIf=\"!friend.isFriend && !friend.isFriendRequest && !friend.isHold\" mat-raised-button (click)='addToFrinds(friend)'><mat-icon>group_add</mat-icon></button>\n                                <button *ngIf=\"friend.isFriend\" mat-raised-button color='warn' (click)=\"unfriendUser(friend)\">unfriend<mat-icon>delete</mat-icon></button>\n                                <button *ngIf=\"friend.isFriendRequest\" mat-raised-button (click)=\"acceptFrindRequst(friend)\">Accept</button>\n                                <button *ngIf=\"friend.isHold\" mat-raised-button (click)=\"cansleFriendRequst(friend)\">cansle</button>\n                                <button *ngIf=\"friend.isFriendRequest\" mat-raised-button (click)=\"ignoreFriendRequest(friend)\">ignore</button>\n                            </p>\n                        </div>\n                    </div>\n                </div>\n            </mat-grid-tile>\n    </mat-grid-list>\n</div>\n"
+module.exports = "<div class=\"home\">\n    <mat-grid-list cols=\"4\" rowHeight=\"100vh\">\n            <mat-grid-tile [colspan]='colSpan'>\n                <form class=\"post-form\" (submit)='addNewPost(user, newPost)'>\n                    <mat-form-field>\n                        <textarea name='newPost' class=\"ta\" [(ngModel)]=\"newPost\" matInput placeholder=\"post\"></textarea>\n                    </mat-form-field>\n                    <div class=\"text-right\">\n                        <button mat-raised-button color='primary' >post</button>\n                    </div>\n                </form>\n               <app-post [user]='user'></app-post>\n            </mat-grid-tile>\n            <mat-grid-tile *ngIf=\"bigScreen\" [colspan]='1'>\n                <div class=\"search\">\n                    <mat-form-field>\n                        <input autocomplete=\"off\" (keyup)='findFrind()' [(ngModel)]=\"frindName\" name=\"name\" matInput placeholder=\"find user\">\n                        <mat-icon matSuffix (click)=\"findFrind()\">search</mat-icon>\n                    </mat-form-field>\n                    <div class=\"users\" *ngIf=\"users.length >= 1\">\n                        <div class=\"users\" *ngFor=\"let friend of users\">\n                            <p class=\"post-user\">\n                                <a [routerLink]=\"[ '/user/profile', friend._id ]\">\n                                    <img src=\"{{_services.url}}/{{friend.image}}\" alt=\"{{friend.username}}\"> {{friend.username | titlecase }}\n                                </a>\n                            </p>\n                            <p class=\"text-right\">\n                                <button *ngIf=\"!friend.isFriend && !friend.isFriendRequest && !friend.isHold\" mat-raised-button (click)='addToFrinds(friend)'><mat-icon>group_add</mat-icon></button>\n                                <button *ngIf=\"friend.isFriend\" mat-raised-button color='warn' (click)=\"unfriendUser(friend)\">unfriend<mat-icon>delete</mat-icon></button>\n                                <button *ngIf=\"friend.isFriendRequest\" mat-raised-button (click)=\"acceptFrindRequst(friend)\">Accept</button>\n                                <button *ngIf=\"friend.isHold\" mat-raised-button (click)=\"cansleFriendRequst(friend)\">cansle</button>\n                                <button *ngIf=\"friend.isFriendRequest\" mat-raised-button (click)=\"ignoreFriendRequest(friend)\">ignore</button>\n                            </p>\n                        </div>\n                    </div>\n                </div>\n            </mat-grid-tile>\n    </mat-grid-list>\n</div>\n"
 
 /***/ }),
 
@@ -303,7 +426,7 @@ module.exports = "<div class=\"home\">\n    <mat-grid-list cols=\"4\" rowHeight=
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".home .search .users .post-user a {\n  color: #fff;\n  font-size: 16px; }\n  .home .search .users .post-user a img {\n    width: 40px;\n    height: 40px;\n    border-radius: 50%;\n    box-shadow: 0 0 5px #000; }\n  .home .search .users .post-user {\n  font-weight: bold; }\n  .home .search .users .post-user a {\n    color: #000; }\n  .home .search .users .post-body {\n  padding: 10px 40px; }\n  .home .search .users .see-more {\n  cursor: pointer; }\n  .home .search .users .comment-form {\n  width: 100%; }\n  .home .search .users .comment-form .mat-form-field {\n    width: 100%; }\n  .home .search .users .comment-form .mat-form-field textarea {\n      width: 100%; }\n  .home {\n  padding-top: 30px;\n  margin: auto; }\n  .home /deep/ mat-grid-list {\n    padding: 20px !important; }\n  .home /deep/ mat-grid-list mat-grid-tile {\n      overflow: auto;\n      height: 100vh; }\n  .home /deep/ mat-grid-list mat-grid-tile /deep/ .mat-figure {\n        display: block; }\n  .home .post-form {\n    width: 95%;\n    padding-top: 30px; }\n  .home .post-form mat-form-field {\n      width: 100%; }\n  .home .post-form mat-form-field textarea {\n        width: 100%; }\n  .home .search {\n    width: 100%;\n    padding: 10px; }\n  .home .search .users {\n      max-height: 300px;\n      overflow: auto;\n      padding: 5px 0;\n      border-bottom: 1px solid #000; }\n  .home .search .users button {\n        margin-left: 5px;\n        padding-right: 0px;\n        font-size: 12px; }\n  .home .search mat-form-field {\n      width: 100%; }\n  .home .search mat-form-field input {\n        width: 100%; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9ob21lL2RpYm8vRG9jdW1lbnRzL3dvcmsveW9kYS9mcm9udC9zcmMvYXBwL3VzZXJNb2R1bGUvdXNlckNvbXBvbmVudC9ob21lL2hvbWUuY29tcG9uZW50LnNjc3MiLCIvaG9tZS9kaWJvL0RvY3VtZW50cy93b3JrL3lvZGEvZnJvbnQvc3JjL2Fzc2V0cy9zY3NzL19zaGVhcmQuc2NzcyIsIi9ob21lL2RpYm8vRG9jdW1lbnRzL3dvcmsveW9kYS9mcm9udC9zcmMvYXNzZXRzL3Njc3MvX2NvbG9yLnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBRUE7RUNZUSxZQ2RRO0VEZVIsZ0JBQWUsRUFPbEI7RURwQkw7SUNlWSxZQUFXO0lBQ1gsYUFBWTtJQUNaLG1CQUFrQjtJQUNsQix5QkNsQkcsRURtQk47RURuQlQ7RUN5QlEsa0JBQWlCLEVBRXBCO0VEM0JMO0lDMEJVLFlDMUJLLEVEMEJlO0VEMUI5QjtFQzZCUSxtQkFBa0IsRUFDckI7RUQ5Qkw7RUNpQ1EsZ0JBQWUsRUFDbEI7RURsQ0w7RUNvQ1EsWUFBVyxFQU9kO0VEM0NMO0lDc0NZLFlBQVcsRUFJZDtFRDFDVDtNQ3dDZ0IsWUFBVyxFQUNkO0VEekNiO0VBQ0ksa0JBQWlCO0VBQ2pCLGFBQVksRUE4Q2Y7RUFoREQ7SUFJUSx5QkFBd0IsRUFRM0I7RUFaTDtNQU1ZLGVBQWM7TUFDZCxjQUFhLEVBSWhCO0VBWFQ7UUFTZ0IsZUFDSixFQUFDO0VBVmI7SUFjUSxXQUFVO0lBQ1Ysa0JBQWlCLEVBT3BCO0VBdEJMO01BaUJZLFlBQVcsRUFJZDtFQXJCVDtRQW1CZ0IsWUFBVSxFQUNiO0VBcEJiO0lBd0JRLFlBQVU7SUFDVixjQUFhLEVBcUJoQjtFQTlDTDtNQTJCWSxrQkFBaUI7TUFDakIsZUFBYztNQUNkLGVBQWM7TUFDZCw4QkU5QkcsRUZxQ047RUFyQ1Q7UUFpQ2dCLGlCQUFnQjtRQUNoQixtQkFBa0I7UUFDbEIsZ0JBQ0osRUFBQztFQXBDYjtNQXlDWSxZQUFVLEVBSWI7RUE3Q1Q7UUEyQ2dCLFlBQVUsRUFDYiIsImZpbGUiOiJzcmMvYXBwL3VzZXJNb2R1bGUvdXNlckNvbXBvbmVudC9ob21lL2hvbWUuY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyJAaW1wb3J0ICcuLi8uLi8uLi8uLi9hc3NldHMvc2Nzcy9jb2xvcic7XG5AaW1wb3J0ICcuLi8uLi8uLi8uLi9hc3NldHMvc2Nzcy9zaGVhcmQnO1xuLmhvbWV7XG4gICAgcGFkZGluZy10b3A6IDMwcHg7XG4gICAgbWFyZ2luOiBhdXRvO1xuICAgIC9kZWVwLyBtYXQtZ3JpZC1saXN0e1xuICAgICAgICBwYWRkaW5nOiAyMHB4ICFpbXBvcnRhbnQ7XG4gICAgICAgIG1hdC1ncmlkLXRpbGV7XG4gICAgICAgICAgICBvdmVyZmxvdzogYXV0bztcbiAgICAgICAgICAgIGhlaWdodDogMTAwdmg7XG4gICAgICAgICAgICAvZGVlcC8gLm1hdC1maWd1cmV7XG4gICAgICAgICAgICAgICAgZGlzcGxheTogYmxvY2tcbiAgICAgICAgICAgIH1cbiAgICAgICAgfVxuICAgIH1cbiAgICAucG9zdC1mb3Jte1xuICAgICAgICB3aWR0aDogOTUlO1xuICAgICAgICBwYWRkaW5nLXRvcDogMzBweDtcbiAgICAgICAgbWF0LWZvcm0tZmllbGR7XG4gICAgICAgICAgICB3aWR0aDogMTAwJTtcbiAgICAgICAgICAgIHRleHRhcmVhe1xuICAgICAgICAgICAgICAgIHdpZHRoOjEwMCU7XG4gICAgICAgICAgICB9XG4gICAgICAgIH1cbiAgICB9XG4gICAgLnNlYXJjaHtcbiAgICAgICAgd2lkdGg6MTAwJTtcbiAgICAgICAgcGFkZGluZzogMTBweDtcbiAgICAgICAgLnVzZXJze1xuICAgICAgICAgICAgbWF4LWhlaWdodDogMzAwcHg7XG4gICAgICAgICAgICBvdmVyZmxvdzogYXV0bztcbiAgICAgICAgICAgIHBhZGRpbmc6IDVweCAwO1xuICAgICAgICAgICAgYm9yZGVyLWJvdHRvbTogMXB4IHNvbGlkICRkYXJrQ29sb3I7XG4gICAgICAgICAgICBAZXh0ZW5kICV1c2VyX3Bvc3Q7XG4gICAgICAgICAgICBidXR0b257XG4gICAgICAgICAgICAgICAgbWFyZ2luLWxlZnQ6IDVweDtcbiAgICAgICAgICAgICAgICBwYWRkaW5nLXJpZ2h0OiAwcHg7XG4gICAgICAgICAgICAgICAgZm9udC1zaXplOiAxMnB4XG4gICAgICAgICAgICB9XG4gICAgICAgIH1cblxuXG4gICAgICAgIG1hdC1mb3JtLWZpZWxke1xuICAgICAgICAgICAgd2lkdGg6MTAwJTtcbiAgICAgICAgICAgIGlucHV0e1xuICAgICAgICAgICAgICAgIHdpZHRoOjEwMCU7XG4gICAgICAgICAgICB9XG4gICAgICAgIH1cbiAgICB9XG5cbn0iLCJAaW1wb3J0ICcuL2NvbG9yJztcbiVwX25vdGlmaWNhdGlvbntcbiAgICBpbWd7XG4gICAgICAgIHdpZHRoOiAzMHB4O1xuICAgICAgICBoZWlnaHQ6IDMwcHg7XG4gICAgICAgIGJvcmRlci1yYWRpdXM6IDUwJTtcbiAgICB9XG4gICAgYXtcbiAgICAgICAgY29sb3I6ICRkYXJrQ29sb3I7XG4gICAgfVxuXG59XG4ldXNlcl9jb250YWlucntcbiAgICBhe1xuICAgICAgICBjb2xvcjogJGxpZ2h0Q29sb3I7XG4gICAgICAgIGZvbnQtc2l6ZTogMTZweDtcbiAgICAgICAgaW1ne1xuICAgICAgICAgICAgd2lkdGg6IDQwcHg7XG4gICAgICAgICAgICBoZWlnaHQ6IDQwcHg7XG4gICAgICAgICAgICBib3JkZXItcmFkaXVzOiA1MCU7XG4gICAgICAgICAgICBib3gtc2hhZG93OiAwIDAgNXB4ICRkYXJrQ29sb3I7XG4gICAgICAgIH1cbiAgICB9XG59XG4ldXNlcl9wb3N0e1xuICAgIC5wb3N0LXVzZXJ7XG4gICAgICAgIEBleHRlbmQgJXVzZXJfY29udGFpbnI7XG4gICAgICAgIGZvbnQtd2VpZ2h0OiBib2xkO1xuICAgICAgIGF7IGNvbG9yOiAkZGFya0NvbG9yO31cbiAgICB9XG4gICAgLnBvc3QtYm9keXtcbiAgICAgICAgcGFkZGluZzogMTBweCA0MHB4O1xuICAgIH1cblxuICAgIC5zZWUtbW9yZXtcbiAgICAgICAgY3Vyc29yOiBwb2ludGVyO1xuICAgIH1cbiAgICAuY29tbWVudC1mb3Jte1xuICAgICAgICB3aWR0aDogMTAwJTtcbiAgICAgICAgLm1hdC1mb3JtLWZpZWxke1xuICAgICAgICAgICAgd2lkdGg6IDEwMCU7XG4gICAgICAgICAgICB0ZXh0YXJlYXtcbiAgICAgICAgICAgICAgICB3aWR0aDogMTAwJTtcbiAgICAgICAgICAgIH1cbiAgICAgICAgfVxuICAgIH1cbn1cbiVmb3Jte1xuICAgIHdpZHRoOiA5MCU7XG4gICAgbWFyZ2luOiAxMHB4IGF1dG87XG4gICAgLm1hdC1mb3JtLWZpZWxke1xuICAgICAgICB3aWR0aDogMTAwJTtcbiAgICAgICAgdGV4dGFyZWF7XG4gICAgICAgICAgICB3aWR0aDogMTAwJTtcbiAgICAgICAgfVxuICAgIH1cbn0iLCIkbGlnaHRDb2xvcjojZmZmO1xuJG1kQ29sb3I6cmdiKDExNiwgMTA3LCAxMDcpO1xuJGRhcmtDb2xvcjojMDAwOyJdfQ== */"
+module.exports = ".home .search .users .post-user a {\n  color: #fff;\n  font-size: 16px; }\n  .home .search .users .post-user a img {\n    width: 40px;\n    height: 40px;\n    border-radius: 50%;\n    box-shadow: 0 0 5px #000; }\n  .home .search .users .post-user {\n  font-weight: bold; }\n  .home .search .users .post-user a {\n    color: #000; }\n  .home .search .users .post-body {\n  padding: 10px 40px; }\n  .home .search .users .see-more {\n  cursor: pointer; }\n  .home .search .users .comment-form {\n  width: 100%; }\n  .home .search .users .comment-form .mat-form-field {\n    width: 100%; }\n  .home .search .users .comment-form .mat-form-field textarea {\n      width: 100%; }\n  .home {\n  padding-top: 30px;\n  margin: auto; }\n  .home /deep/ mat-grid-list {\n    padding: 20px !important; }\n  .home /deep/ mat-grid-list mat-grid-tile {\n      overflow: auto;\n      height: 100vh; }\n  .home /deep/ mat-grid-list mat-grid-tile /deep/ .mat-figure {\n        display: block; }\n  .home .post-form {\n    width: 97%;\n    padding-top: 30px; }\n  .home .post-form mat-form-field {\n      width: 100%; }\n  .home .search {\n    width: 100%;\n    padding: 10px; }\n  .home .search .users {\n      max-height: 300px;\n      overflow: auto;\n      padding: 5px 0;\n      border-bottom: 1px solid #000; }\n  .home .search .users button {\n        margin-left: 5px;\n        padding-right: 0px;\n        font-size: 12px; }\n  .home .search mat-form-field {\n      width: 100%; }\n  .home .search mat-form-field input {\n        width: 100%; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9ob21lL2RpYm8vRG9jdW1lbnRzL3dvcmsveW9kYS9mcm9udC9zcmMvYXBwL3VzZXJNb2R1bGUvdXNlckNvbXBvbmVudC9ob21lL2hvbWUuY29tcG9uZW50LnNjc3MiLCIvaG9tZS9kaWJvL0RvY3VtZW50cy93b3JrL3lvZGEvZnJvbnQvc3JjL2Fzc2V0cy9zY3NzL19zaGVhcmQuc2NzcyIsIi9ob21lL2RpYm8vRG9jdW1lbnRzL3dvcmsveW9kYS9mcm9udC9zcmMvYXNzZXRzL3Njc3MvX2NvbG9yLnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBRUE7RUNZUSxZQ2RRO0VEZVIsZ0JBQWUsRUFPbEI7RURwQkw7SUNlWSxZQUFXO0lBQ1gsYUFBWTtJQUNaLG1CQUFrQjtJQUNsQix5QkNsQkcsRURtQk47RURuQlQ7RUN5QlEsa0JBQWlCLEVBRXBCO0VEM0JMO0lDMEJVLFlDMUJLLEVEMEJlO0VEMUI5QjtFQzZCUSxtQkFBa0IsRUFDckI7RUQ5Qkw7RUNpQ1EsZ0JBQWUsRUFDbEI7RURsQ0w7RUNvQ1EsWUFBVyxFQU9kO0VEM0NMO0lDc0NZLFlBQVcsRUFJZDtFRDFDVDtNQ3dDZ0IsWUFBVyxFQUNkO0VEekNiO0VBQ0ksa0JBQWlCO0VBQ2pCLGFBQVksRUEyQ2Y7RUE3Q0Q7SUFJUSx5QkFBd0IsRUFRM0I7RUFaTDtNQU1ZLGVBQWM7TUFDZCxjQUFhLEVBSWhCO0VBWFQ7UUFTZ0IsZUFDSixFQUFDO0VBVmI7SUFjUSxXQUFVO0lBQ1Ysa0JBQWlCLEVBSXBCO0VBbkJMO01BaUJZLFlBQVcsRUFDVjtFQWxCYjtJQXFCUSxZQUFVO0lBQ1YsY0FBYSxFQXFCaEI7RUEzQ0w7TUF3Qlksa0JBQWlCO01BQ2pCLGVBQWM7TUFDZCxlQUFjO01BQ2QsOEJFM0JHLEVGa0NOO0VBbENUO1FBOEJnQixpQkFBZ0I7UUFDaEIsbUJBQWtCO1FBQ2xCLGdCQUNKLEVBQUM7RUFqQ2I7TUFzQ1ksWUFBVSxFQUliO0VBMUNUO1FBd0NnQixZQUFVLEVBQ2IiLCJmaWxlIjoic3JjL2FwcC91c2VyTW9kdWxlL3VzZXJDb21wb25lbnQvaG9tZS9ob21lLmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiQGltcG9ydCAnLi4vLi4vLi4vLi4vYXNzZXRzL3Njc3MvY29sb3InO1xuQGltcG9ydCAnLi4vLi4vLi4vLi4vYXNzZXRzL3Njc3Mvc2hlYXJkJztcbi5ob21le1xuICAgIHBhZGRpbmctdG9wOiAzMHB4O1xuICAgIG1hcmdpbjogYXV0bztcbiAgICAvZGVlcC8gbWF0LWdyaWQtbGlzdHtcbiAgICAgICAgcGFkZGluZzogMjBweCAhaW1wb3J0YW50O1xuICAgICAgICBtYXQtZ3JpZC10aWxle1xuICAgICAgICAgICAgb3ZlcmZsb3c6IGF1dG87XG4gICAgICAgICAgICBoZWlnaHQ6IDEwMHZoO1xuICAgICAgICAgICAgL2RlZXAvIC5tYXQtZmlndXJle1xuICAgICAgICAgICAgICAgIGRpc3BsYXk6IGJsb2NrXG4gICAgICAgICAgICB9XG4gICAgICAgIH1cbiAgICB9XG4gICAgLnBvc3QtZm9ybXtcbiAgICAgICAgd2lkdGg6IDk3JTtcbiAgICAgICAgcGFkZGluZy10b3A6IDMwcHg7XG4gICAgICAgIG1hdC1mb3JtLWZpZWxke1xuICAgICAgICAgICAgd2lkdGg6IDEwMCU7XG4gICAgICAgICAgICB9XG4gICAgfVxuICAgIC5zZWFyY2h7XG4gICAgICAgIHdpZHRoOjEwMCU7XG4gICAgICAgIHBhZGRpbmc6IDEwcHg7XG4gICAgICAgIC51c2Vyc3tcbiAgICAgICAgICAgIG1heC1oZWlnaHQ6IDMwMHB4O1xuICAgICAgICAgICAgb3ZlcmZsb3c6IGF1dG87XG4gICAgICAgICAgICBwYWRkaW5nOiA1cHggMDtcbiAgICAgICAgICAgIGJvcmRlci1ib3R0b206IDFweCBzb2xpZCAkZGFya0NvbG9yO1xuICAgICAgICAgICAgQGV4dGVuZCAldXNlcl9wb3N0O1xuICAgICAgICAgICAgYnV0dG9ue1xuICAgICAgICAgICAgICAgIG1hcmdpbi1sZWZ0OiA1cHg7XG4gICAgICAgICAgICAgICAgcGFkZGluZy1yaWdodDogMHB4O1xuICAgICAgICAgICAgICAgIGZvbnQtc2l6ZTogMTJweFxuICAgICAgICAgICAgfVxuICAgICAgICB9XG5cblxuICAgICAgICBtYXQtZm9ybS1maWVsZHtcbiAgICAgICAgICAgIHdpZHRoOjEwMCU7XG4gICAgICAgICAgICBpbnB1dHtcbiAgICAgICAgICAgICAgICB3aWR0aDoxMDAlO1xuICAgICAgICAgICAgfVxuICAgICAgICB9XG4gICAgfVxuXG59XG4iLCJAaW1wb3J0ICcuL2NvbG9yJztcbiVwX25vdGlmaWNhdGlvbntcbiAgICBpbWd7XG4gICAgICAgIHdpZHRoOiAzMHB4O1xuICAgICAgICBoZWlnaHQ6IDMwcHg7XG4gICAgICAgIGJvcmRlci1yYWRpdXM6IDUwJTtcbiAgICB9XG4gICAgYXtcbiAgICAgICAgY29sb3I6ICRkYXJrQ29sb3I7XG4gICAgfVxuXG59XG4ldXNlcl9jb250YWlucntcbiAgICBhe1xuICAgICAgICBjb2xvcjogJGxpZ2h0Q29sb3I7XG4gICAgICAgIGZvbnQtc2l6ZTogMTZweDtcbiAgICAgICAgaW1ne1xuICAgICAgICAgICAgd2lkdGg6IDQwcHg7XG4gICAgICAgICAgICBoZWlnaHQ6IDQwcHg7XG4gICAgICAgICAgICBib3JkZXItcmFkaXVzOiA1MCU7XG4gICAgICAgICAgICBib3gtc2hhZG93OiAwIDAgNXB4ICRkYXJrQ29sb3I7XG4gICAgICAgIH1cbiAgICB9XG59XG4ldXNlcl9wb3N0e1xuICAgIC5wb3N0LXVzZXJ7XG4gICAgICAgIEBleHRlbmQgJXVzZXJfY29udGFpbnI7XG4gICAgICAgIGZvbnQtd2VpZ2h0OiBib2xkO1xuICAgICAgIGF7IGNvbG9yOiAkZGFya0NvbG9yO31cbiAgICB9XG4gICAgLnBvc3QtYm9keXtcbiAgICAgICAgcGFkZGluZzogMTBweCA0MHB4O1xuICAgIH1cblxuICAgIC5zZWUtbW9yZXtcbiAgICAgICAgY3Vyc29yOiBwb2ludGVyO1xuICAgIH1cbiAgICAuY29tbWVudC1mb3Jte1xuICAgICAgICB3aWR0aDogMTAwJTtcbiAgICAgICAgLm1hdC1mb3JtLWZpZWxke1xuICAgICAgICAgICAgd2lkdGg6IDEwMCU7XG4gICAgICAgICAgICB0ZXh0YXJlYXtcbiAgICAgICAgICAgICAgICB3aWR0aDogMTAwJTtcbiAgICAgICAgICAgIH1cbiAgICAgICAgfVxuICAgIH1cbn1cbiVmb3Jte1xuICAgIHdpZHRoOiA5MCU7XG4gICAgbWFyZ2luOiAxMHB4IGF1dG87XG4gICAgLm1hdC1mb3JtLWZpZWxke1xuICAgICAgICB3aWR0aDogMTAwJTtcbiAgICAgICAgdGV4dGFyZWF7XG4gICAgICAgICAgICB3aWR0aDogMTAwJTtcbiAgICAgICAgfVxuICAgIH1cbn0iLCIkbGlnaHRDb2xvcjojZmZmO1xuJG1kQ29sb3I6cmdiKDExNiwgMTA3LCAxMDcpO1xuJGRhcmtDb2xvcjojMDAwOyJdfQ== */"
 
 /***/ }),
 
@@ -376,6 +499,10 @@ var HomeComponent = /** @class */ (function () {
         });
     }
     HomeComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        setTimeout(function () {
+            _this._socket.onNotificationsAndfriedsReqLength(_this.user._id);
+        }, 1000);
     };
     HomeComponent.prototype.findFrind = function () {
         var _this = this;
@@ -516,6 +643,84 @@ var HomeComponent = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/userModule/userComponent/notifications/notifications.component.html":
+/*!*************************************************************************************!*\
+  !*** ./src/app/userModule/userComponent/notifications/notifications.component.html ***!
+  \*************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"not-page\">\n  <div class=\"notification\" *ngIf=\"notifictions.length > 0\">\n    <div [ngClass]=\"{'is-read': !not.isRead}\" class=\"users\" *ngFor=\"let not of notifictions\">\n        <a [routerLink]=\"[ '/user/post', not._id ]\">\n        <p class=\"post-user\">\n          <img src=\"{{_services.url}}/{{not.userImage}}\" alt=\"{{not.username}}\"> <strong> {{not.username | titlecase }}</strong> {{not.body}}\n        </p>\n        <p class=\"date text-right\">{{not.createdAt  | date:'MMM d, y, h:mm:ss a'}}</p>\n      </a>\n    </div>\n  </div>\n</div>\n\n"
+
+/***/ }),
+
+/***/ "./src/app/userModule/userComponent/notifications/notifications.component.scss":
+/*!*************************************************************************************!*\
+  !*** ./src/app/userModule/userComponent/notifications/notifications.component.scss ***!
+  \*************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ".not-page img {\n  width: 30px;\n  height: 30px;\n  border-radius: 50%; }\n\n.not-page a {\n  color: #000; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9ob21lL2RpYm8vRG9jdW1lbnRzL3dvcmsveW9kYS9mcm9udC9zcmMvYXBwL3VzZXJNb2R1bGUvdXNlckNvbXBvbmVudC9ub3RpZmljYXRpb25zL25vdGlmaWNhdGlvbnMuY29tcG9uZW50LnNjc3MiLCIvaG9tZS9kaWJvL0RvY3VtZW50cy93b3JrL3lvZGEvZnJvbnQvc3JjL2Fzc2V0cy9zY3NzL19zaGVhcmQuc2NzcyIsIi9ob21lL2RpYm8vRG9jdW1lbnRzL3dvcmsveW9kYS9mcm9udC9zcmMvYXNzZXRzL3Njc3MvX2NvbG9yLnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBRUE7RUNDUSxZQUFXO0VBQ1gsYUFBWTtFQUNaLG1CQUFrQixFQUNyQjs7QURKTDtFQ01RLFlDTk8sRURPViIsImZpbGUiOiJzcmMvYXBwL3VzZXJNb2R1bGUvdXNlckNvbXBvbmVudC9ub3RpZmljYXRpb25zL25vdGlmaWNhdGlvbnMuY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyJAaW1wb3J0ICcuLi8uLi8uLi8uLi9hc3NldHMvc2Nzcy9jb2xvcic7XG5AaW1wb3J0ICcuLi8uLi8uLi8uLi9hc3NldHMvc2Nzcy9zaGVhcmQnO1xuLm5vdC1wYWdle1xuICAgIEBleHRlbmQgJXBfbm90aWZpY2F0aW9uO1xuXG59IiwiQGltcG9ydCAnLi9jb2xvcic7XG4lcF9ub3RpZmljYXRpb257XG4gICAgaW1ne1xuICAgICAgICB3aWR0aDogMzBweDtcbiAgICAgICAgaGVpZ2h0OiAzMHB4O1xuICAgICAgICBib3JkZXItcmFkaXVzOiA1MCU7XG4gICAgfVxuICAgIGF7XG4gICAgICAgIGNvbG9yOiAkZGFya0NvbG9yO1xuICAgIH1cblxufVxuJXVzZXJfY29udGFpbnJ7XG4gICAgYXtcbiAgICAgICAgY29sb3I6ICRsaWdodENvbG9yO1xuICAgICAgICBmb250LXNpemU6IDE2cHg7XG4gICAgICAgIGltZ3tcbiAgICAgICAgICAgIHdpZHRoOiA0MHB4O1xuICAgICAgICAgICAgaGVpZ2h0OiA0MHB4O1xuICAgICAgICAgICAgYm9yZGVyLXJhZGl1czogNTAlO1xuICAgICAgICAgICAgYm94LXNoYWRvdzogMCAwIDVweCAkZGFya0NvbG9yO1xuICAgICAgICB9XG4gICAgfVxufVxuJXVzZXJfcG9zdHtcbiAgICAucG9zdC11c2Vye1xuICAgICAgICBAZXh0ZW5kICV1c2VyX2NvbnRhaW5yO1xuICAgICAgICBmb250LXdlaWdodDogYm9sZDtcbiAgICAgICBheyBjb2xvcjogJGRhcmtDb2xvcjt9XG4gICAgfVxuICAgIC5wb3N0LWJvZHl7XG4gICAgICAgIHBhZGRpbmc6IDEwcHggNDBweDtcbiAgICB9XG5cbiAgICAuc2VlLW1vcmV7XG4gICAgICAgIGN1cnNvcjogcG9pbnRlcjtcbiAgICB9XG4gICAgLmNvbW1lbnQtZm9ybXtcbiAgICAgICAgd2lkdGg6IDEwMCU7XG4gICAgICAgIC5tYXQtZm9ybS1maWVsZHtcbiAgICAgICAgICAgIHdpZHRoOiAxMDAlO1xuICAgICAgICAgICAgdGV4dGFyZWF7XG4gICAgICAgICAgICAgICAgd2lkdGg6IDEwMCU7XG4gICAgICAgICAgICB9XG4gICAgICAgIH1cbiAgICB9XG59XG4lZm9ybXtcbiAgICB3aWR0aDogOTAlO1xuICAgIG1hcmdpbjogMTBweCBhdXRvO1xuICAgIC5tYXQtZm9ybS1maWVsZHtcbiAgICAgICAgd2lkdGg6IDEwMCU7XG4gICAgICAgIHRleHRhcmVhe1xuICAgICAgICAgICAgd2lkdGg6IDEwMCU7XG4gICAgICAgIH1cbiAgICB9XG59IiwiJGxpZ2h0Q29sb3I6I2ZmZjtcbiRtZENvbG9yOnJnYigxMTYsIDEwNywgMTA3KTtcbiRkYXJrQ29sb3I6IzAwMDsiXX0= */"
+
+/***/ }),
+
+/***/ "./src/app/userModule/userComponent/notifications/notifications.component.ts":
+/*!***********************************************************************************!*\
+  !*** ./src/app/userModule/userComponent/notifications/notifications.component.ts ***!
+  \***********************************************************************************/
+/*! exports provided: NotificationsComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NotificationsComponent", function() { return NotificationsComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var src_app_services_services_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! src/app/services/services.service */ "./src/app/services/services.service.ts");
+/* harmony import */ var src_app_services_socket_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/services/socket.service */ "./src/app/services/socket.service.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var NotificationsComponent = /** @class */ (function () {
+    function NotificationsComponent(_services, _socket) {
+        this._services = _services;
+        this._socket = _socket;
+        this.notifictions = [];
+        this.user = JSON.parse(localStorage.getItem('user'));
+        this._socket.onNotifications({ id: this.user._id, isRead: true });
+    }
+    NotificationsComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this._socket.getAllNotification().subscribe(function (res) {
+            var t = res;
+            _this.notifictions = t.reverse();
+        });
+    };
+    NotificationsComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'app-notifications',
+            template: __webpack_require__(/*! ./notifications.component.html */ "./src/app/userModule/userComponent/notifications/notifications.component.html"),
+            styles: [__webpack_require__(/*! ./notifications.component.scss */ "./src/app/userModule/userComponent/notifications/notifications.component.scss")]
+        }),
+        __metadata("design:paramtypes", [src_app_services_services_service__WEBPACK_IMPORTED_MODULE_1__["ServicesService"],
+            src_app_services_socket_service__WEBPACK_IMPORTED_MODULE_2__["SocketService"]])
+    ], NotificationsComponent);
+    return NotificationsComponent;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/userModule/userComponent/post/post.component.html":
 /*!*******************************************************************!*\
   !*** ./src/app/userModule/userComponent/post/post.component.html ***!
@@ -523,7 +728,7 @@ var HomeComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"post\" *ngFor=\"let post of posts;let p = index; trackBy:index\" >\n    <p class=\"text-right edit-icon\" >\n        <mat-icon *ngIf=\"user._id === post.userId\" (click)='openEditPostDailog(post, \"post\", \"\", \"\")'>edit</mat-icon>\n        <mat-icon *ngIf=\"user._id === post.userId\" (click)='openRemoveDialog($event, post, \"post\")'>close</mat-icon>\n    </p>\n    <p class=\"post-user\">\n        <a [routerLink]=\"[ '/user/profile', post.userId ]\">\n            <img src=\"{{url}}/{{post.userImage}}\" alt=\"{{post.username}}\"> {{post.username | titlecase }}\n        </a>\n    </p>\n    <p class=\"post-body\">{{post.body}}</p>\n    <p class=\"date text-right\">\n        {{post.createdAt | date:'MMM d, y, h:mm:ss a'}}\n    </p>\n    <div class=\"comment\" *ngFor=\"let comment of post.comment;let c = index; trackBy:index;\">\n        <p class=\"text-right edit-icon\" >\n            <mat-icon *ngIf=\"user._id === comment.userId\" (click)='openEditPostDailog(post, \"comment\", comment, \"\")'>edit</mat-icon>\n            <mat-icon *ngIf=\"user._id === comment.userId || user._id === post.userId\" (click)='openRemoveDialog($event, comment, \"comment\")'>close</mat-icon>\n        </p>\n        <p class=\"post-user\">\n            <a [routerLink]=\"[ '/user/profile', comment.userId ]\">\n                <img src=\"{{url}}/{{comment.userImage}}\" alt=\"{{comment.username}}\"> {{comment.username | titlecase }}\n            </a>\n        </p>\n        <p class=\"post-body\">{{comment.body}}</p>\n        <p class=\"date text-right\">\n            {{comment.createdAt | date:'MMM d, y, h:mm:ss a'}}\n        </p>\n        <div class=\"replay\" *ngFor=\"let replay of comment.replay\">\n            <p class=\"text-right edit-icon\" >\n                        <mat-icon *ngIf=\"user._id === replay.userId\" (click)='openEditPostDailog(post, \"replay\", comment, replay)'>edit</mat-icon>\n                        <mat-icon *ngIf=\"user._id === replay.userId || user._id === post.userId || user._id === comment.userId\"  (click)='openRemoveDialog($event, replay, \"replay\", comment)'>close</mat-icon>\n            </p>\n            <p class=\"post-user\">\n                <a [routerLink]=\"[ '/user/profile', replay.userId ]\">\n                    <img src=\"{{url}}/{{replay.userImage}}\" alt=\"{{replay.username}}\"> {{replay.username | titlecase }}\n                </a>\n            </p>\n            <p class=\"post-body\">{{replay.body }}{{r}}</p>\n            <p class=\"date text-right\">\n                {{replay.createdAt | date:'MMM d, y, h:mm:ss a'}}\n            </p>\n          </div>\n        <p *ngIf=\"comment.replay.length > 2\" class=\"text-right\" >\n                <span (click)='seeMoreReplay(comment.postId, comment._id)' class=\"see-more\">\n                    see replay\n                </span> \n            </p>\n        <form class=\"comment-form\" (submit)='addReplay($event, comment._id, comment.postId, user.username, user._id, user.image)'>\n            <mat-form-field>\n                <textarea name='com{{c}}'#rep{{c}} ngModel matInput placeholder=\"replay\"></textarea>\n            </mat-form-field>\n            <div class=\"text-right\">\n                <button mat-raised-button color='primary' >replay</button>\n            </div>\n        </form>\n    </div>\n\n\n    <form class=\"comment-form\" (submit)='addComment($event, post._id, user.username, user._id, user.image)'>\n            <mat-form-field>\n                <textarea name='comment{{p}}' ngModel matInput placeholder=\"comment\"></textarea>\n            </mat-form-field>\n            <div class=\"text-right\">\n                <button mat-raised-button color='primary' >comment</button>\n            </div>\n    </form>\n    <p *ngIf=\"post.commentsLength > 1\" class=\"text-right\" >\n        <span (click)='seeMoreComment(post._id)' class=\"see-more\">\n            see comments\n        </span> \n    </p>\n</div>\n"
+module.exports = "<div class=\"post\" *ngFor=\"let post of posts;let p = index; trackBy:index\" >\n    <p class=\"text-right edit-icon\" >\n        <mat-icon *ngIf=\"user._id === post.userId\" (click)='openEditPostDailog(post, \"post\", \"\", \"\")'>edit</mat-icon>\n        <mat-icon *ngIf=\"user._id === post.userId\" (click)='openRemoveDialog($event, post, \"post\")'>close</mat-icon>\n    </p>\n    <p class=\"post-user\">\n        <a [routerLink]=\"[ '/user/profile', post.userId ]\">\n            <img src=\"{{url}}/{{post.userImage}}\" alt=\"{{post.username}}\"> {{post.username | titlecase }}\n        </a>\n    </p>\n    <p class=\"post-body text-right\">{{post.body}}</p>\n    <p class=\"date text-right\">\n        {{post.createdAt | date:'MMM d, y, h:mm:ss a'}}\n    </p>\n    <div class=\"comment\" *ngFor=\"let comment of post.comment;let c = index; trackBy:index;\">\n        <p class=\"text-right edit-icon\" >\n            <mat-icon *ngIf=\"user._id === comment.userId\" (click)='openEditPostDailog(post, \"comment\", comment, \"\")'>edit</mat-icon>\n            <mat-icon *ngIf=\"user._id === comment.userId || user._id === post.userId\" (click)='openRemoveDialog($event, comment, \"comment\")'>close</mat-icon>\n        </p>\n        <p class=\"post-user\">\n            <a [routerLink]=\"[ '/user/profile', comment.userId ]\">\n                <img src=\"{{url}}/{{comment.userImage}}\" alt=\"{{comment.username}}\"> {{comment.username | titlecase }}\n            </a>\n        </p>\n        <p class=\"post-body\">{{comment.body}}</p>\n        <p class=\"date text-right\">\n            {{comment.createdAt | date:'MMM d, y, h:mm:ss a'}}\n        </p>\n        <div class=\"replay\" *ngFor=\"let replay of comment.replay\">\n            <p class=\"text-right edit-icon\" >\n                        <mat-icon *ngIf=\"user._id === replay.userId\" (click)='openEditPostDailog(post, \"replay\", comment, replay)'>edit</mat-icon>\n                        <mat-icon *ngIf=\"user._id === replay.userId || user._id === post.userId || user._id === comment.userId\"  (click)='openRemoveDialog($event, replay, \"replay\", comment)'>close</mat-icon>\n            </p>\n            <p class=\"post-user\">\n                <a [routerLink]=\"[ '/user/profile', replay.userId ]\">\n                    <img src=\"{{url}}/{{replay.userImage}}\" alt=\"{{replay.username}}\"> {{replay.username | titlecase }}\n                </a>\n            </p>\n            <p class=\"post-body\">{{replay.body }}{{r}}</p>\n            <p class=\"date text-right\">\n                {{replay.createdAt | date:'MMM d, y, h:mm:ss a'}}\n            </p>\n          </div>\n        <p *ngIf=\"comment.replay.length > 2\" class=\"text-right\" >\n                <span (click)='seeMoreReplay(comment.postId, comment._id)' class=\"see-more\">\n                    see replay\n                </span> \n            </p>\n        <form class=\"comment-form\" (submit)='addReplay($event, comment._id, comment.postId, user.username, user._id, user.image)'>\n            <mat-form-field>\n                <textarea name='com{{c}}'#rep{{c}} ngModel matInput placeholder=\"replay\"></textarea>\n            </mat-form-field>\n            <div class=\"text-right\">\n                <button mat-raised-button color='primary' >replay</button>\n            </div>\n        </form>\n    </div>\n\n\n    <form class=\"comment-form\" (submit)='addComment($event, post._id, user.username, user._id, user.image)'>\n            <mat-form-field>\n                <textarea name='comment{{p}}' ngModel matInput placeholder=\"comment\"></textarea>\n            </mat-form-field>\n            <div class=\"text-right\">\n                <button mat-raised-button color='primary' >comment</button>\n            </div>\n    </form>\n    <p *ngIf=\"post.commentsLength > 1\" class=\"text-right\" >\n        <span (click)='seeMoreComment(post._id)' class=\"see-more\">\n            see comments\n        </span> \n    </p>\n</div>\n"
 
 /***/ }),
 
@@ -598,7 +803,7 @@ var PostComponent = /** @class */ (function () {
         this._socket.getComment().subscribe(function (res) {
             for (var _i = 0, _a = _this.posts; _i < _a.length; _i++) {
                 var post = _a[_i];
-                if (post._id == res.postId) {
+                if (post._id === res.postId) {
                     post.comment.push(res);
                 }
             }
@@ -607,10 +812,10 @@ var PostComponent = /** @class */ (function () {
         this._socket.getReplay().subscribe(function (res) {
             for (var _i = 0, _a = _this.posts; _i < _a.length; _i++) {
                 var post = _a[_i];
-                if (post._id == res.postId) {
+                if (post._id === res.postId) {
                     for (var _b = 0, _c = post.comment; _b < _c.length; _b++) {
                         var comment = _c[_b];
-                        if (comment._id == res.commentId) {
+                        if (comment._id === res.commentId) {
                             comment.replay.push(res);
                         }
                     }
@@ -622,6 +827,7 @@ var PostComponent = /** @class */ (function () {
         var _this = this;
         this._httpService.getUserDashbord(this.user._id).subscribe(function (res) {
             if (res.success) {
+                var po = [];
                 _this.posts = res.posts;
             }
             else {
@@ -630,7 +836,7 @@ var PostComponent = /** @class */ (function () {
         }, function (error) {
             _this._snakBar.open(error.message, 'undo', { duration: 3000 });
         });
-    }; //on init
+    }; // on init
     PostComponent.prototype.openRemoveDialog = function (event, obj, type, comment) {
         var _this = this;
         switch (type) {
@@ -641,7 +847,7 @@ var PostComponent = /** @class */ (function () {
                     data: { event: event, postId: obj._id, type: type }
                 });
                 dialogRef.afterClosed().subscribe(function (result) {
-                    if (result != undefined && result.type == 'post') {
+                    if (result !== undefined && result.type === 'post') {
                         _this._httpService.removePost(obj._id).subscribe(function (res) {
                             if (res.success) {
                                 event.target.parentElement.parentElement.classList.add('d-none');
@@ -663,8 +869,7 @@ var PostComponent = /** @class */ (function () {
                     data: { event: event, postId: obj.postId, commentId: obj._id, type: type }
                 });
                 commentRef.afterClosed().subscribe(function (result) {
-                    console.log(result);
-                    if (result != undefined && result.type == 'comment') {
+                    if (result !== undefined && result.type === 'comment') {
                         _this._httpService.removeComment(result.postId, result.commentId).subscribe(function (res) {
                             if (res.success) {
                                 event.target.parentElement.parentElement.classList.add('d-none');
@@ -686,7 +891,7 @@ var PostComponent = /** @class */ (function () {
                     data: { event: event, postId: comment.postId, commentId: comment._id, replayId: obj._id, type: type }
                 });
                 replayRef.afterClosed().subscribe(function (result) {
-                    if (result != undefined && result.type == 'replay') {
+                    if (result !== undefined && result.type === 'replay') {
                         _this._httpService.removeReplay(result.postId, result.commentId, result.replayId).subscribe(function (res) {
                             if (res.success) {
                                 event.target.parentElement.parentElement.classList.add('d-none');
@@ -702,18 +907,18 @@ var PostComponent = /** @class */ (function () {
                 });
                 break;
         }
-    }; // remove 
+    }; // remove
     PostComponent.prototype.openEditPostDailog = function (post, type, comment, replay) {
         var _this = this;
         switch (type) {
             case 'post':
                 var postRef = this.dialog.open(_edit_dialog_edit_dialog_component__WEBPACK_IMPORTED_MODULE_9__["EditDialogComponent"], {
-                    maxWidth: '450px',
+                    minWidth: '80%',
                     maxHeight: '350px',
                     data: { body: post.body, postId: post._id, type: type }
                 });
                 postRef.afterClosed().subscribe(function (result) {
-                    if (result != undefined && result.type == 'post') {
+                    if (result !== undefined && result.type === 'post') {
                         var o = {
                             body: result.body
                         };
@@ -733,12 +938,12 @@ var PostComponent = /** @class */ (function () {
                 break;
             case 'comment':
                 var commentRef = this.dialog.open(_edit_dialog_edit_dialog_component__WEBPACK_IMPORTED_MODULE_9__["EditDialogComponent"], {
-                    maxWidth: '450px',
+                    minWidth: '80%',
                     maxHeight: '350px',
                     data: { body: comment.body, postId: comment.postId, type: type, commentId: comment._id }
                 });
                 commentRef.afterClosed().subscribe(function (result) {
-                    if (result != undefined && result.type == 'comment') {
+                    if (result !== undefined && result.type === 'comment') {
                         var o = {
                             body: result.body
                         };
@@ -758,12 +963,12 @@ var PostComponent = /** @class */ (function () {
                 break;
             default:
                 var replayRef = this.dialog.open(_edit_dialog_edit_dialog_component__WEBPACK_IMPORTED_MODULE_9__["EditDialogComponent"], {
-                    maxWidth: '450px',
+                    minWidth: '80%',
                     maxHeight: '350px',
                     data: { body: replay.body, postId: comment.postId, type: type, commentId: comment._id, replayId: replay._id }
                 });
                 replayRef.afterClosed().subscribe(function (result) {
-                    if (result != undefined && result.type == 'replay') {
+                    if (result !== undefined && result.type === 'replay') {
                         var o = {
                             body: result.body
                         };
@@ -894,7 +1099,6 @@ var RemoveDialogComponent = /** @class */ (function () {
     RemoveDialogComponent.prototype.ngOnInit = function () {
     };
     RemoveDialogComponent.prototype.closeDialog = function () {
-        console.log('re');
         this.dialogRef.close('Pizza!');
     };
     RemoveDialogComponent = __decorate([

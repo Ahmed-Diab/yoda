@@ -17,7 +17,6 @@ export class RemoveDialogComponent implements OnInit {
   ngOnInit() {
   }
   closeDialog() {
-    console.log('re')
     this.dialogRef.close('Pizza!');
   }
 

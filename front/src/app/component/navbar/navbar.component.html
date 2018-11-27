@@ -65,13 +65,10 @@
   <div  [@openClose]="isNotifications ? 'in' : 'out'"  class="notifications">
     <mat-icon (click)="close($event)">close</mat-icon>
     <div class="notification" *ngIf="notifictions.length > 0">
-      <div [ngClass]="{'is-read': not.isRead == fales}" class="users" *ngFor="let not of notifictions">
+      <div [ngClass]="{'is-read': !not.isRead}" class="users" *ngFor="let not of notifictions">
           <a [routerLink]="[ '/user/post', not._id ]">
           <p class="post-user">
-                  <img src="{{_services.url}}/{{not.userImage}}" alt="{{not.username}}"> {{not.username | titlecase }}
-          </p>
-          <p>
-            {{not.body}}
+            <img src="{{_services.url}}/{{not.userImage}}" alt="{{not.username}}"> <strong> {{not.username | titlecase }}</strong> {{not.body}}
           </p>
           <p class="date text-right">{{not.createdAt  | date:'MMM d, y, h:mm:ss a'}}</p>
         </a>
@@ -82,12 +79,8 @@
       <mat-icon (click)="close($event)">close</mat-icon>
       <div class="notification">
           <p>
-            <a [routerLink]="[ '/path', routeParam ]">
-              <img src="../../../assets/images/yoda.png" alt=""> Ahmed Diab
-            </a> 
-          </p>
-          <p>
-            <a [routerLink]="[ '/path', routeParam ]">
+            <a [routerLink]="[ '/post', routeParam ]">
+              <img src="../../../assets/images/yoda.png" alt=""><strong>Ahmed Diab</strong>
               Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rerum, aperiam.
             </a> 
           </p>

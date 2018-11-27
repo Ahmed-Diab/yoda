@@ -16,7 +16,7 @@ import { MatSnackBar } from '@angular/material';
     trigger('openClose', [
       state('in', style({
         transform: 'translateX(0%)',
-        width: '30%'
+        width: '25%'
       })),
       state('out', style({
         transform: 'translateX(165%)',
@@ -52,8 +52,10 @@ export class NavbarComponent implements OnInit {
     private _snakBar: MatSnackBar
   ) {
     this.user = JSON.parse(localStorage.getItem('user'));
+    this._socket.onNotificationsAndfriedsReqLength(this.user._id);
 
     this._socket.getNewNotification().subscribe((res: any) => {
+      this.notLength += 1;
       this.notifictions.unshift(res);
     });
 
@@ -64,7 +66,7 @@ export class NavbarComponent implements OnInit {
 
     this._socket.getLength().subscribe((res: { friendsLength: number, notLength: number}) => {
       this.friendsLength = res.friendsLength;
-      this.notLength = res.notLength;
+      this.notLength     = res.notLength;
     });
 
     this._socket.getAllNotification().subscribe((res: any) => {
@@ -90,7 +92,7 @@ export class NavbarComponent implements OnInit {
 
   toggleNotifications() {
     if (!this.isNotifications) {
-      this._socket.onNotifications({id: this.user._id, isRead: false});
+      this._socket.onNotifications({id: this.user._id, isRead: true});
     }
     setTimeout(() => {
       this.isNotifications  = !this.isNotifications;
@@ -98,7 +100,6 @@ export class NavbarComponent implements OnInit {
       this.isFriendsRequst  = false;
     }, 100);
     this.notLength = 0;
-    console.log('not');
   }
 
   toggleFriendsRequst() {

@@ -1,0 +1,6 @@
+@import '../../../../assets/scss/color';
+@import '../../../../assets/scss/sheard';
+.not-page{
+    @extend %p_notification;
+
+}

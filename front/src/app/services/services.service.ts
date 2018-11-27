@@ -9,9 +9,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class ServicesService {
   // private pathName = new BehaviorSubject<string>('hello');
   // crancePathName = this.pathName.asObservable();
-  public  url = 'http://localhost:3000';
+  // public  url = 'http://localhost:3000';
 
-  // public  url = '';
+  public  url = '';
   constructor() { }
 
   // changePathName(path){

@@ -3,7 +3,7 @@
             <mat-grid-tile [colspan]='colSpan'>
                 <form class="post-form" (submit)='addNewPost(user, newPost)'>
                     <mat-form-field>
-                        <textarea name='newPost' [(ngModel)]="newPost" matInput placeholder="post"></textarea>
+                        <textarea name='newPost' class="ta" [(ngModel)]="newPost" matInput placeholder="post"></textarea>
                     </mat-form-field>
                     <div class="text-right">
                         <button mat-raised-button color='primary' >post</button>

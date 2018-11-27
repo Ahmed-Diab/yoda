@@ -1,14 +1,6 @@
 @import '../../../assets/scss/color';
 @import '../../../assets/scss/sheard';
 
-.is-read{
-    p, a{
-        color: $darkColor !important;
-
-    }
-    background-color: $lightColor;
-}
-
 .d-sm-none, .d-lg-none{
     display: none;
 }
@@ -84,12 +76,19 @@ nav{
                 color: $lightColor;
                 padding: 5px 10px;
             }
-            .post-user{
-                padding-top: 15px;   
-            }
-            a{
-                color: $lightColor;
 
+            .users{
+                margin-top: 10px;
+                background-color: rgba($darkColor, .2);
+                .post-user{
+                    padding-top: 15px;
+                    font-size: 12px;
+
+                }
+                a{
+                    color: $lightColor;
+    
+                }
             }
         }
         .zero-request{
@@ -152,4 +151,11 @@ nav{
     .username{
         display: none;
     }
+}
+
+.is-read{
+    p{
+        color: $darkColor !important;
+    }
+    background-color: $lightColor !important;
 }

@@ -1,0 +1,20 @@
+  <div class="friends-requsts">
+    <div class="notification" *ngIf="friendsRequsts.length > 0;else zeroRequst">
+        <div class="users" *ngFor="let friend of friendsRequsts">
+            <p class="post-user">
+                <a [routerLink]="[ '/user/profile', friend._id ]">
+                    <img src="{{_services.url}}/{{friend.image}}" alt="{{friend.username}}"> {{friend.username | titlecase }}
+                </a>
+            </p>
+            <p class="text-right">
+                <button mat-raised-button (click)="acceptFrindRequst(friend)">Accept</button>
+                <button mat-raised-button (click)="ignoreFriendRequest(friend)">ignore</button>
+            </p>
+        </div>
+      </div>
+      
+      <ng-template #zeroRequst>
+        <h3 class="zero-request">you don't have requst yet</h3>          
+      </ng-template>
+    
+  </div>

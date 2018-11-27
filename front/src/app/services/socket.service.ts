@@ -3,7 +3,7 @@ import io from 'socket.io-client';
 import { Observable } from 'rxjs';
 import { Post } from '../module/post';
 import { ServicesService } from './services.service';
-const socket = io('http://localhost:3000');
+const socket = io('http://192.168.20.102:3000');
 
 
 @Injectable({
@@ -40,17 +40,7 @@ export class SocketService {
     });
     return observable;
   }
-  getLength() {
-    const observable = new Observable((observer) => {
-      socket.on('get Length', (data: string) => {
-        observer.next(data);
-      });
-      return () => {
-        socket.disconnect();
-      };
-    });
-    return observable;
-  }
+
 
   getNewTextNotifications() {
     const observable = new Observable((observer) => {
@@ -66,6 +56,21 @@ export class SocketService {
   getNewFriendRequstTextNotifications() {
     const observable = new Observable((observer) => {
       socket.on('new friend requst text notifications', (data: string) => {
+        observer.next(data);
+      });
+      return () => {
+        socket.disconnect();
+      };
+    });
+    return observable;
+  }
+  onNotificationsAndfriedsReqLength(data) {
+    socket.emit('notificationsAndfriedsReqLength', data);
+  }
+
+  getLength() {
+    const observable = new Observable((observer) => {
+      socket.on('get Length', (data: string) => {
         observer.next(data);
       });
       return () => {

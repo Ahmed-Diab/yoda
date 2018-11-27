@@ -53,9 +53,14 @@ export class HomeComponent implements OnInit {
     this._socket.getError().subscribe((res: string) => {
       this._snakBar.open(res, 'undo', {duration: 5000});
     });
+
    }
 
   ngOnInit() {
+    setTimeout(() => {
+      this._socket.onNotificationsAndfriedsReqLength(this.user._id);
+
+    }, 1000);
 
   }
   findFrind() {
@@ -111,7 +116,6 @@ export class HomeComponent implements OnInit {
   addNewPost(user, postBody) {
     if (this.newPost === '' || undefined) {
       this._snakBar.open('cant\'t post empty filed', 'undo', {duration: 3000});
-
       return false;
     }
     const post = {

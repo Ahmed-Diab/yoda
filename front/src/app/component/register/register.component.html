@@ -32,6 +32,17 @@
                     Email is <strong>required</strong>
                   </mat-error>
                 </mat-form-field>
+                <mat-form-field class="example-full-width">
+                  <input name="dateOfBirth" matInput [matDatepicker]="picker" placeholder="5/5/2005" [formControl]="dateOfBirth"
+                  [errorStateMatcher]="matcher">
+                  <mat-error *ngIf="dateOfBirth.hasError('required')">
+                       Date of birth is <strong>required</strong>
+                    </mat-error>
+                  <mat-datepicker-toggle matSuffix [for]="picker">
+                    <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+                  </mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
               <mat-form-field>
                 <input name="password" matInput placeholder="Password" [type]="'hide' ? 'password' : 'text'" [formControl]="password"
                 [errorStateMatcher]="matcher">
@@ -45,17 +56,6 @@
                   <mat-error *ngIf="rePassword.hasError('required')">
                       Re Password is <strong>required</strong>
                     </mat-error>
-                </mat-form-field>
-                <mat-form-field class="example-full-width">
-                  <input name="dateOfBirth" matInput [matDatepicker]="picker" placeholder="5/5/2005" [formControl]="dateOfBirth"
-                  [errorStateMatcher]="matcher">
-                  <mat-error *ngIf="dateOfBirth.hasError('required')">
-                       Date of birth is <strong>required</strong>
-                    </mat-error>
-                  <mat-datepicker-toggle matSuffix [for]="picker">
-                    <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
-                  </mat-datepicker-toggle>
-                  <mat-datepicker #picker></mat-datepicker>
                 </mat-form-field>
               <div class="text-right">
                 <button mat-raised-button color="primary" type="submit">Register</button>  

@@ -35,20 +35,42 @@ io.on("connection", (socket)=>{
             friendsAreConncting[socket._id].friendRequest = user.friendRequest || [];
             friendsAreConncting[socket._id].username      = user.username
             friendsAreConncting[socket._id].image         = user.image
-            var notifications = [];
-            for (const not of user.notifications) {
-              if (!not.isRead) {
-                notifications.push(not)
-              }
-            }
-            friendsAreConncting[id].emit('get Length', {notLength:notifications.length, friendsLength:user.friendRequest.length})
+            // var notifications = [];
+            // var notArray =  user.notifications;
+            // for (const not of notArray) {
+            //   if (!not.isRead) {
+            //     notifications.push(not)
+            //   }
+            // }
+            // friendsAreConncting[id].emit('get Length', {notLength:notifications.length, friendsLength:user.friendRequest.length})
           }
         })
         updateFriendsAreConncting();
 
       }
   })
-  // send notifications
+
+    // send notifications
+    socket.on('notificationsAndfriedsReqLength', (id)=>{
+      User.findById(id, (err, user)=>{
+        if (err) {
+          io.sockets.emit('Error', err.message)
+        }else{
+          var notifications = [];
+          var notArray =  user.notifications;
+          for (const not of notArray) {
+            if (!not.isRead) {
+              notifications.push(not)
+            }
+          }
+          if (id in friendsAreConncting) {
+            friendsAreConncting[id].emit('get Length', {notLength:notifications.length, friendsLength:user.friendRequest.length});
+          }
+        }
+      })
+  })// send notifications
+
+  // // send notifications
   // socket.on('notifications', (data)=>{
   //     io.sockets.emit('get notifications', {success:true, data:data})
   // })// send notifications
@@ -85,7 +107,7 @@ io.on("connection", (socket)=>{
                         _id      :post._id,
                         username : username,
                         userImage:userImage,
-                        body     :`${username} add new post`
+                        body     :`add new post`
                       } 
                       friend.notifications.push(not)
                       friend.save((err)=>{
@@ -95,7 +117,7 @@ io.on("connection", (socket)=>{
                             if (friend._id in friendsAreConncting) {
                               friendsAreConncting[friend.id].emit('new notification', not);
                               friendsAreConncting[friend._id].emit('new post', post);
-                              friendsAreConncting[friend._id].emit('new text notifications', `${username} add new post `);
+                              friendsAreConncting[friend._id].emit('new text notifications', `${username} add new post`);
                             }
                             // if (userId in friendsAreConncting) {
                             // }
@@ -132,8 +154,7 @@ io.on("connection", (socket)=>{
             createdAt:Date.now()}}
     }, {save:true, upsert:true, new:true}, (err, post)=>{
         if (err) {
-          console.log('err', err)
-            // res.json({success:false, errMSG:err.message})
+          friendsAreConncting[userId].emit('Error', err.message)
         }else{
           User.findById(post.userId, (err, user)=>{
             if (err) {
@@ -144,31 +165,30 @@ io.on("connection", (socket)=>{
                 _id      :postId,
                 username : username,
                 userImage:userImage,
-                body     :`${username} add comment in your post`
-              } 
-          user.notifications.push(not)
-          user.save((err)=>{
-          if (err) {
-            if (userId in friendsAreConncting){
-              friendsAreConncting[userId].emit('Error',err.message) 
-
-            }
-          }else{
-            if (post.userId in friendsAreConncting && post.userId != userId) {
-              friendsAreConncting[post.userId].emit('new notification', not);
-              friendsAreConncting[post.userId].emit('new text notifications', `${username} add comment in your post `);
-            }// save
-          }// else
-          })// friend save
-          var com = post.comment.pop();
-          if (userId in friendsAreConncting) {
-            for (const friendId of friendsAreConncting[userId].friends) {
-              if (friendId in friendsAreConncting) {
-                friendsAreConncting[friendId].emit('new comment', com);
-              }// if
-            } // for
-            friendsAreConncting[userId].emit('new comment', com);
-          }
+                body     :`add comment in your post`
+              }
+              user.notifications.push(not)
+              user.save((err)=>{
+              if (err) {
+                if (userId in friendsAreConncting){
+                  friendsAreConncting[userId].emit('Error',err.message);
+                }
+              } else {
+                if (post.userId in friendsAreConncting && post.userId != userId) {
+                  friendsAreConncting[post.userId].emit('new text notifications', `${username} add comment in your post `);
+                  friendsAreConncting[post.userId].emit('new notification', not);
+                }// save
+              }// else
+              })// friend save
+              var com = post.comment.pop();
+              if (userId in friendsAreConncting) {
+                for (const friendId of friendsAreConncting[userId].friends) {
+                  if (friendId in friendsAreConncting) {
+                    friendsAreConncting[friendId].emit('new comment', com);
+                  }// if
+                } // for
+                friendsAreConncting[userId].emit('new comment', com);
+              }
             }// else
           }) // user find by id
         }// else
@@ -213,14 +233,14 @@ io.on("connection", (socket)=>{
                                       _id      :postId,
                                       username : username,
                                       userImage:userImage,
-                                      body     :`${username} replay your comment`
+                                      body     :` replay your comment`
                                     } 
                                 user.notifications.push(not)
                                 user.save((err)=>{
                                 if (err) {
                                   friendsAreConncting[userId].emit('Error', err.message) 
                                 }else{
-                                    if (uId in friendsAreConncting && userId != uId ) {
+                                    if (uId in friendsAreConncting && userId !== uId ) {
                                       friendsAreConncting[uId].emit('new notification', not);
                                       friendsAreConncting[uId].emit('new text notifications', `${username} replay your comment `);
                                     }// save
@@ -233,14 +253,14 @@ io.on("connection", (socket)=>{
                                       _id      :postId,
                                       username : username,
                                       userImage:userImage,
-                                      body     :`${username} replay comment on your post`
+                                      body     :` replay comment on your post`
                                     } 
                                     user.notifications.push(not)
                                     user.save((err)=>{
                                     if (err) {
                                       friendsAreConncting[userId].emit('Error', err.message) 
                                     }else{
-                                        if (post.userId in friendsAreConncting && post.userId != userId) {
+                                        if (post.userId in friendsAreConncting && post.userId !== userId) {
                                           friendsAreConncting[post.userId].emit('new notification', not);
                                           friendsAreConncting[post.userId].emit('new text notifications', `${username} replay comment on your post`);
                                         }// save
@@ -486,7 +506,7 @@ socket.on('get friends requset', (id)=>{
                 _id      :data.user._id,
                 username : data.user.username,
                 userImage:data.user.image,
-                body     :`${data.user.username} accepted your frind requst`
+                body     :` accepted your frind requst`
               }
               user.notifications.push(not)
                 holdAcceptFriendRequest.forEach((item)=>{
@@ -551,7 +571,6 @@ socket.on('get friends requset', (id)=>{
 
 // on notifications
   socket.on('notifications', (data)=>{
-    console.log(data);
     User.findById(data.id, (err, user)=>{
       if (err) {
         friendsAreConncting[id].emit('Error', err.message)
@@ -562,7 +581,6 @@ socket.on('get friends requset', (id)=>{
           }else{
             var not = [] = user.notifications;
           }
-          console.log(not);
           friendsAreConncting[data.id].emit('all notification', not);
           user.notifications.forEach((not)=>{
             if(!not.isRead && data.isRead){
