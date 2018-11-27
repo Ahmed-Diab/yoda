@@ -15,12 +15,12 @@ import { MatSnackBar } from '@angular/material';
   animations: [
     trigger('openClose', [
       state('in', style({
-        transform: 'translateX(10%)',
-        width:'30%'
+        transform: 'translateX(0%)',
+        width: '30%'
       })),
       state('out', style({
         transform: 'translateX(165%)',
-        width:'0'
+        width: '0'
 
       })),
       transition('in => out', [
@@ -36,112 +36,128 @@ export class NavbarComponent implements OnInit {
   isNotifications     = false;
   isMessages          = false;
   isFriendsRequst     = false;
-  user:User;
-  url:string          = this._services.url;
-  notifictions:any    = [];
-  friendsRequsts:any = [];
-  notLength:number;
-  friendsLength:number;
+  user: User;
+  url: string          = this._services.url;
+  notifictions: any    = [];
+  friendsRequsts: any = [];
+  notLength: number;
+  friendsLength: number;
 
   constructor(
-    private _services:ServicesService,
-    private _auth:AuthService,
-    private _router:Router,
-    private _socket:SocketService,
-    private _httpService:HttpService,
-    private _snakBar:MatSnackBar
+    private _services: ServicesService,
+    private _auth: AuthService,
+    private _router: Router,
+    private _socket: SocketService,
+    private _httpService: HttpService,
+    private _snakBar: MatSnackBar
   ) {
     this.user = JSON.parse(localStorage.getItem('user'));
 
-    this._socket.getNewNotification().subscribe((res:any)=>{
-      this.notLength+=1;
-      this.notifictions.unshift(res)
-    })
-    this._socket.getLength().subscribe((res:{friendsLength:number, notLength:number})=>{
+    this._socket.getNewNotification().subscribe((res: any) => {
+      this.notifictions.unshift(res);
+    });
+
+    this._socket.getNewFriendRequstTextNotifications().subscribe((res: string) => {
+      this.friendsLength += 1;
+      this._snakBar.open(res, 'undo', {duration: 3000});
+    });
+
+    this._socket.getLength().subscribe((res: { friendsLength: number, notLength: number}) => {
       this.friendsLength = res.friendsLength;
       this.notLength = res.notLength;
-    })
-    this._socket.getAllNotification().subscribe((res:any)=>{
-      var t = [] = res;
+    });
+
+    this._socket.getAllNotification().subscribe((res: any) => {
+      const t = res;
       this.notifictions = t.reverse();
-      console.log(t)
-
-    })
-
-
-    this._socket.getNewFriendsRequset().subscribe((res:any)=>{
+    });
+    this._socket.getNewFriendsRequset().subscribe((res: any) => {
       this.friendsRequsts = res;
-    })
-
+      this.friendsLength  = res.length;
+    });
    }
   ngOnInit() {
 
   }
-  toggleNotifications() {
-    this.isNotifications  = !this.isNotifications;
-    this.isMessages       = false;
-    this.isFriendsRequst  = false;
-    if (this.isNotifications) {
-      this._socket.onNotifications({id:this.user._id, isRead:true})
 
-    }
-    this.notLength = 0;
-  }
-  toggleFriendsRequst() {
-    this.isFriendsRequst  = !this.isFriendsRequst
+  goToHome() {
     this.isNotifications  = false;
     this.isMessages       = false;
-    if(this.isFriendsRequst){
-      this._socket.onGetFriendRequst(this.user._id)
+    this.isFriendsRequst  = false;
+    this._router.navigate(['/user']);
+
+  }
+
+  toggleNotifications() {
+    if (!this.isNotifications) {
+      this._socket.onNotifications({id: this.user._id, isRead: false});
     }
+    setTimeout(() => {
+      this.isNotifications  = !this.isNotifications;
+      this.isMessages       = false;
+      this.isFriendsRequst  = false;
+    }, 100);
+    this.notLength = 0;
+    console.log('not');
+  }
+
+  toggleFriendsRequst() {
+    this._socket.onGetFriendRequst(this.user._id);
+    setTimeout(() => {
+      this.isNotifications  = false;
+      this.isMessages       = false;
+      this.isFriendsRequst  = !this.isFriendsRequst;
+    }, 100);
   }
   toggleMessages() {
-    this.isFriendsRequst  = false
+    this.isFriendsRequst  = false;
     this.isNotifications  = false;
     this.isMessages       = !this.isMessages;
   }
-  // close
-  close(event){
+
+  close() {
     this.isNotifications  = false;
     this.isMessages       = false;
     this.isFriendsRequst  = false;
   }
 
-  logout(){
+  logout() {
     this._auth.logout();
-    this._router.navigate(['/login'])
+    this._router.navigate(['/login']);
   }
-  acceptFrindRequst(friend){
+
+  acceptFrindRequst(friend) {
       for (let i = 0; i < this.friendsRequsts.length; i++) {
         const req = this.friendsRequsts[i];
-        if (req._id == friend._id) {
+        if (req._id === friend._id) {
           this._socket.onAcceptFriendRequest({
-            user:{
-              username:this.user.username, 
-              _id:this.user._id, 
-              image:this.user.image}, 
-            friend:{
-              _id:friend._id, 
-              username:friend.username, 
-              image:friend.image}
-            })
-          this.friendsRequsts.splice(req, 1)
+            user: {
+              username: this.user.username,
+              _id: this.user._id,
+              image: this.user.image},
+            friend: {
+              _id: friend._id,
+              username: friend.username,
+              image: friend.image}
+            });
+          this.friendsRequsts.splice(req, 1);
+          this.friendsLength -= 1;
         }
       }
   }
 
-  ignoreFriendRequest(friend){
+  ignoreFriendRequest(friend) {
     for (let i = 0; i < this.friendsRequsts.length; i++) {
       const req = this.friendsRequsts[i];
-      if (req._id == friend._id) {
+      if (req._id === friend._id) {
         this._socket.onIgnoreFriendRequest({
-          userId:this.user._id, 
-          friendId:friend._id
-        })
-        this.friendsRequsts.splice(req, 1)
-      } 
+          userId: this.user._id,
+          friendId: friend._id
+        });
+        this.friendsRequsts.splice(req, 1);
+        this.friendsLength -= 1;
+      }
     }
   }
-
 
 }

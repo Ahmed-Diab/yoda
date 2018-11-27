@@ -298,8 +298,8 @@ io.on("connection", (socket)=>{
                         friendsAreConncting[userId].emit('Error', err.message);
                       }else{
                         if (friendId in friendsAreConncting) {
+                          friendsAreConncting[data.friendId].emit('new friend requst text notifications', `you have new friend request`);
                           friendsAreConncting[data.friendId].friendRequest.push(data.userId)
-                          friendsAreConncting[data.friendId].emit('new text notifications', `you have new friend request`);
                         }
                         if (data.userId in friendsAreConncting) {
                           friendsAreConncting[data.userId].emit('new text notifications', `request is sent`);
@@ -551,13 +551,19 @@ socket.on('get friends requset', (id)=>{
 
 // on notifications
   socket.on('notifications', (data)=>{
+    console.log(data);
     User.findById(data.id, (err, user)=>{
       if (err) {
         friendsAreConncting[id].emit('Error', err.message)
       }else{
         if (data.id in friendsAreConncting) {
-          var not = [] = user.notifications;
-          friendsAreConncting[data.id].emit('all notification', not.slice(-11, -1));
+          if (user.notifications.length > 10) {
+            var not = [] = user.notifications.slice(-11, -1);
+          }else{
+            var not = [] = user.notifications;
+          }
+          console.log(not);
+          friendsAreConncting[data.id].emit('all notification', not);
           user.notifications.forEach((not)=>{
             if(!not.isRead && data.isRead){
               not.isRead = true;
@@ -573,7 +579,7 @@ socket.on('get friends requset', (id)=>{
     })
   })// on notifications
 
-
+ 
 
 // if user disconncting
   socket.on('disconnect', ()=>{

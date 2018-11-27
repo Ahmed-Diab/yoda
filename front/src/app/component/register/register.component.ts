@@ -35,85 +35,85 @@ export class RegisterComponent implements OnInit {
   ]);
   dateOfBirth = new FormControl('', [
     Validators.required
-  ])
+  ]);
   matcher = new MyErrorStateMatcher();
-  imagesURL:string  = '../../assets/images/yoda.png';
+  imagesURL  = '../../assets/images/yoda.png';
   constructor(
-    private _services:ServicesService,
-    private _snackBar:MatSnackBar,
-    private _element:ElementRef,
-    private _auth:AuthService,
-    private _router:Router,
-    private _http:HttpClient
+    private _services: ServicesService,
+    private _snackBar: MatSnackBar,
+    private _element: ElementRef,
+    private _auth: AuthService,
+    private _router: Router,
+    private _http: HttpClient
   ) { }
 
   ngOnInit() {
-    window.scrollTo(0,0)
+    window.scrollTo(0, 0);
   }
 
 
-  onChange(file:any){
-    for (var i = 0; i < file.length; i++) {
-      var fi = file[i];
-      var imageReader = new FileReader();
-      imageReader.onload = (event:any)=>{
+  onChange(file: any) {
+    for (let i = 0; i < file.length; i++) {
+      const fi = file[i];
+      const imageReader = new FileReader();
+      imageReader.onload = (event: any) => {
         this.imagesURL = event.target.result;
-        }
+        };
       imageReader.readAsDataURL(fi);
       }
     }
 
     onRegisterSubmit() {
-      if (this.username.hasError('required')){
+      if (this.username.hasError('required')) {
         this._snackBar.open('plz check username filde', 'Undo', {
           duration: 3000
         });
-        return false
+        return false;
       }
-      if (this.email.hasError('required')){
+      if (this.email.hasError('required')) {
         this._snackBar.open('plz check email filde', 'Undo', {
           duration: 3000
         });
-        return false
+        return false;
 
       }
-      if (this.email.hasError('email')){
+      if (this.email.hasError('email')) {
         this._snackBar.open('plz check email filde and enter valid email', 'Undo', {
           duration: 3000
         });
-        return false
+        return false;
 
       }
-      if (this.dateOfBirth.hasError('required')){
+      if (this.dateOfBirth.hasError('required')) {
         this._snackBar.open('plz check date of birth filde', 'Undo', {
           duration: 3000
         });
-        return false
+        return false;
 
       }
-      if (this.password.hasError('required')){
+      if (this.password.hasError('required')) {
         this._snackBar.open('plz check password filde', 'Undo', {
           duration: 3000
         });
-        return false
+        return false;
 
       }
-      if (this.rePassword.hasError('required')){
+      if (this.rePassword.hasError('required')) {
         this._snackBar.open('plz check re password filde', 'Undo', {
           duration: 3000
         });
       }
 
-      if (this.password.value != this.rePassword.value) {
+      if (this.password.value !== this.rePassword.value) {
         this._snackBar.open('plz make shure password filde is equal re password', 'Undo', {
           duration: 3000
-        }); 
-        return false
-      }  
-      let inputEl: HTMLInputElement = this._element.nativeElement.querySelector('#photo');
+        });
+        return false;
+      }
+      const inputEl: HTMLInputElement = this._element.nativeElement.querySelector('#photo');
 
 
-      var formData = new FormData();
+      const formData = new FormData();
   //  //create a new fromdata instance
       if (inputEl.files.length !== 1) {
       this._snackBar.open('plz select image', 'Undo', {
@@ -121,30 +121,29 @@ export class RegisterComponent implements OnInit {
       });
         return false;
     }
-    
-    formData.append('username', this.username.value)
-    formData.append('dateOfBirth',this.dateOfBirth.value)
-    formData.append('password', this.password.value)
-    formData.append('email', this.email.value)
-    formData.append('photo', inputEl.files.item(0))
+    formData.append('username', this.username.value);
+    formData.append('dateOfBirth', this.dateOfBirth.value);
+    formData.append('password', this.password.value);
+    formData.append('email', this.email.value);
+    formData.append('photo', inputEl.files.item(0));
     // this._http.post('http://localhost:3000/users/register', formData).subscribe(res=>{console.log(res)})
 
-    this._auth.registerUser(formData).subscribe((data:any) => {
-    if(data.success) {
+    this._auth.registerUser(formData).subscribe((data: any) => {
+    if (data.success) {
       this._router.navigate(['/login']);
       this._snackBar.open(data.MSG, 'Undo', {
         duration: 3000
-      }); 
-    }else{
+      });
+    } else {
       this._snackBar.open(data.errMSG, 'Undo', {
         duration: 3000
-      }); 
+      });
     }
   },
-  (error)=>{
+  (error) => {
     this._snackBar.open(error.message, 'Undo', {
       duration: 3000
-    })
+    });
     });
 
   }

@@ -5,21 +5,21 @@ import { catchError } from 'rxjs/operators';
 import { ServicesService } from './services.service';
 @Injectable()
 export class AuthService {
-  authToken:any;
-  user:any;
-  isDev:Boolean;
+  authToken: any;
+  user: any;
+  isDev: Boolean;
   _url = this._service.url;
-  tu:Boolean = false;
+  tu: Boolean = false;
   constructor(
-    private _http:HttpClient,
-    private _service:ServicesService
+    private _http: HttpClient,
+    private _service: ServicesService
   ) {
     this.isDev = true;  // Change to false before deployment
   }
   registerUser(data) {
-    return this._http.post( `http://localhost:3000/users/register`, data).pipe(
+    return this._http.post( `${this._url}/users/register`, data).pipe(
       catchError(this._service.handleError)
-    )
+    );
   }
 
   storeUserData(token, user) {
@@ -31,7 +31,7 @@ export class AuthService {
 
   loginUser(user) {
     {
-      let headers = new HttpHeaders();
+      const headers = new HttpHeaders();
       headers.append('Content-Type', 'application/json');
       headers.append('Authorization', this.authToken);
       return this._http.post(`${this._url}/users/login`, user).pipe(
@@ -39,15 +39,13 @@ export class AuthService {
       );
     }
   }
-    
   getToken() {
-    return localStorage.getItem('token')
+    return localStorage.getItem('token');
   }
 
   loggedIn() {
     return tokenNotExpired('token');
   }
-  
   loadToken() {
     const token = localStorage.getItem('token');
     this.authToken = token;

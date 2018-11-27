@@ -1,3 +1,4 @@
+@import './color';
 %p_notification{
     img{
         width: 30px;
@@ -8,4 +9,49 @@
         color: $darkColor;
     }
 
+}
+%user_containr{
+    a{
+        color: $lightColor;
+        font-size: 16px;
+        img{
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            box-shadow: 0 0 5px $darkColor;
+        }
+    }
+}
+%user_post{
+    .post-user{
+        @extend %user_containr;
+        font-weight: bold;
+       a{ color: $darkColor;}
+    }
+    .post-body{
+        padding: 10px 40px;
+    }
+
+    .see-more{
+        cursor: pointer;
+    }
+    .comment-form{
+        width: 100%;
+        .mat-form-field{
+            width: 100%;
+            textarea{
+                width: 100%;
+            }
+        }
+    }
+}
+%form{
+    width: 90%;
+    margin: 10px auto;
+    .mat-form-field{
+        width: 100%;
+        textarea{
+            width: 100%;
+        }
+    }
 }

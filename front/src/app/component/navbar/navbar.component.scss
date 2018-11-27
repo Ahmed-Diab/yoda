@@ -69,6 +69,7 @@ nav{
         padding: 5px 20px;
         background-color: rgba($darkColor, .5);
         right: 0px;
+        transform: translateX(-50%);
 
         mat-icon{
             float: right;

@@ -9,7 +9,7 @@
   </div>
   <div class="d-lg-none ul">
     <span>
-      <a [routerLink]="[ '/user']">
+      <a (click)="goToHome()">
         <i class="d-lg">home </i>
         <mat-icon>home</mat-icon> 
       </a>
@@ -18,10 +18,10 @@
         <i class="d-lg">notifications </i> <mat-icon>notifications</mat-icon>
         <i *ngIf="notLength > 0">{{notLength}}</i>
     </span>
-    <span (click)="toggleMessages()">
+    <!-- <span (click)="toggleMessages()">
         <i class="d-lg">messages</i>  
         <mat-icon>message</mat-icon> 
-    </span> 
+    </span>  -->
     <span (click)="toggleFriendsRequst()">
         <i class="d-lg">friends requst</i>  
         <mat-icon>group</mat-icon>
@@ -46,11 +46,11 @@
           <i *ngIf="notLength > 0">{{notLength}}</i>
         </a>
       </span>
-      <span>
+      <!-- <span>
           <a [routerLink]="[ '/user/messages']">
             <mat-icon>message</mat-icon>
           </a>
-        </span> 
+        </span>  -->
       <span>
         <a [routerLink]="[ '/user/friends-requsts']">
           <mat-icon>group</mat-icon>

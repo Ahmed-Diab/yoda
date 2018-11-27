@@ -13,173 +13,171 @@ import { Post } from 'src/app/module/post';
 })
 export class HomeComponent implements OnInit {
 
-  frindName:string = '';
-  newPost:string = '';
-  users:any = [];
-  public user:User;
-  posts:Post[];
+  frindName = '';
+  newPost = '';
+  users: any = [];
+  public user: User;
+  posts: Post[];
   colSpan = 3;
   rows;
-  bigScreen:boolean = true;
+  bigScreen = true;
   constructor(
-    private _services:ServicesService,
-    private _socket:SocketService,
-    private _httpService:HttpService,
-    private _snakBar:MatSnackBar
+    private _services: ServicesService,
+    private _socket: SocketService,
+    private _httpService: HttpService,
+    private _snakBar: MatSnackBar
   ) {
     if (window.innerWidth < 778) {
       this.colSpan = 4;
       this.bigScreen = false;
-    }else{
+    } else {
       this.colSpan = 3;
       this.bigScreen = true;
 
     }
-    window.addEventListener('resize', ()=>{
+    window.addEventListener('resize', () => {
       if (window.innerWidth < 778) {
         this.colSpan = 4;
         this.bigScreen = false;
-      }else{
+      } else {
         this.colSpan = 3;
         this.bigScreen = true;
-
       }
-    })
-    this.user = JSON.parse(localStorage.getItem('user'))
-    this._socket.onJoin(this.user._id)
-    this._socket.getNewTextNotifications().subscribe((res:any)=>{
-      this._snakBar.open(res, 'undo', {duration:3000})
+    });
+    this.user = JSON.parse(localStorage.getItem('user'));
+    this._socket.onJoin(this.user._id);
+    this._socket.getNewTextNotifications().subscribe((res: any) => {
+      this._snakBar.open(res, 'undo', {duration: 3000});
+    });
 
-    })
-
-    this._socket.getError().subscribe((res:string)=>{
-      this._snakBar.open(res, 'undo', {duration:5000})
-    })
+    this._socket.getError().subscribe((res: string) => {
+      this._snakBar.open(res, 'undo', {duration: 5000});
+    });
    }
 
   ngOnInit() {
 
   }
-  findFrind(){
-    console.log(this.frindName)
+  findFrind() {
+    console.log(this.frindName);
 
-    this._httpService.findUserByUsername(this.frindName ||'00', this.user._id).subscribe((res:any)=>{
-      console.log(res)
+    this._httpService.findUserByUsername(this.frindName || '00', this.user._id).subscribe((res: any) => {
+      console.log(res);
       if (res.success) {
-        var usersArr = res.users;
-        this._httpService.getUserById(this.user._id).subscribe((res:any)=>{
-          if (res.success) {
-            var data = res.user;
+        const usersArr = res.users;
+        this._httpService.getUserById(this.user._id).subscribe((res2: any) => {
+          if (res2.success) {
+            const data = res2.user;
             for (const id of data.friends) {
               for (const user of usersArr) {
-                if (id == user._id) {
+                if (id === user._id) {
                   user.isFriend = true;
                 }
               }
             }
             for (const id of data.holdAcceptFriendRequest) {
               for (const user of usersArr) {
-                if (id == user._id) {
+                if (id === user._id) {
                   user.isHold = true;
                 }
               }
             }
             for (const id of data.friendRequest) {
               for (const user of usersArr) {
-                if (id == user._id) {
+                if (id === user._id) {
                   user.isFriendRequest = true;
                 }
               }
             }
             this.users = usersArr;
-          }else{
-            this._snakBar.open(res.errMSG, 'undo', {duration:3000})
+          } else {
+            this._snakBar.open(res2.errMSG, 'undo', {duration: 3000});
 
           }
-        },(error)=>{
-          this._snakBar.open(error.message, 'undo', {duration:5000})
-        })
+        }, (error) => {
+          this._snakBar.open(error.message, 'undo', {duration: 5000});
+        });
         // this.users = res.users;
-      }else{
-        this._snakBar.open(res.errMSG, 'undo', {duration:3000})
+      } else {
+        this._snakBar.open(res.errMSG, 'undo', {duration: 3000});
 
       }
-    },(error)=>{
-      this._snakBar.open(error.message, 'undo', {duration:5000})
+    }, (error) => {
+      this._snakBar.open(error.message, 'undo', {duration: 5000});
 
-    })
+    });
   }
 
-  addNewPost(user, postBody){
-    if (this.newPost == '' || undefined) {
-      this._snakBar.open("cant't post empty filed", 'undo', {duration:3000})
+  addNewPost(user, postBody) {
+    if (this.newPost === '' || undefined) {
+      this._snakBar.open('cant\'t post empty filed', 'undo', {duration: 3000});
 
       return false;
     }
-    let post = {
-        userId   :user._id,
+    const post = {
+        userId   : user._id,
         username : user.username,
         userImage: user.image,
         body     : postBody,
-    }
-    this._socket.onPost(post)
+    };
+    this._socket.onPost(post);
     this.newPost = '';
   }
 
-  addToFrinds(friend){
+  addToFrinds(friend) {
     this._socket.onSendFrindRequst({
-      userId:this.user._id, 
-      friendId:friend._id})
+      userId: this.user._id,
+      friendId: friend._id});
       friend.isHold = true;
   }
 
-  acceptFrindRequst(friend){
+  acceptFrindRequst(friend) {
     this._socket.onAcceptFriendRequest({
-      user:{
-        username:this.user.username, 
-        _id:this.user._id, 
-        image:this.user.image}, 
-      friend:{
-        _id:friend._id, 
-        username:friend.username, 
-        image:friend.image}
-      })
+      user: {
+        username: this.user.username,
+        _id: this.user._id,
+        image: this.user.image},
+      friend: {
+        _id: friend._id,
+        username: friend.username,
+        image: friend.image}
+      });
       friend.isFriendRequest = false;
       friend.isFriend = true;
   }
 
-  cansleFriendRequst(friend){
-    this._socket.onCanselFriendRequestFromSender({userId:this.user._id, friendId:friend._id})
+  cansleFriendRequst(friend) {
+    this._socket.onCanselFriendRequestFromSender({userId: this.user._id, friendId: friend._id});
     friend.isFriend = false;
     friend.isFriendRequest = false;
     friend.isHold = false;
   }
 
 
-  ignoreFriendRequest(friend){
+  ignoreFriendRequest(friend) {
     this._socket.onIgnoreFriendRequest({
-      userId:this.user._id, 
-      friendId:friend._id
-    })
+      userId: this.user._id,
+      friendId: friend._id
+    });
     friend.isFriendRequest = false;
     friend.isFriend = false;
   }
 
 
-  unfriendUser(friend){
-    this._httpService.unFriendUser(this.user._id, friend._id).subscribe((res:any)=>{
+  unfriendUser(friend) {
+    this._httpService.unFriendUser(this.user._id, friend._id).subscribe((res: any) => {
       if (res.success) {
-        this._snakBar.open(res.MSG, 'undo', {duration:3000})
+        this._snakBar.open(res.MSG, 'undo', {duration: 3000});
         friend.isFriend = false;
         friend.isFriendRequest = false;
         friend.isHold = false;
-      }else{
-        this._snakBar.open(res.errMSG, 'undo', {duration:3000})
+      } else {
+        this._snakBar.open(res.errMSG, 'undo', {duration: 3000});
       }
-    }, (error)=>{
-      this._snakBar.open(error.message, 'undo', {duration:5000})
+    }, (error) => {
+      this._snakBar.open(error.message, 'undo', {duration: 5000});
 
-    })
+    });
 
   }
 

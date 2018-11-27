@@ -1,19 +1,19 @@
-const createError = require('http-errors');
-const http = require('http');
-const express = require('express');
-const path = require('path');
-const cookieParser = require('cookie-parser');
-const logger = require('morgan');
-const passport = require('passport');
-const usersRouter = require('./routes/users');
-const postRouter = require('./routes/post');
-const commentRouter = require('./routes/comment');
-const replayRouter = require('./routes/replay');
-const authRouter = require('./routes/auth');
-const cors = require('cors');
-const mongoose = require('mongoose');
-const keys = require('./config/keys')
-const app = express();
+var createError = require('http-errors');
+var http = require('http');
+var express = require('express');
+var path = require('path');
+var cookieParser = require('cookie-parser');
+var logger = require('morgan');
+var passport = require('passport');
+var usersRouter = require('./routes/users');
+var postRouter = require('./routes/post');
+var commentRouter = require('./routes/comment');
+var replayRouter = require('./routes/replay');
+var authRouter = require('./routes/auth');
+var cors = require('cors');
+var mongoose = require('mongoose');
+var keys = require('./config/keys');
+var app = express();
 
 
 mongoose.connect(keys.database, { useNewUrlParser: true });
@@ -51,7 +51,7 @@ app.use(function(req, res, next) {
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use((err, req, res, next) => {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};

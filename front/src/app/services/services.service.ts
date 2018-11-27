@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, throwError } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
- 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -9,9 +9,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class ServicesService {
   // private pathName = new BehaviorSubject<string>('hello');
   // crancePathName = this.pathName.asObservable();
-  public  url:string = 'http://localhost:3000';
+  public  url = 'http://localhost:3000';
 
-  // public  url:string = '';
+  // public  url = '';
   constructor() { }
 
   // changePathName(path){
@@ -30,5 +30,5 @@ export class ServicesService {
     }
     // return an observable with a user-facing error message
     return throwError(error);
-  };
+  }
 }
