@@ -33,16 +33,8 @@ io.on("connection", (socket)=>{
             friendsAreConncting[socket._id]               = socket;
             friendsAreConncting[socket._id].friends       = user.friends || [];
             friendsAreConncting[socket._id].friendRequest = user.friendRequest || [];
-            friendsAreConncting[socket._id].username      = user.username
-            friendsAreConncting[socket._id].image         = user.image
-            // var notifications = [];
-            // var notArray =  user.notifications;
-            // for (const not of notArray) {
-            //   if (!not.isRead) {
-            //     notifications.push(not)
-            //   }
-            // }
-            // friendsAreConncting[id].emit('get Length', {notLength:notifications.length, friendsLength:user.friendRequest.length})
+            friendsAreConncting[socket._id].username      = user.username;
+            friendsAreConncting[socket._id].image         = user.image;
           }
         })
         updateFriendsAreConncting();
@@ -577,11 +569,40 @@ socket.on('get friends requset', (id)=>{
       }else{
         if (data.id in friendsAreConncting) {
           if (user.notifications.length > 10) {
-            var not = [] = user.notifications.slice(-11, -1);
+            var not = [] = user.notifications.slice(-11, );
+            var length = user.notifications.length;
+
           }else{
             var not = [] = user.notifications;
+            var length = 0;
           }
-          friendsAreConncting[data.id].emit('all notification', not);
+          friendsAreConncting[data.id].emit('all notification', {not:not, length:length});
+          user.notifications.forEach((not)=>{
+            if(!not.isRead && data.isRead){
+              not.isRead = true;
+            }
+          })
+          user.save((err)=>{
+            if(err){
+              friendsAreConncting[data.id].emit('Error', err.message)
+            }
+          })
+        }
+      }
+    })
+  })// on notifications
+
+  // on notifications
+  socket.on('more notifications', (data)=>{
+    console.log(data);
+    User.findById(data.id, (err, user)=>{
+      if (err) {
+        friendsAreConncting[id].emit('Error', err.message)
+      }else{
+        if (data.id in friendsAreConncting) {
+          var num = Number(data.index)
+          var not = [] = user.notifications.slice(-num+11, -num);
+          friendsAreConncting[data.id].emit('get more notification', not);
           user.notifications.forEach((not)=>{
             if(!not.isRead && data.isRead){
               not.isRead = true;

@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
-
 const notifications =  mongoose.Schema({
   type:{
     type:String,
