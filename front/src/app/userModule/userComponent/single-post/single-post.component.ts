@@ -1,81 +1,67 @@
-import { Component, OnInit, Input, Inject } from '@angular/core';
-import { User } from 'src/app/module/user';
-import { HttpService } from 'src/app/services/http.service';
-import { Post } from 'src/app/module/post';
-import { MatSnackBar } from '@angular/material';
-import { ServicesService } from 'src/app/services/services.service';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { SocketService } from 'src/app/services/socket.service';
-import { Comment } from 'src/app/module/comment';
-import { AuthService } from 'src/app/services/auth.service';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { HttpService } from 'src/app/services/http.service';
+import { MatSnackBar, MatDialog } from '@angular/material';
 import { RemoveDialogComponent } from '../remove-dialog/remove-dialog.component';
 import { EditDialogComponent } from '../edit-dialog/edit-dialog.component';
-export interface DialogData {
-  postId: string;
-  event: string;
-}
+import { ActivatedRoute } from '@angular/router';
+import { User } from 'src/app/module/user';
+import { ServicesService } from 'src/app/services/services.service';
+
 @Component({
-  selector: 'app-post',
-  templateUrl: './post.component.html',
-  styleUrls: ['./post.component.scss']
+  selector: 'app-single-post',
+  templateUrl: './single-post.component.html',
+  styleUrls: ['./single-post.component.scss']
 })
-export class PostComponent implements OnInit {
-  @Input() user: User;
-  posts: any = [];
+export class SinglePostComponent implements OnInit {
+  user: any;
+  post: any;
+
   url = this._services.url;
-  newComment: string;
-  newReplay: string;
   constructor(
-    public _dialog: MatDialog,
+    private _socket: SocketService,
     private _httpService: HttpService,
     private _snakBar: MatSnackBar,
+    public _dialog: MatDialog,
     private _services: ServicesService,
-    private _router: Router,
-    private _socket: SocketService,
-    private _auth: AuthService
+    public _activatedRoute: ActivatedRoute
 
   ) {
-// get new post
-    this._socket.getPost().subscribe((post: Post) => {
-      this.posts.unshift(post);
+    this.user = JSON.parse(localStorage.getItem('user'));
+
+    // get new post
+    this._socket.getPost().subscribe((post: any) => {
+      this.post.unshift(post);
     }); // get new post
 
   // get new commment
     this._socket.getComment().subscribe((res: any) => {
-      for (const post of this.posts) {
-        if (post._id === res.postId) {
-          post.comment.push(res);
+        if (this.post._id === res.postId) {
+          this.post.comment.push(res);
         }
-      }
     });  // get new commment
+
   // get new replay
     this._socket.getReplay().subscribe((res: any) => {
-      for (const post of this.posts) {
-        if (post._id === res.postId) {
-          for (const comment of post.comment) {
+        if (this.post._id === res.postId) {
+          for (const comment of this.post.comment) {
             if (comment._id === res.commentId) {
               comment.replay.push(res);
             }
           }
         }
-      }
     }); // get new replay
 
-   }// constractor
+    this._activatedRoute.params.subscribe(res => {
+      this._httpService.getOnePost(res.id).subscribe((data: any) => {
+        this.post = data.post;
+      });
+    });
+   }
 
   ngOnInit() {
-    this._httpService.getUserDashbord(this.user._id).subscribe((res: any) => {
-      if (res.success) {
-        const po = [];
-          this.posts = res.posts;
-      } else {
-        this._snakBar.open(res.errMSG, 'undo', {duration: 4000});
-      }
-    }, (error) => {
-      this._snakBar.open(error.message, 'undo', {duration: 3000});
-    });
-  } // on init
+
+  }
 
   openRemoveDialog(event, obj, type, comment): void {
     switch (type) {
@@ -146,72 +132,47 @@ export class PostComponent implements OnInit {
 
   } // remove
 
-
-openEditPostDailog(post, type, comment, replay) {
-  switch (type) {
-    case 'post':
-        const postRef = this._dialog.open(EditDialogComponent, {
-          minWidth: '80%',
-          maxHeight: '350px',
-          data: {body: post.body, postId: post._id, type: type}
-        });
-        postRef.afterClosed().subscribe(result => {
-          if (result !== undefined && result.type === 'post') {
-            const o = {
-              body: result.body
-            };
-            this._httpService.editPost(result.postId, o).subscribe((res: any) => {
-              if (res.success) {
-                this._snakBar.open(res.MSG, 'undo', {duration: 3000});
-                post.body = result.body;
-              } else {
-                this._snakBar.open(res.errMSG, 'undo', {duration: 3000});
-              }
-            }, (error) => {
-              this._snakBar.open(error.message, 'undo', {duration: 3000});
-            });
-          }
-        });
-      break;
-    case 'comment':
-      const commentRef = this._dialog.open(EditDialogComponent, {
-        minWidth: '80%',
-        maxHeight: '350px',
-        data: {body: comment.body, postId: comment.postId, type: type, commentId: comment._id}
-      });
-      commentRef.afterClosed().subscribe(result => {
-        if (result !== undefined && result.type === 'comment') {
-          const o = {
-            body: result.body
-          };
-          this._httpService.editComment(result.postId, result.commentId, o).subscribe((res: any) => {
-            if (res.success) {
-              this._snakBar.open(res.MSG, 'undo', {duration: 3000});
-              comment.body = result.body;
-            } else {
-              this._snakBar.open(res.errMSG, 'undo', {duration: 3000});
-            }
-          }, (error) => {
-            this._snakBar.open(error.message, 'undo', {duration: 3000});
+  openEditPostDailog(post, type, comment, replay) {
+    switch (type) {
+      case 'post':
+          const postRef = this._dialog.open(EditDialogComponent, {
+            minWidth: '80%',
+            maxHeight: '350px',
+            data: {body: post.body, postId: post._id, type: type}
           });
-        }
-      });
-    break;
-    default:
-        const replayRef = this._dialog.open(EditDialogComponent, {
+          postRef.afterClosed().subscribe(result => {
+            if (result !== undefined && result.type === 'post') {
+              const o = {
+                body: result.body
+              };
+              this._httpService.editPost(result.postId, o).subscribe((res: any) => {
+                if (res.success) {
+                  this._snakBar.open(res.MSG, 'undo', {duration: 3000});
+                  post.body = result.body;
+                } else {
+                  this._snakBar.open(res.errMSG, 'undo', {duration: 3000});
+                }
+              }, (error) => {
+                this._snakBar.open(error.message, 'undo', {duration: 3000});
+              });
+            }
+          });
+        break;
+      case 'comment':
+        const commentRef = this._dialog.open(EditDialogComponent, {
           minWidth: '80%',
           maxHeight: '350px',
-          data: {body: replay.body, postId: comment.postId, type: type, commentId: comment._id, replayId: replay._id}
+          data: {body: comment.body, postId: comment.postId, type: type, commentId: comment._id}
         });
-        replayRef.afterClosed().subscribe(result => {
-          if (result !== undefined && result.type === 'replay') {
+        commentRef.afterClosed().subscribe(result => {
+          if (result !== undefined && result.type === 'comment') {
             const o = {
               body: result.body
             };
-            this._httpService.editreplay(result.postId, result.commentId, result.replayId, o).subscribe((res: any) => {
+            this._httpService.editComment(result.postId, result.commentId, o).subscribe((res: any) => {
               if (res.success) {
                 this._snakBar.open(res.MSG, 'undo', {duration: 3000});
-                replay.body = result.body;
+                comment.body = result.body;
               } else {
                 this._snakBar.open(res.errMSG, 'undo', {duration: 3000});
               }
@@ -221,11 +182,35 @@ openEditPostDailog(post, type, comment, replay) {
           }
         });
       break;
+      default:
+          const replayRef = this._dialog.open(EditDialogComponent, {
+            minWidth: '80%',
+            maxHeight: '350px',
+            data: {body: replay.body, postId: comment.postId, type: type, commentId: comment._id, replayId: replay._id}
+          });
+          replayRef.afterClosed().subscribe(result => {
+            if (result !== undefined && result.type === 'replay') {
+              const o = {
+                body: result.body
+              };
+              this._httpService.editreplay(result.postId, result.commentId, result.replayId, o).subscribe((res: any) => {
+                if (res.success) {
+                  this._snakBar.open(res.MSG, 'undo', {duration: 3000});
+                  replay.body = result.body;
+                } else {
+                  this._snakBar.open(res.errMSG, 'undo', {duration: 3000});
+                }
+              }, (error) => {
+                this._snakBar.open(error.message, 'undo', {duration: 3000});
+              });
+            }
+          });
+        break;
+    }
   }
 
-}
-  // add new comment
-  addComment(event, postId, username, userId, userImage) {
+   // add new comment
+   addComment(event, postId, username, userId, userImage) {
     const body = event.target.firstElementChild.querySelector('textarea').value;
     const commemt = {
       userId: userId,
@@ -253,7 +238,4 @@ openEditPostDailog(post, type, comment, replay) {
     event.target.firstElementChild.querySelector('textarea').value = '';
   }  // add new replay
 
-  // see more comment
-  seeMoreComment(id) {
-  } // see more comment
 }

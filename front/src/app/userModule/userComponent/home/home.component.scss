@@ -1,15 +1,15 @@
 @import '../../../../assets/scss/color';
 @import '../../../../assets/scss/sheard';
 .home{
-    padding-top: 30px;
+    padding-top: 85px;
     margin: auto;
     /deep/ mat-grid-list{
-        padding: 20px !important;
-        mat-grid-tile{
-            overflow: auto;
+        /deep/mat-grid-tile{
             height: 100vh;
+
+            overflow: auto;
             /deep/ .mat-figure{
-                display: block
+                display: block;
             }
         }
     }
@@ -45,4 +45,15 @@
         }
     }
 
+}
+@media(max-width:768px){
+    .home{
+        padding-top: 0px !important;
+
+        /deep/ mat-grid-list{
+            /deep/mat-grid-tile{
+                height: 73vh;
+            }
+        }
+        }
 }

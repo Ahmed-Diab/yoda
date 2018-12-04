@@ -41,7 +41,7 @@
         </a>
       </span>
       <span>
-        <a [routerLink]="[ '/user/notifications']">
+        <a (click)="toNot()">
           <mat-icon>notifications</mat-icon>
           <i *ngIf="notLength > 0">{{notLength}}</i>
         </a>
@@ -74,8 +74,10 @@
         </a>
       </div>
   </div>
+  <a (click)="getMoreNotfiction(notifictions.length)" *ngIf="notifictions.length < notaLength">See More</a>
+
   </div>
-  <div [@openClose]="isMessages ? 'in' : 'out'" class="messages">
+  <!-- <div [@openClose]="isMessages ? 'in' : 'out'" class="messages">
       <mat-icon (click)="close($event)">close</mat-icon>
       <div class="notification">
           <p>
@@ -85,7 +87,7 @@
             </a> 
           </p>
         </div>
-  </div>
+  </div> -->
   <div [@openClose]="isFriendsRequst ? 'in' : 'out'" class="friends-requst">
       <mat-icon (click)="close($event)">close</mat-icon>
       <div class="notification" *ngIf="friendsRequsts.length > 0;else zeroRequst">
@@ -101,7 +103,6 @@
               </p>
           </div>
       </div>
-
       <ng-template #zeroRequst>
           <h3 class="zero-request">you don't have requst yet</h3>          
       </ng-template>

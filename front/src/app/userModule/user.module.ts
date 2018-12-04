@@ -18,6 +18,7 @@ import { EditDialogComponent } from './userComponent/edit-dialog/edit-dialog.com
 import { FindFrindComponent } from './userComponent/find-frind/find-frind.component';
 import { FriendsRequstsComponent } from './userComponent/friends-requsts/friends-requsts.component';
 import { NotificationsComponent } from './userComponent/notifications/notifications.component';
+import { SinglePostComponent } from './userComponent/single-post/single-post.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { NotificationsComponent } from './userComponent/notifications/notificati
     EditDialogComponent,
     FindFrindComponent,
     FriendsRequstsComponent,
-    NotificationsComponent
+    NotificationsComponent,
+    SinglePostComponent
   ],
   imports: [
     CommonModule,

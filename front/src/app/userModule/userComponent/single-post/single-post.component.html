@@ -1,0 +1,77 @@
+
+<div *ngIf="post else elseTemplate" class="post">
+  <p class="text-right edit-icon" >
+      <mat-icon *ngIf="user._id === post.userId" (click)='openEditPostDailog(post, "post", "", "")'>edit</mat-icon>
+      <mat-icon *ngIf="user._id === post.userId" (click)='openRemoveDialog($event, post, "post")'>close</mat-icon>
+  </p>
+  <p class="post-user">
+      <a [routerLink]="[ '/user/profile', post.userId ]">
+          <img src="{{url}}/{{post.userImage}}" alt="{{post.username}}"> {{post.username | titlecase }}
+      </a>
+  </p>
+  <p class="post-body text-right">{{post.body}}</p>
+  <p class="date text-right">
+      {{post.createdAt | date:'MMM d, y, h:mm:ss a'}}
+  </p>
+  <div class="comment" *ngFor="let comment of post.comment;let c = index; trackBy:index;">
+      <p class="text-right edit-icon" >
+          <mat-icon *ngIf="user._id === comment.userId" (click)='openEditPostDailog(post, "comment", comment, "")'>edit</mat-icon>
+          <mat-icon *ngIf="user._id === comment.userId || user._id === post.userId" (click)='openRemoveDialog($event, comment, "comment")'>close</mat-icon>
+      </p>
+      <p class="post-user">
+          <a [routerLink]="[ '/user/profile', comment.userId ]">
+              <img src="{{url}}/{{comment.userImage}}" alt="{{comment.username}}"> {{comment.username | titlecase }}
+          </a>
+      </p>
+      <p class="post-body">{{comment.body}}</p>
+      <p class="date text-right">
+          {{comment.createdAt | date:'MMM d, y, h:mm:ss a'}}
+      </p>
+      <div class="replay" *ngFor="let replay of comment.replay">
+          <p class="text-right edit-icon" >
+                      <mat-icon *ngIf="user._id === replay.userId" (click)='openEditPostDailog(post, "replay", comment, replay)'>edit</mat-icon>
+                      <mat-icon *ngIf="user._id === replay.userId || user._id === post.userId || user._id === comment.userId"  (click)='openRemoveDialog($event, replay, "replay", comment)'>close</mat-icon>
+          </p>
+          <p class="post-user">
+              <a [routerLink]="[ '/user/profile', replay.userId ]">
+                  <img src="{{url}}/{{replay.userImage}}" alt="{{replay.username}}"> {{replay.username | titlecase }}
+              </a>
+          </p>
+          <p class="post-body">{{replay.body }}{{r}}</p>
+          <p class="date text-right">
+              {{replay.createdAt | date:'MMM d, y, h:mm:ss a'}}
+          </p>
+        </div>
+      <p *ngIf="comment.replay.length > 2" class="text-right" >
+              <span (click)='seeMoreReplay(comment.postId, comment._id)' class="see-more">
+                  see replay
+              </span> 
+          </p>
+      <form class="comment-form" (submit)='addReplay($event, comment._id, comment.postId, user.username, user._id, user.image)'>
+          <mat-form-field>
+              <textarea name='com{{c}}'#rep{{c}} ngModel matInput placeholder="replay"></textarea>
+          </mat-form-field>
+          <div class="text-right">
+              <button mat-raised-button color='primary' >replay</button>
+          </div>
+      </form>
+  </div>
+
+
+  <form class="comment-form" (submit)='addComment($event, post._id, user.username, user._id, user.image)'>
+          <mat-form-field>
+              <textarea name='comment{{p}}' ngModel matInput placeholder="comment"></textarea>
+          </mat-form-field>
+          <div class="text-right">
+              <button mat-raised-button color='primary' >comment</button>
+          </div>
+  </form>
+  <p *ngIf="post.commentsLength > 1" class="text-right" >
+      <span (click)='seeMoreComment(post._id)' class="see-more">
+          see comments
+      </span> 
+  </p>
+</div>
+<ng-template #elseTemplate>
+  <h1 class="h1-cantfind">cant find this post me by this post removed</h1>
+</ng-template>

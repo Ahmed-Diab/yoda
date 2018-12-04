@@ -42,6 +42,7 @@ export class NavbarComponent implements OnInit {
   friendsRequsts: any = [];
   notLength: number;
   friendsLength: number;
+  notaLength: number;
 
   constructor(
     private _services: ServicesService,
@@ -70,13 +71,21 @@ export class NavbarComponent implements OnInit {
     });
 
     this._socket.getAllNotification().subscribe((res: any) => {
-      const t = res;
+      const t = res.not;
+      this.notaLength = res.length;
       this.notifictions = t.reverse();
     });
     this._socket.getNewFriendsRequset().subscribe((res: any) => {
       this.friendsRequsts = res;
       this.friendsLength  = res.length;
     });
+
+    this._socket.getMoreNotifications().subscribe((res: any) => {
+      const resArr = res.reverse();
+      for (const not of resArr) {
+        this.notifictions.push(not);
+      }
+      });
    }
   ngOnInit() {
 
@@ -159,6 +168,13 @@ export class NavbarComponent implements OnInit {
         this.friendsLength -= 1;
       }
     }
+  }
+  toNot() {
+    this._socket.onNotifications({id: this.user._id, isRead: true});
+    this._router.navigate(['/user/notifications']);
+  }
+  getMoreNotfiction(x) {
+    this._socket.onMoreNotifications({id: this.user._id, index: x});
   }
 
 }

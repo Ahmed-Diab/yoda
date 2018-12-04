@@ -64,10 +64,7 @@ export class HomeComponent implements OnInit {
 
   }
   findFrind() {
-    console.log(this.frindName);
-
     this._httpService.findUserByUsername(this.frindName || '00', this.user._id).subscribe((res: any) => {
-      console.log(res);
       if (res.success) {
         const usersArr = res.users;
         this._httpService.getUserById(this.user._id).subscribe((res2: any) => {
@@ -109,7 +106,6 @@ export class HomeComponent implements OnInit {
       }
     }, (error) => {
       this._snakBar.open(error.message, 'undo', {duration: 5000});
-
     });
   }
 

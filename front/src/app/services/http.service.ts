@@ -8,63 +8,73 @@ import { catchError } from 'rxjs/operators';
 export class HttpService {
 
   constructor(
-    private _http:HttpClient,
-    private _services:ServicesService
+    private _http: HttpClient,
+    private _services: ServicesService
   ) { }
 // user
-  login(data){
+  login(data) {
     return this._http.post(`${this._services.url}`, data)
             .pipe( catchError(this._services.handleError));
   }
-  loginAuthGoogle(){
+  loginAuthGoogle() {
     return this._http.get(`${this._services.url}/auth/google`)
             .pipe( catchError(this._services.handleError));
   }
-  register(data){
-    return this._http.post(`${this._services.url}`, data) 
+  register(data) {
+    return this._http.post(`${this._services.url}`, data)
             .pipe( catchError(this._services.handleError));
   }
-  getUserDashbord(userId){
-    return this._http.get(`${this._services.url}/post/${userId}/user`) 
+  getUserDashbord(userId) {
+    return this._http.get(`${this._services.url}/post/${userId}/user`)
             .pipe( catchError(this._services.handleError));
   }
-  findUserByUsername(username, userId){
-    return this._http.get(`${this._services.url}/users/find/${username}/${userId}`) 
+  findUserByUsername(username, userId) {
+    return this._http.get(`${this._services.url}/users/find/${username}/${userId}`)
               .pipe( catchError(this._services.handleError));
   }
-  getUserById(id){
-    return this._http.get(`${this._services.url}/users/${id}`) 
-    .pipe( catchError(this._services.handleError));
-  }
-  unFriendUser(userId, friendId){
-    return this._http.get(`${this._services.url}/users/${userId}/${friendId}/unfriend`) 
+
+  getUserById(id) {
+    return this._http.get(`${this._services.url}/users/${id}`)
     .pipe( catchError(this._services.handleError));
   }
 
-  // post 
-  editPost(postId, body){
-    return this._http.post(`${this._services.url}/post/${postId}/edit`, body).pipe( catchError(this._services.handleError));
+  unFriendUser(userId, friendId) {
+    return this._http.get(`${this._services.url}/users/${userId}/${friendId}/unfriend`)
+    .pipe( catchError(this._services.handleError));
   }
-  removePost(postId){
-    return this._http.get(`${this._services.url}/post/${postId}/remove`).pipe( catchError(this._services.handleError));
+
+  // post
+  getOnePost(postId) {
+    return this._http.get(`${this._services.url}/post/${postId}`)
+              .pipe( catchError(this._services.handleError));
+  }
+  editPost(postId, body) {
+    return this._http.post(`${this._services.url}/post/${postId}/edit`, body)
+              .pipe( catchError(this._services.handleError));
+  }
+  removePost(postId) {
+    return this._http.get(`${this._services.url}/post/${postId}/remove`)
+              .pipe( catchError(this._services.handleError));
   }
 
   // comment
-  editComment(postId, commentId, body){
-    return this._http.post(`${this._services.url}/comment/${postId}/${commentId}/edit`, body).pipe( catchError(this._services.handleError));
+  editComment(postId, commentId, body) {
+    return this._http.post(`${this._services.url}/comment/${postId}/${commentId}/edit`, body)
+              .pipe( catchError(this._services.handleError));
   }
-  removeComment(postId, commentId){
-    return this._http.get(`${this._services.url}/comment/${postId}/${commentId}/remove`).pipe( catchError(this._services.handleError));
+  removeComment(postId, commentId) {
+    return this._http.get(`${this._services.url}/comment/${postId}/${commentId}/remove`)
+              .pipe( catchError(this._services.handleError));
   }
-
-
 
   // replay
-  editreplay(postId, commentId, replayId, body){
-    return this._http.post(`${this._services.url}/replay/${postId}/${commentId}/${replayId}/edit`, body).pipe( catchError(this._services.handleError));
+  editreplay(postId, commentId, replayId, body) {
+    return this._http.post(`${this._services.url}/replay/${postId}/${commentId}/${replayId}/edit`, body)
+      .pipe( catchError(this._services.handleError));
   }
-  removeReplay(postId, commentId, replayId){
-    return this._http.get(`${this._services.url}/replay/${postId}/${commentId}/${replayId}/remove`).pipe( catchError(this._services.handleError));
+  removeReplay(postId, commentId, replayId) {
+    return this._http.get(`${this._services.url}/replay/${postId}/${commentId}/${replayId}/remove`)
+      .pipe( catchError(this._services.handleError));
   }
 
 }

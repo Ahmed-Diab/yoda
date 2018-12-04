@@ -15,7 +15,7 @@ nav{
     color: $lightColor;
     overflow: hidden !important;
     .right-side{
-        width: 30%;
+        width: 50%;
         float: left;
         @extend %user_containr;
         .username{
@@ -23,7 +23,7 @@ nav{
         }
     }
     .ul{
-        width: 70%;
+        width: 50%;
         height: 100%;
         float: left;
         list-style: none;
@@ -111,24 +111,16 @@ nav{
             display: none;
         }
     }
-    .right-side{
-        width: 40%;
-    }
-    .ul{
-        width: 60%;
-    }
 }
 @media(max-width:778px){
     nav{
         padding: 10px;
     .right-side{
-        width: 30%;
         .username{
             display: none;
         }
     }
     .ul{
-        width: 70%;
         mat-icon{
             font-size: 18px;
             width: 18px;

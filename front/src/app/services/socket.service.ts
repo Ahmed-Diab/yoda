@@ -67,6 +67,21 @@ export class SocketService {
   onNotificationsAndfriedsReqLength(data) {
     socket.emit('notificationsAndfriedsReqLength', data);
   }
+  onMoreNotifications(data) {
+    socket.emit('more notifications', data);
+  }
+
+  getMoreNotifications() {
+    const observable = new Observable((observer) => {
+      socket.on('get more notification', (data: any) => {
+        observer.next(data);
+      });
+      return () => {
+        socket.disconnect();
+      };
+    });
+    return observable;
+  }
 
   getLength() {
     const observable = new Observable((observer) => {
