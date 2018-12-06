@@ -8,10 +8,24 @@
             <img src="{{url}}/{{post.userImage}}" alt="{{post.username}}"> {{post.username | titlecase }}
         </a>
     </p>
-    <p class="post-body">{{post.body}}</p>
-    <p class="date text-right">
-        {{post.createdAt | date:'MMM d, y, h:mm:ss a'}}
-    </p>
+    <p class="post-body"> {{post.body}}</p>
+    <div class="post-footer">
+        <div>
+            <span [ngClass]="{'red': !post.spictailLike, 'black': post.spictailLike}" (click)="like($event, post, user)">
+                    <mat-icon title="like" >thumb_up</mat-icon>
+                    <span  *ngIf="!post.spictailLike && post.likesLength > 0">{{post.likesLength}}</span>
+                    <span  *ngIf="post.spictailLike && post.likesLength > 0">you and {{post.likesLength -1}} like this</span>
+            </span>
+            <span class="comment-icon" title="comment">
+                    <mat-icon>comment</mat-icon><span *ngIf="post.commentsLength > 0">{{post.commentsLength}}</span> 
+            </span>
+        </div>
+        <div class="date text-right">
+            {{post.createdAt | date:'MMM d, y, h:mm:ss a'}}
+        </div>
+    </div>
+    <div class="clear-fix"></div>
+
     <div class="comment" *ngFor="let comment of post.comment;let c = index; trackBy:index;">
         <p class="text-right edit-icon" >
             <mat-icon *ngIf="user._id === comment.userId" (click)='openEditPostDailog(post, "comment", comment, "")'>edit</mat-icon>
@@ -21,8 +35,8 @@
             <a [routerLink]="[ '/user/profile', comment.userId ]">
                 <img src="{{url}}/{{comment.userImage}}" alt="{{comment.username}}"> {{comment.username | titlecase }}
             </a>
+            {{comment.body}}
         </p>
-        <p class="post-body">{{comment.body}}</p>
         <p class="date text-right">
             {{comment.createdAt | date:'MMM d, y, h:mm:ss a'}}
         </p>
@@ -35,8 +49,8 @@
                 <a [routerLink]="[ '/user/profile', replay.userId ]">
                     <img src="{{url}}/{{replay.userImage}}" alt="{{replay.username}}"> {{replay.username | titlecase }}
                 </a>
+                {{replay.body }}{{r}}
             </p>
-            <p class="post-body">{{replay.body }}{{r}}</p>
             <p class="date text-right">
                 {{replay.createdAt | date:'MMM d, y, h:mm:ss a'}}
             </p>
@@ -46,24 +60,19 @@
                     see replay
                 </span> 
             </p>
-        <form class="comment-form" (submit)='addReplay($event, comment._id, comment.postId, user.username, user._id, user.image)'>
-            <mat-form-field>
-                <textarea name='com{{c}}'#rep{{c}} ngModel matInput placeholder="replay"></textarea>
-            </mat-form-field>
-            <div class="text-right">
+        <form class="comment-form" >
+                <textarea class="comment-input" name='com{{c}}' #rep{{c}} ngModel  placeholder="Replay" (keyup.enter)='addReplay($event, comment._id, comment.postId, user.username, user._id, user.image)'></textarea>
+            <!-- <div class="text-right">
                 <button mat-raised-button color='primary' >replay</button>
-            </div>
+            </div> -->
         </form>
     </div>
 
 
-    <form class="comment-form" (submit)='addComment($event, post._id, user.username, user._id, user.image)'>
-            <mat-form-field>
-                <textarea name='comment{{p}}' ngModel matInput placeholder="comment"></textarea>
-            </mat-form-field>
-            <div class="text-right">
-                <button mat-raised-button color='primary' >comment</button>
-            </div>
+    <form class="comment-form" >
+        <textarea type="text" name='comment{{p}}' ngModel class="comment-input" placeholder="Comment" 
+        (keyup.enter)='addComment($event, post._id, user.username, user._id, user.image)'>   
+        </textarea>
     </form>
     <p *ngIf="post.commentsLength > 1" class="text-right" >
         <span (click)='seeMoreComment(post._id)' class="see-more">

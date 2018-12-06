@@ -4,12 +4,15 @@ import { HomeComponent } from './userComponent/home/home.component';
 import { NotificationsComponent } from './userComponent/notifications/notifications.component';
 import { FriendsRequstsComponent } from './userComponent/friends-requsts/friends-requsts.component';
 import { SinglePostComponent } from './userComponent/single-post/single-post.component';
+import { ProfileComponent } from './userComponent/profile/profile.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'notifications', component: NotificationsComponent},
   {path: 'friends-requsts', component: FriendsRequstsComponent},
-  {path: 'post/:id', component: SinglePostComponent}
+  {path: 'post/:id', component: SinglePostComponent},
+  {path: 'profile/:id', component: ProfileComponent}
+
 
 
 ];
@@ -20,5 +23,6 @@ const routes: Routes = [
 })
 export class UserRoutingModule { }
 export const components = [
-  HomeComponent
+  HomeComponent,
+  ProfileComponent
 ];

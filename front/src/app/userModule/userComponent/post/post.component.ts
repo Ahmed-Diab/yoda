@@ -67,8 +67,9 @@ export class PostComponent implements OnInit {
   ngOnInit() {
     this._httpService.getUserDashbord(this.user._id).subscribe((res: any) => {
       if (res.success) {
-        const po = [];
           this.posts = res.posts;
+          console.log(res.posts);
+          
       } else {
         this._snakBar.open(res.errMSG, 'undo', {duration: 4000});
       }
@@ -226,7 +227,7 @@ openEditPostDailog(post, type, comment, replay) {
 }
   // add new comment
   addComment(event, postId, username, userId, userImage) {
-    const body = event.target.firstElementChild.querySelector('textarea').value;
+    const body = event.target.value;
     const commemt = {
       userId: userId,
       username: username,
@@ -235,12 +236,12 @@ openEditPostDailog(post, type, comment, replay) {
       postId: postId
     };
     this._socket.onComment(commemt);
-    event.target.firstElementChild.querySelector('textarea').value = '';
+    event.target.value = '';
   }  // add new comment
 
   // add new replay
   addReplay(event, commentId, postId, username, userId, userImage) {
-    const body = event.target.firstElementChild.querySelector('textarea').value;
+    const body = event.target.value;
     const replay = {
       postId    : postId,
       commentId : commentId,
@@ -250,10 +251,55 @@ openEditPostDailog(post, type, comment, replay) {
       userImage : userImage
     };
     this._socket.onReplay(replay);
-    event.target.firstElementChild.querySelector('textarea').value = '';
+    event.target.value = '';
   }  // add new replay
 
   // see more comment
   seeMoreComment(id) {
   } // see more comment
+
+  like(event, post, userData) {
+      const userId    = userData._id;
+      const userImage = userData.image;
+      const username  = userData.username;
+      const user = {
+        userImage: userImage,
+        username : username,
+        _id      : userId
+      };
+      const t =  post.likes.find((x) => {
+        return x.userId === userId;
+      });
+      if (t) {
+        this._httpService.unlike(post._id, userId).subscribe((res: any) => {
+          if (res.success) {
+            post.likes = res.likes;
+            post.likesLength = res.likes.length;
+            post.spictailLike = false;
+          }
+        });
+      } else {
+        this._httpService.likePost(post._id, user).subscribe((res: any) => {
+          if (res.success) {
+            post.likes = res.likes;
+            post.likesLength = res.likes.length;
+            post.spictailLike = true;
+          } else {
+            this._snakBar.open(res.error, 'undo', {duration: 3000});
+          }
+          }, (error) => {
+            this._snakBar.open(error.message, 'undo', {duration: 3000});
+          });
+      }
+
+    // event.target.style.color = '#f00';
+  }
+
+  check(post) {
+      if (post.spictailLike) {
+        return true;
+      } else {
+        return false;
+      }
+  }
 }

@@ -3,24 +3,23 @@
 
 .post{
     margin: 10px;
-    padding: 0 10px 5px 10px;
+    padding: 5px 5px 5px 5px;
     border-radius: 5px;
     border: 1px solid rgba($darkColor, .1);
     @extend %user_post;
     .comment{
-    
         margin-left: 30px;
         @extend %user_post;
         .replay{
             margin-left: 40px;
             @extend %user_post;
         }
-    
     }
     .edit-form{
         @extend %form;
     }
     .edit-icon{
+        padding-top: 0;
         mat-icon:first-of-type{
             cursor: pointer;
             color: $darkColor;
@@ -29,8 +28,21 @@
         mat-icon:last-of-type{
             color: red;
             font-size: 12px;
-
             cursor: pointer;
         }
     }
+    .comment-form{
+        padding-left: 40px;
+        .textarea{
+            box-shadow: none !important;
+           
+        }
+    }
 }   
+
+.red{
+    color: red !important;
+}
+.black{
+    color: green;
+}

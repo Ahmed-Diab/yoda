@@ -1,15 +1,13 @@
 <div class="home">
     <mat-grid-list cols="4" rowHeight="90vh">
             <mat-grid-tile [colspan]='colSpan'>
-                <form class="post-form" (submit)='addNewPost(user, newPost)'>
-                    <mat-form-field>
-                        <textarea name='newPost' class="ta" [(ngModel)]="newPost" matInput placeholder="post"></textarea>
-                    </mat-form-field>
-                    <div class="text-right">
-                        <button mat-raised-button color='primary' >post</button>
-                    </div>
-                </form>
-               <app-post [user]='user'></app-post>
+             <form class="post-form" (submit)='addNewPost(user, newPost)'> 
+                <textarea name='newPost' class="textarea" [(ngModel)]="newPost" placeholder="post"></textarea>   
+                <div class="text-right">
+                    <button mat-raised-button color='primary' >post</button>
+                </div>
+            </form>
+            <app-post [user]='user'></app-post>
             </mat-grid-tile>
             <mat-grid-tile *ngIf="bigScreen" [colspan]='1'>
                 <div class="search">

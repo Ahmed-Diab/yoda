@@ -56,6 +56,14 @@ export class HttpService {
     return this._http.get(`${this._services.url}/post/${postId}/remove`)
               .pipe( catchError(this._services.handleError));
   }
+  likePost(postId, user) {
+    return this._http.post(`${this._services.url}/post/${postId}/like/${user._id}`, user)
+              .pipe( catchError(this._services.handleError));
+  }
+  unlike(postId, likeId) {
+    return this._http.get(`${this._services.url}/post/${postId}/unlike/${likeId}`)
+    .pipe( catchError(this._services.handleError));
+  }
 
   // comment
   editComment(postId, commentId, body) {

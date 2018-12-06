@@ -1,6 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
-
+@import './assets/scss/color';
 *{
     box-sizing: border-box;
     margin: 0;
@@ -21,6 +21,7 @@ mat-icon{
 }
 .date{
     font-size: 10px;
+    padding-bottom: 5px;
 }
 .clear-fix{
     clear: both;
@@ -47,6 +48,20 @@ a{
 
 @media(max-width:778px){
     .container{
-        margin: 90px auto;
+        margin: 75px auto;
     }   
+}
+
+.comment-form{
+    .comment-input{
+        width: 100%;
+        padding: 10px;
+        height: 40px;;
+        border: 1px solid rgba($darkColor, .2);
+        margin-top: 5px;
+        position: relative;
+        resize: vertical;
+    
+    }
+
 }

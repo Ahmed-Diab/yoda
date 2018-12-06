@@ -14,8 +14,16 @@
         }
     }
     .post-form{
-        width: 97%;
-        padding-top: 30px;
+        width: 98%;
+        padding: 30px 5px 30px 5px;
+        .textarea{
+            border: 1px solid rgba($darkColor, .2);
+            padding: 10px 10px 0px 10px;
+            height: 50px;;
+            width: 100%;
+            resize: vertical;
+            box-shadow: 0 0 5px #ccc;
+        }
         mat-form-field{
             width: 100%;
             }

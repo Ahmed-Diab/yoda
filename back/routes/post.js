@@ -43,6 +43,8 @@ router.get('/:userId/user', function(req, res, next) {
                             if (x.comment) {
                                 if (x.userId === userId) {
                                     var allComments = [] = x.comment;
+                                    var allLikes = [] = x.likes;
+
                                     var z           = allComments.slice(-1)
                                     var l           = {
                                         body          :x.body,
@@ -52,8 +54,10 @@ router.get('/:userId/user', function(req, res, next) {
                                         userId        :x.userId,
                                         userImage     :x.userImage,
                                         createdAt     :x.createdAt,
-                                        comment       :z,
-                                        commentsLength:allComments.length
+                                        // comment       :z,
+                                        commentsLength:allComments.length,
+                                        likes         :allLikes,
+                                        likesLength   :allLikes.length
                                     }
                                     arrPosts.push(l);
                                    }
@@ -63,7 +67,8 @@ router.get('/:userId/user', function(req, res, next) {
                         for (const post of posts) {
                             for (const i of friends) {
                                 if (post.userId === i) {
-                                    var allComments = [] = post.comment
+                                    var allComments = [] = post.comment;
+                                    var allLikes = [] = post.likes;
                                     var z = allComments.slice(-1);
                                     var l           = {
                                         body          :post.body,
@@ -73,8 +78,12 @@ router.get('/:userId/user', function(req, res, next) {
                                         userId        :post.userId,
                                         userImage     :post.userImage,
                                         createdAt     :post.createdAt,
-                                        comment       :z,
-                                        commentsLength:allComments.length
+                                        // comment       :z,
+                                        commentsLength:allComments.length,
+                                        likes         :allLikes,
+                                        likesLength   :allLikes.length
+
+
                                     }
                                     arrPosts.push(l);
                                 }
@@ -156,8 +165,74 @@ router.get('/:postId/remove', (req, res, next)=>{
         if (err) {
             res.json({success:false, errMSG:err.message})
         }else{
-            res.json({success:true, MSG:'removed success'})
+            res.json({success:true, MSG:'removed success'});
+        }
+    });
+});// remove post
+
+
+router.post('/:postId/like/:userId', (req, res, next)=>{
+    const userId = req.body._id;
+    const postId = req.params.postId;
+    const username = req.body.username
+    const userImage = req.body.userImage
+    Post.findById(postId, (err, post) => {
+        if (err) {
+            res.json({success:false, error:err.message})
+        }else{
+            post.spictailLike = true;
+            post.save((err, po) => {
+                if(err){
+                    res.json({success:false, error:err.message})
+                }else{
+                    po.likes.push({
+                        userId:    userId,
+                        username:  username,
+                        userImage: userImage
+                    })
+                    po.save((err, x) => {
+                        if(err){
+                            res.json({success:false, error:err.message})
+                        }else{
+                            res.json({success:true, likes: x.likes});
+                        }
+                    })
+                }
+            })
+
+
         }
     })
-})// remove post
+});
+router.get('/:postId/unlike/:userId', (req, res, next)=>{
+    const userId = req.params.userId;
+    const postId = req.params.postId;
+    Post.findById(postId, (err, post) => {
+        if (err) {
+            res.json({success:false, error:err.message})
+        }else{ 
+            post.spictailLike = false;
+            post.save((err, po)=>{
+                if (err) {
+                    res.json({success:false, error:err.message})
+                }else{
+                    po.likes.forEach((like) => {
+                        if (like.userId === userId) {
+                            like.remove();
+                            post.save((err, x)=>{
+                                if (err) {
+                                    res.json({success:false, error:err.message})
+                                }else{
+                                    res.json({success:true, likes: x.likes})
+                                }
+                            })
+                        }
+                    })
+                }
+            })
+
+        }
+    })
+ })
+
 module.exports = router;

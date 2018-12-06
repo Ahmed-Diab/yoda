@@ -22,14 +22,12 @@ import { FacebookModule, FacebookService } from 'ngx-facebook';
 import { NavbarComponent } from './component/navbar/navbar.component';
 import { RegisterComponent } from './component/register/register.component';
 import { SharedModule } from './sharedModule/shared.module';
-import { ProfileComponent } from './userModule/userComponent/profile/profile.component';
 @NgModule({
   declarations: [
     AppComponent,
     routingComponant,
     NavbarComponent,
     RegisterComponent,
-    ProfileComponent,
   ],
   imports: [
     BrowserModule,

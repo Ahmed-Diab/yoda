@@ -77,7 +77,7 @@ router.post('/login', (req, res, next) => {
         }
         User.comparePassword(password, user.password, (err, isMatch) => {
           if(err) {
-          return  res.json({success: false, errMSG: 'somthig wrong  plz try agean later'})
+            return  res.json({success: false, errMSG: 'somthig wrong  plz try agean later'})
           }
           if(isMatch) {
             const token = jwt.sign({data: user}, config.secret, {
@@ -174,15 +174,15 @@ router.post('/register', (req, res, next)=>{
                 }
               }) // User addUser
             }
-          }) //User findOne
+          }); //User findOne
         } // if ! user
-      }) //user find one
+      }); //user find one
       } //else
-    }) // upload
-  })// end user post
+    }); // upload
+  });// end user post
 
 // profile
-router.get('/profile', passport.authenticate('jwt', {session:false}), (req, res, next) => {
+router.get('/profile', passport.authenticate('jwt', {session:false}), (req, res) => {
     res.json({user: req.user});
 });// profile
 
